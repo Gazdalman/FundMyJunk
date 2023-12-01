@@ -12,7 +12,7 @@ class Project(db.Model):
   subtitle = db.Column(db.String(135), nullable=False)
   location = db.Column(db.String(50), nullable=False)
   image = db.Column(db.String(150), nullable=False)
-  video = db.Column(db.String(50))
+  video = db.Column(db.String(150))
   type = db.Column(db.String(50), nullable=False)
   goal = db.Column(db.FLOAT, nullable=False)
   main_category = db.Column(db.String(50), nullable=False)
