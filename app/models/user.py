@@ -12,7 +12,10 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50))
     hashed_password = db.Column(db.String(255), nullable=False)
+    user_credit = db.Column(db.FLOAT, default=10000)
 
     @property
     def password(self):
@@ -26,8 +29,13 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
-        return {
+        safe_user = {
             'id': self.id,
+            'firstName': self.first_name,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'userCredit': self.user_credit
         }
+        if self.last_name:
+            safe_user['lastName'] = self.last_name
+        return safe_user
