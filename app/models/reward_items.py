@@ -8,7 +8,7 @@ class RewardItem(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   reward_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("rewards.id")), nullable=False)
-  title = db.Column(db.String(50), nullable=False)
+  title = db.Column(db.String(150), nullable=False)
   quantity = db.Column(db.Integer, nullable=False)
   image = db.Column(db.String(150))
 

@@ -95,7 +95,7 @@ def upgrade():
     op.create_table('reward_items',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('reward_id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=50), nullable=False),
+    sa.Column('title', sa.String(length=150), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('image', sa.String(length=150), nullable=True),
     sa.ForeignKeyConstraint(['reward_id'], ['rewards.id'], ),
