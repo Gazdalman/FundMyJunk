@@ -1,13 +1,16 @@
 """empty message
 
 Revision ID: a5ad9c34e1b2
-Revises: 
+Revises:
 Create Date: 2023-11-30 18:50:28.522418
 
 """
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
 revision = 'a5ad9c34e1b2'
@@ -30,6 +33,10 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table('projects',
     sa.Column('id', sa.INTEGER(), nullable=False),
     sa.Column('user_id', sa.INTEGER(), nullable=False),
@@ -49,6 +56,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE projects SET SCHEMA {SCHEMA};")
+
     op.create_table('rewards',
     sa.Column('id', sa.INTEGER(), nullable=False),
     sa.Column('project_id', sa.INTEGER(), nullable=True),
@@ -64,6 +75,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE rewards SET SCHEMA {SCHEMA};")
+
     op.create_table('stories',
     sa.Column('id', sa.INTEGER(), nullable=False),
     sa.Column('project_id', sa.INTEGER(), nullable=False),
@@ -73,6 +88,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE stories SET SCHEMA {SCHEMA};")
+
     op.create_table('reward_items',
     sa.Column('id', sa.INTEGER(), nullable=False),
     sa.Column('reward_id', sa.INTEGER(), nullable=False),
@@ -82,6 +101,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['reward_id'], ['rewards.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE reward_items SET SCHEMA {SCHEMA};")
+
     # ### end Alembic commands ###
 
 
