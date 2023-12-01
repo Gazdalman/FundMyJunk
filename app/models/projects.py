@@ -21,7 +21,7 @@ class Project(db.Model):
   second_subcat = db.Column(db.String(50))
   launch_date = db.Column(db.DateTime)
   end_date = db.Column(db.DateTime)
-  launched = db.Column(db.Boolean, nullable=False, default=False)
+  launched = db.Column(db.Boolean, nullable=False)
 
   story = db.relationship(
     "Story",
