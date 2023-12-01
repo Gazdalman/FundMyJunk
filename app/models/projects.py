@@ -21,6 +21,7 @@ class Project(db.Model):
   second_subcat = db.Column(db.String(50))
   launch_date = db.Column(db.DateTime)
   end_date = db.Column(db.DateTime)
+  launched = db.Column(db.Boolean, nullable=False, default=False)
 
   story = db.relationship(
     "Story",
@@ -46,10 +47,11 @@ class Project(db.Model):
       "goal": self.goal,
       "launchDate": self.launch_date,
       "endDate": self.end_date,
-      "story": self.story[0].to_dict(),
+      "story": [story.to_dict() for story in self.story],
       "mainCategory": self.main_category,
       "mainSub": self.main_subcat,
       "secondCat": self.second_cat if self.second_cat else '',
       "secondSub": self.second_subcat if self.second_subcat else '',
-      "rewards": [reward.to_dict() for reward in self.rewards]
+      "rewards": [reward.to_dict() for reward in self.rewards],
+      "launched": self.launched
     }

@@ -35,7 +35,8 @@ def seed_projects():
       type=choice(['individual', 'business', 'non-profit']),
       goal=randint(1, 1000000),
       launch_date=launch,
-      end_date=end
+      end_date=end,
+      launched=choice([True,False])
     )
     db.session.add(project)
   db.session.commit()
