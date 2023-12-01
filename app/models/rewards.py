@@ -11,11 +11,11 @@ class Reward(db.Model):
   image = db.Column(db.String(50), nullable=False)
   title = db.Column(db.String(50), nullable=False)
   description = db.Column(db.String(2000))
-  physical_items = db.Column(db.Boolean, nullable=False)
+  physical_items = db.Column(db.Boolean, nullable=False, default=False)
   shipping = db.Column(db.String(50), nullable=False)
   delivery_date = db.Column(db.DateTime, nullable=False)
   amount = db.Column(db.FLOAT, nullable=False)
-  unlimited = db.Column(db.Boolean, nullable=False)
+  unlimited = db.Column(db.Boolean, nullable=False, default=False)
   quantity = db.Column(db.Integer)
 
   project = db.relationship(

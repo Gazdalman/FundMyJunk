@@ -46,7 +46,7 @@ class Project(db.Model):
       "goal": self.goal,
       "launchDate": self.launch_date,
       "endDate": self.end_date,
-      "story": self.story.to_dict(),
+      "story": self.story[0].to_dict(),
       "mainCategory": self.main_category,
       "mainSub": self.main_subcat,
       "secondCat": self.second_cat if self.second_cat else '',
