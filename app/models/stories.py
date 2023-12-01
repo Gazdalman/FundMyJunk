@@ -6,8 +6,8 @@ class Story(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  id = db.Column(db.INTEGER, primary_key=True)
-  project_id = db.Column(db.INTEGER, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
+  id = db.Column(db.Integer, primary_key=True)
+  project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
   ai = db.Column(db.Boolean, nullable=False, default=False)
   story_text = db.Column(db.String(2000), nullable=False)
   risks_challenges = db.Column(db.String(2500), nullable=False)

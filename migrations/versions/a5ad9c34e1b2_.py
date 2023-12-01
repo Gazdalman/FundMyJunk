@@ -38,8 +38,8 @@ def upgrade():
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
     op.create_table('projects',
-    sa.Column('id', sa.INTEGER(), nullable=False),
-    sa.Column('user_id', sa.INTEGER(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=60), nullable=False),
     sa.Column('subtitle', sa.String(length=135), nullable=False),
     sa.Column('location', sa.String(length=50), nullable=False),
@@ -51,8 +51,8 @@ def upgrade():
     sa.Column('main_subcat', sa.String(length=50), nullable=False),
     sa.Column('second_cat', sa.String(length=50), nullable=True),
     sa.Column('second_subcat', sa.String(length=50), nullable=True),
-    sa.Column('launch_date', sa.DATETIME(), nullable=True),
-    sa.Column('end_date', sa.DATETIME(), nullable=True),
+    sa.Column('launch_date', sa.DateTime(), nullable=True),
+    sa.Column('end_date', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -61,17 +61,17 @@ def upgrade():
         op.execute(f"ALTER TABLE projects SET SCHEMA {SCHEMA};")
 
     op.create_table('rewards',
-    sa.Column('id', sa.INTEGER(), nullable=False),
-    sa.Column('project_id', sa.INTEGER(), nullable=True),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('project_id', sa.Integer(), nullable=True),
     sa.Column('image', sa.String(length=50), nullable=False),
     sa.Column('title', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=2000), nullable=True),
     sa.Column('physical_items', sa.Boolean(), nullable=False),
     sa.Column('shipping', sa.String(length=50), nullable=False),
-    sa.Column('delivery_date', sa.DATETIME(), nullable=False),
+    sa.Column('delivery_date', sa.DateTime(), nullable=False),
     sa.Column('amount', sa.FLOAT(), nullable=False),
     sa.Column('unlimited', sa.Boolean(), nullable=False),
-    sa.Column('quantity', sa.INTEGER(), nullable=True),
+    sa.Column('quantity', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -80,8 +80,8 @@ def upgrade():
         op.execute(f"ALTER TABLE rewards SET SCHEMA {SCHEMA};")
 
     op.create_table('stories',
-    sa.Column('id', sa.INTEGER(), nullable=False),
-    sa.Column('project_id', sa.INTEGER(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('project_id', sa.Integer(), nullable=False),
     sa.Column('ai', sa.Boolean(), nullable=False),
     sa.Column('story_text', sa.String(length=2000), nullable=False),
     sa.Column('risks_challenges', sa.String(length=2500), nullable=False),
@@ -93,10 +93,10 @@ def upgrade():
         op.execute(f"ALTER TABLE stories SET SCHEMA {SCHEMA};")
 
     op.create_table('reward_items',
-    sa.Column('id', sa.INTEGER(), nullable=False),
-    sa.Column('reward_id', sa.INTEGER(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('reward_id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=50), nullable=False),
-    sa.Column('quantity', sa.INTEGER(), nullable=False),
+    sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('image', sa.String(length=50), nullable=True),
     sa.ForeignKeyConstraint(['reward_id'], ['rewards.id'], ),
     sa.PrimaryKeyConstraint('id')

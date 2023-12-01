@@ -6,8 +6,8 @@ class Project(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  id = db.Column(db.INTEGER, primary_key=True)
-  user_id = db.Column(db.INTEGER, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
   title = db.Column(db.String(60), nullable=False)
   subtitle = db.Column(db.String(135), nullable=False)
   location = db.Column(db.String(50), nullable=False)
@@ -19,8 +19,8 @@ class Project(db.Model):
   main_subcat = db.Column(db.String(50), nullable=False)
   second_cat = db.Column(db.String(50))
   second_subcat = db.Column(db.String(50))
-  launch_date = db.Column(db.DATETIME)
-  end_date = db.Column(db.DATETIME)
+  launch_date = db.Column(db.DateTime)
+  end_date = db.Column(db.DateTime)
 
   story = db.relationship(
     "Story",

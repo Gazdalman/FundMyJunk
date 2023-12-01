@@ -6,17 +6,17 @@ class Reward(db.Model):
   if environment == "production":
     __table_args__ = {'schema': SCHEMA}
 
-  id = db.Column(db.INTEGER, primary_key=True)
-  project_id = db.Column(db.INTEGER, db.ForeignKey(add_prefix_for_prod("projects.id")))
+  id = db.Column(db.Integer, primary_key=True)
+  project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")))
   image = db.Column(db.String(50), nullable=False)
   title = db.Column(db.String(50), nullable=False)
   description = db.Column(db.String(2000))
   physical_items = db.Column(db.Boolean, nullable=False)
   shipping = db.Column(db.String(50), nullable=False)
-  delivery_date = db.Column(db.DATETIME, nullable=False)
+  delivery_date = db.Column(db.DateTime, nullable=False)
   amount = db.Column(db.FLOAT, nullable=False)
   unlimited = db.Column(db.Boolean, nullable=False)
-  quantity = db.Column(db.INTEGER)
+  quantity = db.Column(db.Integer)
 
   project = db.relationship(
     "Project",
