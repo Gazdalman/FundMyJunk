@@ -28,7 +28,7 @@ def seed_projects():
       user_id=choice(range(1, 11)),
       title=f"The {fake.word(ext_word_list=adjectives).title()} Project",
       subtitle="Nothing to see here folks, just give me money",
-      location=fake.country(),
+      location='nowhere',
       main_category=choice(categories),
       main_subcat="banana",
       image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFFFdyEuFvw9ktw7vI0Q5l1JFHKmXVI_8W5mNhLPxhnJKhe8Wf08hr1BAXBaS3nGpBqaI&usqp=CAU",
