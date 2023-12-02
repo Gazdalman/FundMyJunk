@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .aws_helper import remove_file_from_s3
+from sqlalchemy import event
 
 class Reward(db.Model):
   __tablename__ = "rewards"
@@ -25,12 +27,15 @@ class Reward(db.Model):
 
   items = db.relationship(
     "RewardItem",
-    back_populates="reward"
+    back_populates="reward",
+    cascade="all, delete-orphan"
   )
+
 
   def to_dict(self):
     return {
       "id": self.id,
+      "projectId": self.project_id,
       "image": self.image,
       "title": self.title,
       "description": self.description,
@@ -42,3 +47,9 @@ class Reward(db.Model):
       "deliveryDate": self.delivery_date,
       "items": [item.to_dict() for item in self.items]
     }
+
+def on_reward_delete(mapper, connection, target):
+  remove_file_from_s3(target.image)
+  return 'blah'
+
+event.listen(Reward, 'before_delete', on_reward_delete)

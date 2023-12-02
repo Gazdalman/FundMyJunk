@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.models import User
 from .aws_helper import get_unique_filename, upload_file_to_s3
 
@@ -23,4 +23,11 @@ def user(id):
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
+    return user.to_dict()
+
+@user_routes.route('/current')
+@login_required
+def curr_user():
+    user = User.query.get(current_user.get_id())
+
     return user.to_dict()

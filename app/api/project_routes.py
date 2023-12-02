@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Project, User, Reward, db
-from app.forms import ProjectForm, ProjectEditForm, RewardForm, RewardEditForm
+from app.models import Project, Reward, Story, db
+from app.forms import ProjectForm, ProjectEditForm, RewardForm, StoryForm
 from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from .helper_functions import user_owns
 
 project_routes = Blueprint('projects', __name__, url_prefix="/api/projects")
 
@@ -106,6 +107,39 @@ def create_project():
   return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
+@project_routes.route('/<int:id>/story', methods=['POST'])
+@login_required
+def create_story(id):
+  """
+  Create a story for a project
+  """
+  form = StoryForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  project = Project.query.get(id)
+
+  if not project:
+    return {'not_found': 'Project was not found'}
+
+  if not user_owns(project):
+    return {'errors': 'Unauthorized'}, 403
+
+  if form.validate_on_submit():
+    data = form.data
+    story = Story(
+      project_id=id,
+      ai=data['ai'],
+      story_text=data['storyText'],
+      risks_challenges=data['risksChallenges']
+    )
+    db.session.add(story)
+    db.session.commit()
+    return story
+
+  return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+
+
+
 @project_routes.route('/<int:id>/rewards/new', methods=['POST'])
 @login_required
 def create_reward(id):
@@ -117,6 +151,9 @@ def create_reward(id):
   project = Project.query.get(id)
   if not project:
     return {'not_found': 'Project was not found'}
+
+  if not user_owns(project):
+    return {'errors': 'Unauthorized'}, 403
 
   if form.validate_on_submit():
     data = form.data
@@ -158,6 +195,9 @@ def edit_project(id):
   if not project:
     return {'not_found': 'Product was not found'}, 404
 
+  if not user_owns(project):
+    return {'errors': 'Unauthorized'}, 403
+
   if form.validate_on_submit():
     data = form.data
     errs = []
@@ -173,7 +213,8 @@ def edit_project(id):
       img_upload = upload_file_to_s3(proj_img)
       if 'url' not in img_upload:
         return img_upload, 400
-      remove_file_from_s3(old_img)
+      if old_img:
+        remove_file_from_s3(old_img)
 
     if proj_vid:
       old_vid = project.video
@@ -182,7 +223,8 @@ def edit_project(id):
 
       if 'url' not in vid_upload:
         return vid_upload, 400
-      remove_file_from_s3(old_vid)
+      if old_vid:
+        remove_file_from_s3(old_vid)
 
     if errs:
       print(errs)
@@ -214,6 +256,12 @@ def edit_project(id):
 def delete_project(id):
   """Deletes a project"""
   project = Project.query.get(id)
+  if not project:
+    return {'not_found': 'Product was not found'}, 404
+
+  if not user_owns(project):
+    return {'errors': 'Unauthorized'}, 403
+
   db.session.delete(project)
   db.session.commit()
   return {'message': 'Project deleted'}

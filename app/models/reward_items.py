@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .aws_helper import remove_file_from_s3
+from sqlalchemy import event
 
 class RewardItem(db.Model):
   __tablename__ = "reward_items"
@@ -20,7 +22,15 @@ class RewardItem(db.Model):
   def to_dict(self):
     return {
       "id": self.id,
+      "rewardId": self.reward_id,
       "title": self.title,
       "image": self.image,
       "quantity": self.quantity
     }
+
+def on_item_delete(mapper, connection, target):
+  if target.image:
+    remove_file_from_s3(target.image)
+  return 'blah'
+
+event.listen(RewardItem, 'before_delete', on_item_delete)

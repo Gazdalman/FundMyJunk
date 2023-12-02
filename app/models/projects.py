@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .aws_helper import remove_file_from_s3
+from sqlalchemy import event
 
 class Project(db.Model):
   __tablename__ = "projects"
@@ -31,7 +33,8 @@ class Project(db.Model):
 
   rewards = db.relationship(
     "Reward",
-    back_populates="project"
+    back_populates="project",
+    cascade="all, delete-orphan"
   )
 
   def to_dict(self):
@@ -55,3 +58,11 @@ class Project(db.Model):
       "rewards": [reward.to_dict() for reward in self.rewards],
       "launched": self.launched
     }
+
+def on_project_delete(mapper, connection, target):
+  remove_file_from_s3(target.image)
+  if target.video:
+    remove_file_from_s3(target.video)
+  return 'blah'
+
+event.listen(Project, 'before_delete', on_project_delete)
