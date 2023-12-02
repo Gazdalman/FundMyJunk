@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Project, User, db
-from app.forms import ProjectForm, ProjectEditForm
+from app.models import Project, User, Reward, db
+from app.forms import ProjectForm, ProjectEditForm, RewardForm, RewardEditForm
 from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
 project_routes = Blueprint('projects', __name__, url_prefix="/api/projects")
@@ -31,6 +31,9 @@ def get_all_projects():
 
 @project_routes.route('/<int:id>')
 def get_one(id):
+  """
+  Get a single project by id
+  """
   project = Project.query.get(id)
 
   if not project:
@@ -42,6 +45,9 @@ def get_one(id):
 @project_routes.route('/new', methods=['POST'])
 @login_required
 def create_project():
+  """
+  Creates a new Project associated with the current user
+  """
   form = ProjectForm()
   form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -89,7 +95,8 @@ def create_project():
       second_cat=data['secondCat'],
       second_subcat=data['secondSubcat'],
       launch_date=data['launchDate'],
-      end_date=data['endDate']
+      end_date=data['endDate'],
+      launched=data['launched']
     )
 
     db.session.add(project)
@@ -99,10 +106,53 @@ def create_project():
   return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
+@project_routes.route('/<int:id>/rewards/new', methods=['POST'])
+@login_required
+def create_reward(id):
+  """
+  Create a reward on a project
+  """
+  form = RewardForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  project = Project.query.get(id)
+  if not project:
+    return {'not_found': 'Project was not found'}
+
+  if form.validate_on_submit():
+    data = form.data
+
+    img = data['image']
+    img.filename = get_unique_filename(img.filename)
+    upload = upload_file_to_s3(img)
+
+    if 'url' not in upload:
+      return upload
+
+    reward = Reward(
+      project_id=id,
+      image=upload['url'],
+      title=data['title'],
+      description=data['description'],
+      physical_items=data['physicalItems'],
+      shipping=data['shipping'],
+      delivery_date=data['deliveryDate'],
+      amount=data['amount'],
+      unlimited=data['unlimited'],
+      quantity=data['quantity']
+    )
+    db.session.add(reward)
+    db.session.commit()
+    return reward.to_dict()
+  return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+
 @project_routes.route('/<int:id>/edit', methods=['PUT'])
 @login_required
 def edit_project(id):
-  form = ProjectForm()
+  """
+  Updates the information on a project
+  """
+  form = ProjectEditForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   project = Project.query.get(id)
   if not project:
@@ -162,6 +212,7 @@ def edit_project(id):
 @project_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def delete_project(id):
+  """Deletes a project"""
   project = Project.query.get(id)
   db.session.delete(project)
   db.session.commit()
