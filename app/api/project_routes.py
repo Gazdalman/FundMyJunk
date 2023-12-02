@@ -19,11 +19,26 @@ def validation_errors_to_error_messages(validation_errors):
 
 
 @project_routes.route('/')
-def get_all_projects():
+def get_home_projects():
+  """
+  Returns home page projects
+  """
+
+  projects = Project.query.paginate(page=1, per_page=5)
+
+  proj_dict = {project.id: project.to_dict() for project in projects}
+
+  return proj_dict, 200
+
+
+@project_routes.route('/search')
+def query_projects():
   """
   Returns all projects
   """
-  projects = Project.query.all()
+  page = request.args.get('page', 1, type=int)
+  per_page = request.args.get('per_page', 10, type=int)
+  projects = Project.query.paginate(page=page, per_page=per_page)
 
   proj_dict = {project.id: project.to_dict() for project in projects}
 
