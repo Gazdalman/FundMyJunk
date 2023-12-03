@@ -1,14 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
+import { useHistory, useLocation } from "react-router-dom"
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+
+  const redirect = (e) => {
+    e.preventDefault()
+    setShowMenu(false);
+    return history.push("/profile")
+  }
+
+  const createRedirect = (e) => {
+    e.preventDefault();
+    setShowMenu(false);
+    return history.push("/new_project")
+  }
 
   const openMenu = () => {
     if (showMenu) return;
@@ -47,6 +62,12 @@ function ProfileButton({ user }) {
           <>
             <li>{user.username}</li>
             <li>{user.email}</li>
+            {location.pathname != "/profile" && <li>
+              <button onClick={redirect}>Your Account</button>
+            </li>}
+            {location.pathname != "/new_product" && <li>
+              <button onClick={createRedirect}>Start a Project</button>
+              </li>}
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>

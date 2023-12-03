@@ -4,6 +4,7 @@ from app.models import Project, Reward, Story, db
 from app.forms import ProjectForm, ProjectEditForm, RewardForm, StoryForm
 from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from .helper_functions import user_owns
+from datetime import datetime
 
 project_routes = Blueprint('projects', __name__, url_prefix="/api/projects")
 
@@ -24,7 +25,7 @@ def get_home_projects():
   Returns home page projects
   """
 
-  projects = Project.query.paginate(page=1, per_page=5)
+  projects = Project.query.filter(Project.launched and Project.launch_date <= datetime.now()).paginate(page=1, per_page=6)
 
   proj_dict = {project.id: project.to_dict() for project in projects}
 

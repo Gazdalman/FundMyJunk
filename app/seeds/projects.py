@@ -22,13 +22,13 @@ adjectives = [
 # Adds a demo project, you can add other projects here if you want
 def seed_projects():
   for _ in range(50):
-    launch = fake.future_date(end_date='+30d')
-    end = datetime.strptime(str(launch), '%Y-%m-%d') + timedelta(days=randint(1,60))
+    launch = datetime.now()
+    end = launch + timedelta(days=randint(1,60))
     project = Project(
       user_id=choice(range(1, 11)),
       title=f"The {fake.word(ext_word_list=adjectives).title()} Project",
       subtitle="Nothing to see here folks, just give me money",
-      location='nowhere',
+      location='nowhere, Alaska',
       main_category=choice(categories),
       main_subcat="banana",
       image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFFFdyEuFvw9ktw7vI0Q5l1JFHKmXVI_8W5mNhLPxhnJKhe8Wf08hr1BAXBaS3nGpBqaI&usqp=CAU",

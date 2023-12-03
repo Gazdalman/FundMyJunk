@@ -1,1 +1,32 @@
-/* TODO Add site wide styles */
+/* styles.css */
+.floating-input {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-60%);
+  font-size: 18px;
+  color: #777;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.input-field {
+  font-size: 16px;
+  padding: 8px 0px 08px 08px;
+  width: 500px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.label-focus {
+  top: 0px;
+  font-size: 18px;
+  background:white;
+  color: #555;
+}

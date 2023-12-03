@@ -11,17 +11,19 @@ def seed_users():
         email='demo@aa.io',
         first_name='Demo',
         last_name='Noodle',
-        password='password'
+        password='password',
+        display_name='Demoted INC'
     )
     db.session.add(user)
-    
+
     for _ in range(10):
         user = User(
             username=fake.user_name(),
             email=fake.email(),
             first_name=fake.first_name(),
             last_name=fake.last_name(),
-            password='password'
+            password='password',
+            display_name=fake.name()
         )
 
         db.session.add(user)

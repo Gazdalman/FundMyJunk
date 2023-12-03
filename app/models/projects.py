@@ -25,6 +25,11 @@ class Project(db.Model):
   end_date = db.Column(db.DateTime)
   launched = db.Column(db.Boolean, nullable=False, default=False)
 
+  user = db.relationship(
+    "User",
+    back_populates="projects"
+  )
+
   story = db.relationship(
     "Story",
     back_populates="project",
@@ -56,7 +61,9 @@ class Project(db.Model):
       "secondCat": self.second_cat if self.second_cat else '',
       "secondSub": self.second_subcat if self.second_subcat else '',
       "rewards": [reward.to_dict() for reward in self.rewards],
-      "launched": self.launched
+      "launched": self.launched,
+      "user": self.user.display_name,
+      "earned": self.goal / 3
     }
 
 def on_project_delete(mapper, connection, target):
