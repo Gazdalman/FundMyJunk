@@ -9,6 +9,8 @@ import HomePage from "./components/HomePage/HomePage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import ProjectForm from "./components/ProjectForm";
+import UserProfilePage from "./components/ProfilePage/UserProfilePage";
+import EditProject from "./components/EditProject/EditProject";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,8 +36,14 @@ function App() {
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
+          <Route path="/users/:id">
+            <UserProfilePage />
+          </Route>
           <ProtectedRoute path="/new_project">
             <ProjectForm />
+          </ProtectedRoute>
+          <ProtectedRoute path="/projects/:projectId/edit">
+            <EditProject />
           </ProtectedRoute>
         </Switch>
       )}

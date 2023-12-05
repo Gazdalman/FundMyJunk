@@ -8,8 +8,9 @@
   position: absolute;
   left: 10px;
   top: 50%;
+
   transform: translateY(-60%);
-  font-size: 18px;
+  font-size: 16px;
   color: #777;
   transition: all 0.3s;
   pointer-events: none;
@@ -26,7 +27,16 @@
 
 .label-focus {
   top: 0px;
-  font-size: 18px;
+  font-size: 16px;
+  padding: 0px 5px;
   background:white;
+  border: solid 1px black;
+  border-radius: 5px;
   color: #555;
 }
+
+.file-inputs-container {
+  position: relative; /* This allows the elements within it to be positioned without taking this element out of the document flow. As it's parent is NOT positioned, it only effects the children. */
+  margin-bottom: 32px;
+}
+

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat}) => {
+const Location = ({ location, setLocation }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -13,19 +13,19 @@ const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat
 
   return (
     <div className={`floating-input ${isFocused ? 'focused' : ''}`}>
-      <label className={`input-label ${isFocused || mainCategory ? 'label-focus' : ''}`}>
-        Category
+      <label className={`input-label ${isFocused || location ? 'label-focus' : ''}`}>
+        Location
       </label>
       <input
         type="text"
-        value={mainCategory}
-        onChange={(e) => setMainCategory(e.target.value)}
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="input-field"
       />
     </div>
-  );
+  )
 }
 
-export default MainCategory
+export default Location

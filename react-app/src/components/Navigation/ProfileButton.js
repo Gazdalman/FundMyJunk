@@ -65,7 +65,7 @@ function ProfileButton({ user }) {
             {location.pathname != "/profile" && <li>
               <button onClick={redirect}>Your Account</button>
             </li>}
-            {location.pathname != "/new_product" && <li>
+            {location.pathname != "/new_project" && <li>
               <button onClick={createRedirect}>Start a Project</button>
               </li>}
             <li>
