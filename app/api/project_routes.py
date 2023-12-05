@@ -19,13 +19,21 @@ def validation_errors_to_error_messages(validation_errors):
   return errorMessages
 
 
+@project_routes.route("/users/<int:id>")
+@login_required
+def get_user_projects(id):
+  projects = Project.query.filter(Project.user_id == id).all()
+
+  return {f"{project.id}": project.to_dict() for project in projects}
+
+
 @project_routes.route('/')
 def get_home_projects():
   """
   Returns home page projects
   """
 
-  projects = Project.query.filter(Project.launched and Project.launch_date <= datetime.now()).paginate(page=1, per_page=6)
+  projects = Project.query.filter(Project.launch_date <= datetime.now()).paginate(page=1, per_page=6)
 
   proj_dict = {project.id: project.to_dict() for project in projects}
 
@@ -123,18 +131,18 @@ def create_project():
   return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-@project_routes.route('/<int:id>/story', methods=['POST'])
+@project_routes.route('/<int:id>/story', methods=['PUT','POST'])
 @login_required
 def create_story(id):
   """
-  Create a story for a project
+  Create or edit a story for a project
   """
   form = StoryForm()
   form['csrf_token'].data = request.cookies['csrf_token']
   project = Project.query.get(id)
 
   if not project:
-    return {'not_found': 'Project was not found'}
+    return {'not_found': 'Project was not found'}, 404
 
   if not user_owns(project):
     return {'errors': 'Unauthorized'}, 403

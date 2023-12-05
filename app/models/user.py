@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     user_credit = db.Column(db.FLOAT, default=10000)
     display_name = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=(datetime.now()))
+    # private = db.Column(db.Boolean, default=False)
 
     projects = db.relationship(
         "Project",
@@ -44,7 +45,8 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'userCredit': self.user_credit,
             'displayName': self.display_name if self.display_name else self.username,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            # 'private': self.private
         }
         if self.last_name:
             safe_user['lastName'] = self.last_name
