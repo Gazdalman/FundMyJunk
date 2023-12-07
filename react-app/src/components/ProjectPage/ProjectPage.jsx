@@ -74,7 +74,7 @@ const ProjectPage = () => {
         />
         </div>}
       {tab == "rewards" && <div id="pp-rewards-tab">
-        <RewardTab projId={project.id} rewards={project.rewards} user={user.id} projectOwner={project.userId}/>
+        <RewardTab projId={project.id} rewards={project.rewards} user={user ? user.id : 0} projectOwner={project.userId}/>
       </div>}
 
 

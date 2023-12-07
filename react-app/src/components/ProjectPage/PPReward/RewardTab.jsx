@@ -74,7 +74,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
         </div>
 
       ))}
-      {user == projectOwner &&
+      {(user && user == projectOwner) &&
       <button onClick={openRewardForm} id="add-reward-button">Add Reward</button>}
 
     </div>
