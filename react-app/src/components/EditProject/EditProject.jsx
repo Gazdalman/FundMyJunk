@@ -27,7 +27,7 @@ const EditProject = () => {
     <>
       {+user.id == +project.userId ? <>
         <ProjectForm type={"edit"} project={project}/>
-      </> : history.push("/")
+      </> : history.replace("/unauthorized")
       }
     </>
   ) : null

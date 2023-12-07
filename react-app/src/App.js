@@ -14,6 +14,11 @@ import EditProject from "./components/EditProject/EditProject";
 import StoryForm from "./components/ProjectForm/StoryForm";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
 import RewardInfo from "./components/ProjectForm/Rewards/RewardsInfo";
+import UnauthorizedPage from "./components/utilities/Unauthorized";
+import EditStoryForm from "./components/ProjectPage/PPForms/EditStory";
+import NotFound from "./components/utilities/NotFound";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
+import PPRewardTab from "./components/ProjectPage/PPForms/PPReward";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +62,18 @@ function App() {
           <ProtectedRoute path="/projects/:projectId/add_reward">
             <RewardInfo />
           </ProtectedRoute>
+          <ProtectedRoute path="/projects/:projectId/edit_story">
+            <EditStoryForm />
+          </ProtectedRoute>
+          <Route path="/unauthorized">
+            <UnauthorizedPage />
+          </Route>
+          <Route path="/not_found">
+            <NotFound />
+          </Route>
+          <Route>
+            <Redirect to="/not_found"/>
+          </Route>
         </Switch>
       )}
     </>

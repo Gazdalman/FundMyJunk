@@ -1,0 +1,37 @@
+#pp-rcd-image {
+  width: 20rem;
+  height: auto;
+}
+
+#pp-item-image {
+  width: 75px;
+  height: 75px;
+  margin-right: 10px;
+}
+
+#preview-image{
+  width: 20px;
+}
+
+.thumbnails-noname {
+  width: 20px;
+}
+
+#reward-modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+#pp-rcd-item {
+  width: 60vw;
+  display: flex;
+  justify-content: space-between;
+  border:black solid 1px;
+  border-radius: 10px;
+  align-content: center;
+}
+
+#reward-dnd-box {
+width: 20px
+}

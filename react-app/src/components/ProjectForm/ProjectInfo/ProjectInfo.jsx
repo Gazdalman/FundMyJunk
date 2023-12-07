@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import PhotoField from "../utilities/PhotoField";
-import VideoField from "../utilities/VideoField";
+import PhotoField from "../../utilities/PhotoField";
+import VideoField from "../../utilities/VideoField";
 import moment from 'moment';
 
 const ProjectInfo = ({

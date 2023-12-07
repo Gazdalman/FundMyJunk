@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react"
 import PhotoField from "../../utilities/PhotoField";
 import { useHistory, useParams } from "react-router-dom";
-import RewardItemForm from "./RewardItem";
+import RewardItemForm from "../../ProjectForm/Rewards/RewardItem";
 import { useDispatch } from "react-redux";
 import { createReward } from "../../../store/project";
-import OpenModalButton from "../../OpenModalButton";
-import SkipStep from "../../utilities/SkipStep";
+import { useModal } from "../../../context/Modal";
 
-const RewardInfo = () => {
+
+const PPRewardTab = ({ reward, projectId }) => {
   const dispatch = useDispatch()
   const history = useHistory();
+  const {closeModal} = useModal()
   const [focused, setFocused] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false)
-  const { projectId } = useParams()
   const [index, setIndex] = useState(1)
   const [selectedIndex, setSelectedIndex] = useState("")
-  const [rewardTitle, setRewardTitle] = useState("")
+  const [rewardTitle, setRewardTitle] = useState(reward.title)
   const [itemForm, setItemForm] = useState(false)
   const [selectedShipping, setSelectedShipping] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState("")
@@ -25,14 +25,19 @@ const RewardInfo = () => {
   const [image, setImage] = useState("")
   const [imageURL, setImageURL] = useState("")
   const [description, setDescription] = useState("")
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(reward.items)
   const [itemData, setItemData] = useState([])
-  const [physicalItems, setPhysicalItems] = useState(false)
-  const [deliveryDate, setDeliveryDate] = useState("")
-  const [shipping, setShipping] = useState("")
-  const [unlimited, setUnlimited] = useState(false)
-  const [quantity, setQuantity] = useState("")
+  const [physicalItems, setPhysicalItems] = useState(reward.physicalItems)
+  const [deliveryDate, setDeliveryDate] = useState(reward.deliveryDate)
+  const [shipping, setShipping] = useState(reward.shipping)
+  const [unlimited, setUnlimited] = useState(reward.unlimited)
+  const [quantity, setQuantity] = useState(reward.quantity)
   const today = new Date().toISOString().split("T")[0];
+
+  const cancel = (e) => {
+    e.preventDefault()
+    closeModal()
+  }
 
   const handleFocus = (field) => {
     setFocused(field);
@@ -78,12 +83,12 @@ const RewardInfo = () => {
 
   const deleteItem = (key, e) => {
     e.preventDefault()
-    const newItems = {...items}
-    const newItemData = {...itemData}
+    const newItems = { ...items }
+    const newItemData = { ...itemData }
     delete newItems[key]
     delete newItemData[key]
-    setItems({...newItems})
-    setItemData({...newItemData})
+    setItems({ ...newItems })
+    setItemData({ ...newItemData })
   }
 
   const handleRewardSubmit = async (e) => {
@@ -174,8 +179,8 @@ const RewardInfo = () => {
             <h4>Items</h4>
             {Object.values(items) && Object.values(items).map((item) => (
               <>
-              <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
-              <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
+                <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
+                <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
               </>
             ))}
             <button id="show-item-form" onClick={showItemForm}>Add Item</button>
@@ -315,24 +320,20 @@ const RewardInfo = () => {
           </div>
           <button disabled={disabled} >Add Reward</button>
         </form>
-          <OpenModalButton
-          modalComponent={<SkipStep skipStep={skipStep}/>}
-          buttonText={"Skip Step"}
-          modalClasses={["skip-step-button"]}
-          />
+        <button onClick={cancel}>Cancel</button>
       </div>
     </div >
 
-  ): <h1>We Loadin...</h1>) : <RewardItemForm
-  setItems={setItems}
-  items={items}
-  setItemData={setItemData}
-  itemData={itemData}
-  setItemForm={setItemForm}
-  itemForm={itemForm}
-  index={index}
-  setIndex={setIndex}
+  ) : <h1>We Loadin...</h1>) : <RewardItemForm
+    setItems={setItems}
+    items={items}
+    setItemData={setItemData}
+    itemData={itemData}
+    setItemForm={setItemForm}
+    itemForm={itemForm}
+    index={index}
+    setIndex={setIndex}
   />
 }
 
-export default RewardInfo
+export default PPRewardTab

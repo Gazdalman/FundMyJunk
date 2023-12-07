@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react"
 import PhotoField from "../../utilities/PhotoField";
 import { useHistory, useParams } from "react-router-dom";
-import RewardItemForm from "./RewardItem";
+import RewardItemForm from "../../ProjectForm/Rewards/RewardItem";
 import { useDispatch } from "react-redux";
 import { createReward } from "../../../store/project";
-import OpenModalButton from "../../OpenModalButton";
-import SkipStep from "../../utilities/SkipStep";
+import { useModal } from "../../../context/Modal";
+import { setRequestedProject } from "../../../store/userProjects";
 
-const RewardInfo = () => {
+
+const PPRewardTab = ({ projectId, setShowForm }) => {
   const dispatch = useDispatch()
   const history = useHistory();
+  const {closeModal} = useModal()
   const [focused, setFocused] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false)
-  const { projectId } = useParams()
   const [index, setIndex] = useState(1)
   const [selectedIndex, setSelectedIndex] = useState("")
   const [rewardTitle, setRewardTitle] = useState("")
@@ -33,6 +34,11 @@ const RewardInfo = () => {
   const [unlimited, setUnlimited] = useState(false)
   const [quantity, setQuantity] = useState("")
   const today = new Date().toISOString().split("T")[0];
+
+  const cancel = (e) => {
+    e.preventDefault()
+    setShowForm(false)
+  }
 
   const handleFocus = (field) => {
     setFocused(field);
@@ -78,12 +84,12 @@ const RewardInfo = () => {
 
   const deleteItem = (key, e) => {
     e.preventDefault()
-    const newItems = {...items}
-    const newItemData = {...itemData}
+    const newItems = { ...items }
+    const newItemData = { ...itemData }
     delete newItems[key]
     delete newItemData[key]
-    setItems({...newItems})
-    setItemData({...newItemData})
+    setItems({ ...newItems })
+    setItemData({ ...newItemData })
   }
 
   const handleRewardSubmit = async (e) => {
@@ -104,7 +110,10 @@ const RewardInfo = () => {
 
     const res = await dispatch(createReward(rewardData, Object.values(itemData), projectId))
 
-    if (!res.errors) return history.replace(`/projects/${projectId}`)
+    if (!res.errors) {
+      dispatch(setRequestedProject(projectId))
+      setShowForm(false)
+    }
 
     console.log(res);
   }
@@ -132,9 +141,9 @@ const RewardInfo = () => {
   })
 
   return !itemForm ? (!loading ? (
-    <div id="reward-form-div">
+    <div id="reward-modal-form-div">
       <div id="reward-input-container">
-        <form id="reward-form" onSubmit={handleRewardSubmit} encType="multipart/form-data">
+        <form id="reward-modal-form" onSubmit={handleRewardSubmit} encType="multipart/form-data">
           <h1 id="reward-form-header">Add a Reward</h1>
           <div className={`reward-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
             <label className={`rtf-label input-label ${focused == "title" || rewardTitle ? 'label-focus' : ''}`}>
@@ -174,8 +183,8 @@ const RewardInfo = () => {
             <h4>Items</h4>
             {Object.values(items) && Object.values(items).map((item) => (
               <>
-              <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
-              <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
+                <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
+                <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
               </>
             ))}
             <button id="show-item-form" onClick={showItemForm}>Add Item</button>
@@ -290,8 +299,8 @@ const RewardInfo = () => {
           }
           <div id="reward-preview-div">
             <div id="reward-preview">
-              <div id="preview-image">
-                <img src={imageURL} />
+              <div >
+                <img id="preview-image" src={imageURL} />
               </div>
               <div id="preview-mid">
                 <h3>Pledge ${amount ? amount : 1} or more</h3>
@@ -315,24 +324,20 @@ const RewardInfo = () => {
           </div>
           <button disabled={disabled} >Add Reward</button>
         </form>
-          <OpenModalButton
-          modalComponent={<SkipStep skipStep={skipStep}/>}
-          buttonText={"Skip Step"}
-          modalClasses={["skip-step-button"]}
-          />
+        <button onClick={cancel}>Cancel</button>
       </div>
     </div >
 
-  ): <h1>We Loadin...</h1>) : <RewardItemForm
-  setItems={setItems}
-  items={items}
-  setItemData={setItemData}
-  itemData={itemData}
-  setItemForm={setItemForm}
-  itemForm={itemForm}
-  index={index}
-  setIndex={setIndex}
+  ) : <h1>We Loadin...</h1>) : <RewardItemForm
+    setItems={setItems}
+    items={items}
+    setItemData={setItemData}
+    itemData={itemData}
+    setItemForm={setItemForm}
+    itemForm={itemForm}
+    index={index}
+    setIndex={setIndex}
   />
 }
 
-export default RewardInfo
+export default PPRewardTab

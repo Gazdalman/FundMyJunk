@@ -12,7 +12,7 @@ const ProjectForm = ({ type, project }) => {
   const [flip, setFlip] = useState("on")
   const [disabled, setDisabled] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [tab, setTab] = useState("basics");
+  const [tab, setTab] = useState("project-info");
   const [title, setTitle] = useState(type == "edit" ? project.title : "");
   const [subtitle, setSubtitle] = useState(type == "edit" ? project.subtitle : "");
   const [location, setLocation] = useState(type == "edit" ? project.location : "");
@@ -86,6 +86,7 @@ const ProjectForm = ({ type, project }) => {
       && (title.length >= 3)
       && launchDate
       && endDate
+      && location
     ) {
       setDisabled(false)
     } else {
@@ -104,8 +105,8 @@ const ProjectForm = ({ type, project }) => {
   return !uploading ? (
     <div id="project-form-container">
       <div id="form-tabs">
-        <span onClick={() => setTab("basics")} id="basics-tab">Basics</span>
         <span onClick={() => setTab("project-info")} id="project-info-tab">Project Details</span>
+        <span onClick={() => setTab("basics")} id="basics-tab">Basics</span>
       </div>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         {tab == "basics" && <Basics

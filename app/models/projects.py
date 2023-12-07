@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .aws_helper import remove_file_from_s3
 from sqlalchemy import event
+from datetime import datetime
 
 class Project(db.Model):
   __tablename__ = "projects"
@@ -60,10 +61,10 @@ class Project(db.Model):
       "mainSub": self.main_subcat,
       "secondCat": self.second_cat if self.second_cat else '',
       "secondSub": self.second_subcat if self.second_subcat else '',
-      "rewards": [reward.to_dict() for reward in self.rewards],
-      "launched": self.launched,
+      "rewards": sorted([reward.to_dict() for reward in self.rewards], key=lambda reward : reward['amount']),
+      "launched": self.launch_date <= datetime.now(),
       "user": self.user.display_name,
-      "earned": self.goal / 3
+      "earned": round(self.goal / 3, 2)
     }
 
 def on_project_delete(mapper, connection, target):

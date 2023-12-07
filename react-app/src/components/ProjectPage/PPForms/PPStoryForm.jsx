@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react"
-import { setRequestedProject } from "../../store/userProjects";
+import { setRequestedProject } from "../../../store/userProjects";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createStory } from "../../store/project";
-import OpenModalButton from "../OpenModalButton";
-import SkipStep from "../utilities/SkipStep";
+import { createStory } from "../../../store/project";
+import { useModal } from "../../../context/Modal";
 
-const StoryForm = () => {
+const PPStoryForm = ({projectId}) => {
+  const {closeModal} = useModal()
   const history = useHistory();
   const dispatch = useDispatch();
-  const [selectedAI, setSelectedAI] = useState("");
+  const [selectedAI, setSelectedAI] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false)
   const [focused, setFocused] = useState("");
   const [project, setProject] = useState("");
-  const { projectId } = useParams();
   const [disabled, setDisabled] = useState(true);
-  const [ai, setAi] = useState("");
+  const [ai, setAi] = useState(false);
   const [storyText, setStoryText] = useState("")
   const [risksChallenges, setRisksChallenges] = useState("")
 
-  const skipStep = () => {
-    return history.replace(`/projects/${projectId}/add_reward`)
+  console.log(projectId);
+  const cancel = (e) => {
+    e.preventDefault()
+    closeModal()
   }
 
   const handleStorySubmit = async (e) => {
@@ -31,13 +32,14 @@ const StoryForm = () => {
     newStory.append("risksChallenges", risksChallenges)
     const res = await dispatch(createStory(newStory, projectId))
     if (res == "ok") {
-      return history.replace(`/projects/${projectId}/add_reward`)
+      closeModal()
+      dispatch(setRequestedProject(projectId))
     }
   }
 
   const handleAIChange = (e) => {
     setAi(e.target.value)
-    setSelectedAI(e.target.value);
+    setSelectedAI(`${e.target.value}`);
   };
 
   const handleFocus = (field, e) => {
@@ -50,7 +52,7 @@ const StoryForm = () => {
   };
 
   useEffect(() => {
-    if (ai != "" &&
+    if ((ai == "false" || ai == "true") &&
       storyText && storyText.length > 3 &&
       risksChallenges && risksChallenges.length > 3
     ) {
@@ -58,15 +60,15 @@ const StoryForm = () => {
     }
   }, [ai, storyText, risksChallenges])
 
-  useEffect(() => {
-    const loadProject = async () => {
-      const gotProject = await dispatch(setRequestedProject(projectId))
-      if (gotProject.story) return history.push(`/projects/${projectId}`)
-      setProject(gotProject)
-    }
-    loadProject()
-    setIsLoaded(true)
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const loadProject = async () => {
+  //     const gotProject = await dispatch(setRequestedProject(projectId))
+  //     if (gotProject.story) return history.push(`/projects/${projectId}`)
+  //     setProject(gotProject)
+  //   }
+  //   loadProject()
+  //   setIsLoaded(true)
+  // }, [dispatch]);
   return (
     <div id="story-form-container">
       <form onSubmit={handleStorySubmit} encType="multipart/form-data">
@@ -75,8 +77,8 @@ const StoryForm = () => {
           <label className="ai-option">
             <input
               type="radio"
-              value="true"
-              checked={selectedAI === "true"}
+              value={true}
+              checked={selectedAI == "true"}
               onChange={handleAIChange}
             />
             Yes, I am using AI for my project
@@ -84,8 +86,8 @@ const StoryForm = () => {
           <label className="ai-option">
             <input
               type="radio"
-              value="false"
-              checked={selectedAI === "false"}
+              value={false}
+              checked={selectedAI == "false"}
               onChange={handleAIChange}
             />
             No, I am not using AI for my project
@@ -117,13 +119,9 @@ const StoryForm = () => {
         </div>
         <button disabled={disabled}>Save Story</button>
       </form>
-      <OpenModalButton
-          modalComponent={<SkipStep skipStep={skipStep}/>}
-          buttonText={"Skip Step"}
-          modalClasses={["skip-step-button"]}
-          />
+      <button onClick={cancel}>Cancel</button>
     </div>
   )
 }
 
-export default StoryForm
+export default PPStoryForm

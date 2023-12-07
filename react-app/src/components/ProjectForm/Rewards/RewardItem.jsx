@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import PhotoField from "../utilities/PhotoField";
+import PhotoField from "../../utilities/PhotoField";
 
 const RewardItemForm = ({ setItems, items, setItemData, itemData, setItemForm, itemForm, index, setIndex }) => {
   const [title, setTitle] = useState("")

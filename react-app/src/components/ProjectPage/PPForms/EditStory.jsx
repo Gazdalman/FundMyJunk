@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react"
-import { setRequestedProject } from "../../store/userProjects";
+import { setRequestedProject } from "../../../store/userProjects";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createStory } from "../../store/project";
+import { createStory, editStory } from "../../../store/project";
+import { useModal } from "../../../context/Modal";
 
-const EditStoryForm = ({ story }) => {
+const EditStoryForm = ({ story, projectId }) => {
   const history = useHistory();
+  const {closeModal} = useModal()
   const dispatch = useDispatch();
   const [selectedAI, setSelectedAI] = useState(story.ai);
   const [isLoaded, setIsLoaded] = useState(false)
   const [focused, setFocused] = useState("");
-  const { projectId } = useParams();
   const [disabled, setDisabled] = useState(true);
   const [ai, setAi] = useState(story.ai);
-  const [storyText, setStoryText] = useState(story.storyText)
-  const [risksChallenges, setRisksChallenges] = useState(story.risksChallenges)
+  const [storyText, setStoryText] = useState(story.text)
+  const [risksChallenges, setRisksChallenges] = useState(story.risks_challenges)
 
   const handleStorySubmit = async (e) => {
     e.preventDefault()
@@ -22,15 +23,16 @@ const EditStoryForm = ({ story }) => {
     newStory.append("ai", ai)
     newStory.append("storyText", storyText)
     newStory.append("risksChallenges", risksChallenges)
-    const res = await dispatch(createStory(newStory, story.id))
-    if (res == "ok") {
-      return history.push(`/projects/${projectId}`)
+    const res = await dispatch(editStory(newStory, story.id))
+    if (res == "okay") {
+      closeModal()
+      dispatch(setRequestedProject(projectId))
     }
   }
 
   const handleAIChange = (e) => {
     setAi(e.target.value)
-    setSelectedAI(e.target.value);
+    setSelectedAI(`${e.target.value}`);
   };
 
   const handleFocus = (field, e) => {
@@ -43,7 +45,7 @@ const EditStoryForm = ({ story }) => {
   };
 
   useEffect(() => {
-    if (ai != "" &&
+    if ((ai == "false" || ai == "true") &&
       storyText && storyText.length > 3 &&
       risksChallenges && risksChallenges.length > 3
     ) {
@@ -51,24 +53,15 @@ const EditStoryForm = ({ story }) => {
     }
   }, [ai, storyText, risksChallenges])
 
-  useEffect(() => {
-    const loadProject = async () => {
-      const gotProject = await dispatch(setRequestedProject(projectId))
-      if (gotProject.story) return history.push("/")
-      setProject(gotProject)
-    }
-    loadProject()
-    setIsLoaded(true)
-  }, [dispatch]);
   return story ? (
     <div id="story-form-container">
       <form onSubmit={handleStorySubmit} encType="multipart/form-data">
-        <h1>Edit a Story</h1>
+        <h2>Edit a Story</h2>
         <div id="ai-input-field">
           <label className="ai-option">
             <input
               type="radio"
-              value="true"
+              value={true}
               checked={selectedAI === "true"}
               onChange={handleAIChange}
             />
@@ -77,7 +70,7 @@ const EditStoryForm = ({ story }) => {
           <label className="ai-option">
             <input
               type="radio"
-              value="false"
+              value={false}
               checked={selectedAI === "false"}
               onChange={handleAIChange}
             />
@@ -111,7 +104,12 @@ const EditStoryForm = ({ story }) => {
         <button disabled={disabled}>Save Story</button>
       </form>
     </div>
-  ) : <h1>No Story To Edit</h1>
+  ) : (
+    <div>
+      <h2>No Story Found!</h2>
+      <h2>Add a story on your project's page!</h2>
+    </div>
+  )
 }
 
 export default EditStoryForm

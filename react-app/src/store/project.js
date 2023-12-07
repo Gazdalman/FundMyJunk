@@ -38,7 +38,7 @@ export const createStory = (story, projectId) => async dispatch => {
     method: "POST",
     body: story
   })
-
+  
   if (res.ok) {
     return "ok"
   }

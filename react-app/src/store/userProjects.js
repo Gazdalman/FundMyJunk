@@ -34,6 +34,7 @@ export const setRequestedProject = (id) => async dispatch => {
     dispatch(requestedProject(project))
     return project
   }
+  return project
 }
 
 export const getUserProjects = (userId) => async dispatch => {
