@@ -49,7 +49,7 @@ const ProjectPage = () => {
     setIsLoaded(true)
   }, [dispatch]);
 
-  return isLoaded ? (
+  return (
     <div id="project-page-container">
       <div id="pp-header">
         <h1>{project.title}</h1>
@@ -80,7 +80,7 @@ const ProjectPage = () => {
 
 
     </div>
-  ) : <h1>We Loadin...</h1>
+  )
 }
 
 export default ProjectPage
