@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Project, Reward, Story, db
-from app.forms import ProjectForm, ProjectEditForm, RewardForm, StoryForm
+from app.forms import ProjectForm, ProjectEditForm, RewardForm, StoryForm, ImageForm
 from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from .helper_functions import user_owns
 from datetime import datetime
@@ -157,7 +157,7 @@ def create_story(id):
     )
     db.session.add(story)
     db.session.commit()
-    return story
+    return story.to_dict()
 
   return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
@@ -289,3 +289,12 @@ def delete_project(id):
   db.session.delete(project)
   db.session.commit()
   return {'message': 'Project deleted'}
+
+
+@project_routes.route("/add_logo", methods=['POST'])
+def logo_add():
+  form = ImageForm()
+  image = form.data['image']
+  image.filename = get_unique_filename(image.filename)
+  img_upload = upload_file_to_s3(image)
+  return 'banaba'

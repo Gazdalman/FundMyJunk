@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const PhotoField = ({ image, setImage, imageURL, setImageURL }) => {
+const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
   const [filename, setFilename] = useState("")
 
   const handleDrop = (e) => {
@@ -66,7 +66,7 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL }) => {
 
   return (
     <div
-      className="drag-drop-box"
+      className={`drag-drop-box ${extraClass}`}
       onDrop={handleDrop}
       onDragOver={(e) => {
         e.preventDefault();

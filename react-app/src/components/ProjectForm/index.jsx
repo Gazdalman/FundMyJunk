@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Basics from "./Basics/Basics";
-import ProjectInfo from "./ProjectInfo";
+import ProjectInfo from "./ProjectInfo/ProjectInfo";
 import { useDispatch } from "react-redux";
 import { createProject, editProject } from "../../store/project";
 import { useHistory } from "react-router-dom";
@@ -9,7 +9,8 @@ const ProjectForm = ({ type, project }) => {
   const history = useHistory()
   const dispatch = useDispatch();
   const id = type == "edit" ? project.id : null
-  const [disabled, setDisabled] = useState(false)
+  const [flip, setFlip] = useState("on")
+  const [disabled, setDisabled] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [tab, setTab] = useState("basics");
   const [title, setTitle] = useState(type == "edit" ? project.title : "");
@@ -18,7 +19,7 @@ const ProjectForm = ({ type, project }) => {
   const [projType, setProjType] = useState(type == "edit" ? project.type : "");
   const [image, setImage] = useState("");
   const [video, setVideo] = useState("");
-  const [imageURL, setImageURL] = useState(type == "edit" ? project.image: "");
+  const [imageURL, setImageURL] = useState(type == "edit" ? project.image : "");
   const [videoURL, setVideoURL] = useState(type == "edit" ? project.video : "");
   const [goal, setGoal] = useState(type == "edit" ? project.goal : "");
   const [launchDate, setLaunchDate] = useState(type == "edit" ? project.launchDate : "");
@@ -31,11 +32,9 @@ const ProjectForm = ({ type, project }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(title);
-    console.log(subtitle);
-    console.log(location);
-    console.log(goal);
+
     const projectData = new FormData()
+
     projectData.append("title", title)
     projectData.append("subtitle", subtitle)
     projectData.append("location", location)
@@ -66,10 +65,10 @@ const ProjectForm = ({ type, project }) => {
     projectData.append("secondSubcat", secondSubcat)
 
     setUploading(true)
-    if (type != "edit"){
+    if (type != "edit") {
       const res = await dispatch(createProject(projectData))
       setUploading(false)
-      if (!res.errors) return history.push(`/projects/${res.id}`)
+      if (!res.errors) return history.push(`/projects/${res.id}/add_story`)
     } else {
       const res = await dispatch(editProject(projectData, id))
       setUploading(false)
@@ -78,26 +77,21 @@ const ProjectForm = ({ type, project }) => {
   }
 
   useEffect(() => {
-    if (!subtitle || subtitle.length < 10)  {
-      setDisabled(true)
-    } else if (!location || location.length < 5)  {
-      setDisabled(true)
-    }else if (!projType)  {
-      setDisabled(true)
-    }else if (type != "edit" && !image)  {
-      setDisabled(true)
-    } else if (!goal || goal < 1)  {
-      setDisabled(true)
-    } else if (!launchDate && endDate)  {
-      setDisabled(true)
-    } else if (!mainCategory)  {
-      setDisabled(true)
-    } else if (!mainSubcat)  {
-      setDisabled(true)
-    } else if (!title || title.length < 3) {
+    if (subtitle.length >= 10
+      && projType
+      // && (type != "edit" && image)
+      && goal >= 1
+      && mainCategory
+      && mainSubcat
+      && (title.length >= 3)
+      && launchDate
+      && endDate
+    ) {
+      setDisabled(false)
+    } else {
       setDisabled(true)
     }
-    setDisabled(false)
+    setFlip(flip == "on" ? "off" : "on")
   }, [mainCategory, subtitle, title, mainSubcat, launchDate, goal, projType, image, location])
 
   useEffect(() => {
@@ -105,14 +99,13 @@ const ProjectForm = ({ type, project }) => {
       const today = new Date().toISOString().split("T")[0];
       if (today >= project.launchDate) setLaunched(true)
     }
-  },[])
+  }, [])
+
   return !uploading ? (
     <div id="project-form-container">
       <div id="form-tabs">
         <span onClick={() => setTab("basics")} id="basics-tab">Basics</span>
         <span onClick={() => setTab("project-info")} id="project-info-tab">Project Details</span>
-        <span onClick={() => setTab("rewards")} id="reward-tab">Rewards</span>
-        <span onClick={() => setTab("story")} id="story-tab">Story</span>
       </div>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         {tab == "basics" && <Basics
@@ -149,13 +142,12 @@ const ProjectForm = ({ type, project }) => {
           setLaunchDate={setLaunchDate}
           setEndDate={setEndDate}
         />}
-        {tab == "rewards" && <h3>Rewards</h3>}
-        {tab == "story" && <h3>Stories</h3>}
         <button disabled={disabled}> Confirm Project</button>
       </form>
+      <div></div>
     </div>
 
-  ) : <h1>We Loadin</h1>
+  ) : <h1 className="loading-message">We Loadin...</h1>
 }
 
 export default ProjectForm

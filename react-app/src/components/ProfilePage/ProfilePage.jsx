@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { getUserProjects } from "../../store/userProjects";
+import { deleteProject, getUserProjects } from "../../store/userProjects";
 import { useHistory } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -14,6 +14,15 @@ const ProfilePage = () => {
   const editClick = (e, projectId) => {
     e.preventDefault()
     return history.push(`/projects/${projectId}/edit`)
+  }
+
+  const deleteClick = async (e, projectId) => {
+    e.preventDefault()
+    setIsLoaded(false)
+    await dispatch(deleteProject(projectId))
+    await dispatch(getUserProjects(currUser.id))
+    setIsLoaded(true)
+
   }
 
   useEffect(() => {
@@ -30,11 +39,12 @@ const ProfilePage = () => {
         <div key={project.id}>
           <h3>{project.title}</h3>
           <button onClick={e => editClick(e, project.id)}>Edit This</button>
+          <button onClick={e => deleteClick(e, project.id)}>Delete This</button>
         </div>
 
       ))}
     </>
-  ) : null
+  ) : <h1 className="loading-message">We Loadin...</h1>
 }
 
 export default ProfilePage

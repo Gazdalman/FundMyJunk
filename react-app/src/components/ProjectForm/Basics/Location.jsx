@@ -2,7 +2,6 @@ import { useState } from "react";
 
 const Location = ({ location, setLocation }) => {
   const [isFocused, setIsFocused] = useState(false);
-
   const handleFocus = () => {
     setIsFocused(true);
   };

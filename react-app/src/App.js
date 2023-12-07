@@ -11,6 +11,9 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 import ProjectForm from "./components/ProjectForm";
 import UserProfilePage from "./components/ProfilePage/UserProfilePage";
 import EditProject from "./components/EditProject/EditProject";
+import StoryForm from "./components/ProjectForm/StoryForm";
+import ProjectPage from "./components/ProjectPage/ProjectPage";
+import RewardInfo from "./components/ProjectForm/Rewards/RewardsInfo";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,8 +45,17 @@ function App() {
           <ProtectedRoute path="/new_project">
             <ProjectForm />
           </ProtectedRoute>
+          <Route exact path="/projects/:projectId">
+            <ProjectPage />
+          </Route>
           <ProtectedRoute path="/projects/:projectId/edit">
             <EditProject />
+          </ProtectedRoute>
+          <ProtectedRoute path="/projects/:projectId/add_story">
+            <StoryForm />
+          </ProtectedRoute>
+          <ProtectedRoute path="/projects/:projectId/add_reward">
+            <RewardInfo />
           </ProtectedRoute>
         </Switch>
       )}

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleUser } from "../../store/session";
-import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams, useHistory } from "react-router-dom";
 
 const UserProfilePage = () => {
   const { id } = useParams()
@@ -21,8 +20,9 @@ const UserProfilePage = () => {
   }, [dispatch])
 
   return isLoaded && pageUser? (
-    <h1>{pageUser.id}</h1>
-    // <h1>fsadf</h1>
+    <div id="user-profile-container">
+      <h1 id="user-display-name">{pageUser.displayName}</h1>
+    </div>
   ) : null
 }
 

@@ -15,6 +15,17 @@ const requestedProject = (project) => {
   }
 }
 
+export const deleteProject = (projectId) => async dispatch => {
+  const res = await fetch(`/api/projects/${projectId}/delete`, {
+    method: "DELETE"
+  })
+
+  const message = await res.json()
+  if (res.ok) {
+    return message
+  }
+}
+
 export const setRequestedProject = (id) => async dispatch => {
   const res = await fetch(`/api/projects/${id}`)
 

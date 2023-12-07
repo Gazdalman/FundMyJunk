@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, session, request
+from sqlalchemy import or_
 from app.models import User, db
-from app.forms import LoginForm
-from app.forms import SignUpForm
+from app.forms import LoginForm, SignUpForm, ProfileEditForm
+from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -39,7 +40,8 @@ def login():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
-        user = User.query.filter(User.email == form.data['cred'] or User.username == form.data['cred']).first()
+        user = User.query.filter(
+            or_(User.email == form.data['cred'], User.username == form.data['cred'])).first()
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
@@ -62,19 +64,55 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        user = User(
-            username=form.data['username'],
-            email=form.data['email'],
-            first_name=form.data['firstName'],
-            last_name=form.data['lastName'],
-            password=form.data['password']
-        )
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return user.to_dict()
+        upload = None
+        image = form.data['image']
+
+        if image:
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+            if 'url' not in upload:
+                return upload
+
+            user = User(
+                username=form.data['username'],
+                email=form.data['email'],
+                first_name=form.data['firstName'],
+                last_name=form.data['lastName'],
+                password=form.data['password'],
+                private=form.data['private'],
+                profile_picture=upload['url'],
+                biography=form.data['biography'],
+                display_name=form.data['displayName']
+            )
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+
+@auth_routes.route('/<int:id>/edit', methods=['PUT'])
+@login_required
+def edit_user(id):
+    form = ProfileEditForm()
+    user = User.query.get(id)
+    if form.validate_on_submit():
+        upload = None
+        image = form.data['image']
+
+        if image:
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+            if 'url' not in upload:
+                return upload
+
+        user.profile_picture=form.data['image']
+        user.display_name=form.data['displayName']
+        user.biography=form.data['biography']
+        user.private=form.data['private']
+        db.session.commit()
+        return user.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @auth_routes.route('/unauthorized')
 def unauthorized():

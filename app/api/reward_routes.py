@@ -48,15 +48,16 @@ def create_item(id):
   if not user_owns(project):
     return {'errors': 'Unauthorized'}, 403
 
-
+  # if form.data['title']:
   if form.validate_on_submit():
     data = form.data
     upload = None
-    image = data['image']
 
-    if image:
+    if data['image']:
+      image = data['image']
       image.filename = get_unique_filename(image.filename)
       upload = upload_file_to_s3(image)
+
       if 'url' not in upload:
         return upload
 
@@ -64,7 +65,7 @@ def create_item(id):
       reward_id=id,
       title=data['title'],
       quantity=data['quantity'],
-      image=upload['url']
+      image=(upload['url'] if upload and upload['url'] else None)
     )
     db.session.add(item)
     db.session.commit()

@@ -19,20 +19,61 @@ export const getAllProjects = () => async dispatch => {
   }
 }
 
-export const createProject = (project) => async dispatch => {
+export const createProject = (data) => async dispatch => {
   const res = await fetch("/api/projects/new", {
     method: "POST",
-    body: project
+    body: data
+  })
+
+  const resJson = await res.json()
+  if (res.ok) {
+    return resJson
+  }
+
+  console.log("res errors", resJson);
+}
+
+export const createStory = (story, projectId) => async dispatch => {
+  const res = await fetch(`/api/projects/${projectId}/story`, {
+    method: "POST",
+    body: story
   })
 
   if (res.ok) {
-    console.log("was okay");
-    const project = await res.json()
-    return project
+    return "ok"
   }
 
-  const errs = await res.json()
-  console.log("res errors", errs);
+  const err = await res.json()
+  return err
+}
+
+export const createReward = (reward, items, projectId) => async dispatch => {
+  const res = await fetch(`/api/projects/${projectId}/rewards/new`, {
+    method: "POST",
+    body: reward
+  })
+  let broken
+  const err = await res.json()
+  if (res.ok) {
+    // console.log(err.id);
+    const id = err.id
+    items.forEach(async (item) => {
+      const itemRes = await fetch(`/api/rewards/${err.id}/items/new`, {
+        method: "POST",
+        body: item
+      })
+
+      const newItem = await itemRes.json()
+      if (itemRes.ok) {
+        broken = false
+        return broken
+      }
+
+      return newItem
+    })
+  }
+
+  return err
 }
 
 export const editProject = (project, id) => async dispatch => {
@@ -50,10 +91,23 @@ export const editProject = (project, id) => async dispatch => {
   return editedProject
 }
 
+export const editStory = (story, storyId) => async dispatch => {
+  const res = await fetch(`/api/stories/${storyId}/edit`, {
+    method: "PUT",
+    body: story
+  })
+
+  if (res.ok) {
+    return "okay"
+  }
+  const err = await res.json()
+  return err
+}
+
 const projects = (state = {}, action) => {
   switch (action.type) {
     case GET_PROJECTS:
-      return {...action.projects}
+      return { ...action.projects }
 
     default:
       return state;

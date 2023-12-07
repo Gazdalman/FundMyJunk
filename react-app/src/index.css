@@ -1,4 +1,4 @@
-/* styles.css */
+
 .floating-input {
   position: relative;
   margin-bottom: 20px;
@@ -39,4 +39,3 @@
   position: relative; /* This allows the elements within it to be positioned without taking this element out of the document flow. As it's parent is NOT positioned, it only effects the children. */
   margin-bottom: 32px;
 }
-

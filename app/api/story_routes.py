@@ -50,7 +50,7 @@ def edit_story(id):
     story.risks_challenges = data['risksChallenges']
 
     db.session.commit()
-    return story
+    return story.to_dict()
   return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 

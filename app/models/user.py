@@ -16,10 +16,12 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50))
     hashed_password = db.Column(db.String(255), nullable=False)
+    profile_picture = db.Column(db.String(75))
     user_credit = db.Column(db.FLOAT, default=10000)
     display_name = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=(datetime.now()))
-    # private = db.Column(db.Boolean, default=False)
+    private = db.Column(db.Boolean, default=False)
+    biography = db.Column(db.String(1000))
 
     projects = db.relationship(
         "Project",
@@ -46,7 +48,9 @@ class User(db.Model, UserMixin):
             'userCredit': self.user_credit,
             'displayName': self.display_name if self.display_name else self.username,
             'created_at': self.created_at,
-            # 'private': self.private
+            'private': self.private,
+            'profilePic': self.profile_picture,
+            'biography': self.biography
         }
         if self.last_name:
             safe_user['lastName'] = self.last_name

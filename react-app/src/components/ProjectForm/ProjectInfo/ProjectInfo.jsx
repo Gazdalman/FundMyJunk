@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import PhotoField from "./PhotoField";
-import VideoField from "./VideoField";
+import PhotoField from "../utilities/PhotoField";
+import VideoField from "../utilities/VideoField";
 import moment from 'moment';
 
 const ProjectInfo = ({
@@ -155,6 +155,7 @@ const ProjectInfo = ({
           min={today}
           max={launchLimit()}
           onChange={launchChange}
+          className="input-field"
         />
         <div id="end-date-selector">
           <div id="ed-radio">
@@ -175,6 +176,7 @@ const ProjectInfo = ({
                 value="60-days"
                 checked={selectedOption === "60-days"}
                 onChange={handleOptionChange}
+
               />
               End 60 days after you launch
             </label>
@@ -196,6 +198,7 @@ const ProjectInfo = ({
             min={launchDate}
             max={launchDate ? endLimit() : ""}
             onChange={(e) => setEndDate(e.target.value)}
+            className="input-field"
           />
         </div>
       </div>
