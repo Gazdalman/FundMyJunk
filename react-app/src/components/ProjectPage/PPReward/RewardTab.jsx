@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setRequestedProject } from "../../../store/userProjects";
 import { useHistory } from "react-router-dom"
 import { deleteReward } from "../../../store/project";
+import DeleteModal from "../../utilities/deleteModal";
 
 const RewardTab = ({ rewards, user, projectOwner, projId }) => {
   const dispatch = useDispatch()
@@ -88,7 +89,11 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
                 </div>
               ))}
               {user ? (user != projectOwner ?
-                <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Pledge ${reward.amount}</button> : <button id="pp-rcd-delete-button" onClick={(e) => deleteAReward(e, reward.id)}>Delete Reward</button>) :
+                <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Pledge ${reward.amount}</button> :         <OpenModalButton
+                modalClasses={["delete-button"]}
+                modalComponent={<DeleteModal reward={reward} type={"reward"}/>}
+                buttonText={"Delete Reward"}
+                 />) :
                 <button id="no-user-login-pledge" onClick={e => loginRedirect(e)}>Login to Pledge</button>
               }
             </div>

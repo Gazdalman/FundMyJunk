@@ -25,6 +25,10 @@ const ProfilePage = () => {
 
   }
 
+  const goTo = (link) => {
+    return history.push(link)
+  }
+
   useEffect(() => {
     const getProjects = async () => {
       await dispatch(getUserProjects(currUser.id))
@@ -37,11 +41,11 @@ const ProfilePage = () => {
       <h1>{currUser.id}</h1>
       {projArr.map(project => (
         <div key={project.id}>
-          <h3>{project.title}</h3>
+          <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} >{project.title}</h3>
           <button onClick={e => editClick(e, project.id)}>Edit This</button>
           <button onClick={e => deleteClick(e, project.id)}>Delete This</button>
         </div>
-
+      
       ))}
     </>
   ) : <h1 className="loading-message">We Loadin...</h1>

@@ -1,0 +1,54 @@
+.home-project-card {
+  width: 375px;
+  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-project-card > span {
+  width: fit-content;
+}
+
+#hp-subtitle {
+  max-width: 350px;
+}
+
+.link {
+  cursor: pointer;
+  color: #950101;
+}
+
+#home-page-title {
+  margin-top: 75px;
+  text-align: center;
+}
+
+#hp-title {
+  width: fit-content;
+}
+
+#hp-progress {
+  width: 100%;
+}
+progress {
+  appearance: none;
+  height: 7px;
+}
+progress::-webkit-progress-bar {
+  background-color: #a3a0a0;
+}
+
+progress::-webkit-progress-value {
+  background-color: red;
+}
+
+
+
+#home-page-cards {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 5%;
+}

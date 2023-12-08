@@ -10,8 +10,8 @@ const StoryTab = ({ story, projectUser, id, user }) => {
       {(story && user && projectUser == user.id ) && <div id="buttons-links">
         <OpenModalButton
           modalComponent={<EditStoryForm story={story} projectId={id} />}
-          modalClasses={["edit-project-button"]}
-          buttonText={"Edit Project"}
+          modalClasses={["edit-story-button"]}
+          buttonText={"Edit Story"}
           onClick={e => e.preventDefault()}
         />
       </div>

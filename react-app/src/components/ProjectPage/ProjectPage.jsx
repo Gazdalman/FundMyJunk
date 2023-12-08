@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { setRequestedProject } from "../../store/userProjects";
+import { deleteProject, setRequestedProject } from "../../store/userProjects";
 import StoryTab from "./StoryTab";
 import RewardTab from "./PPReward/RewardTab";
 import "./ProjectPage.css"
+import DeleteModal from "../utilities/deleteModal";
+import OpenModalButton from "../OpenModalButton";
 
 const ProjectPage = () => {
   const history = useHistory();
@@ -24,6 +26,19 @@ const ProjectPage = () => {
     //   return Math.floor(difference / (1000 * 60 * 60 * 24))
 
     return Math.floor(difference / (1000 * 60 * 60))
+  }
+
+  const editClick = (e, projectId) => {
+    e.preventDefault()
+    return history.push(`/projects/${projectId}/edit`)
+  }
+
+  const deleteClick = async (e, projectId) => {
+    e.preventDefault()
+    setIsLoaded(false)
+    await dispatch(deleteProject(projectId))
+    await dispatch(setRequestedProject(user.id))
+    setIsLoaded(true)
   }
 
   const setDays = () => {
@@ -79,9 +94,14 @@ const ProjectPage = () => {
       {tab == "rewards" && <div id="pp-rewards-tab">
         <RewardTab projId={project.id} rewards={project.rewards} user={user ? user.id : 0} projectOwner={project.userId} />
       </div>}
-
-
-
+      {user.id == project.userId && <div id="user-project-buttons">
+        <button onClick={e => editClick(e, project.id)}>Edit Project</button>
+        <OpenModalButton
+        modalClasses={["delete-button"]}
+        modalComponent={<DeleteModal project={project} type={"project"}/>}
+        buttonText={"Delete Project"}
+         />
+      </div>}
     </div>
   )
 }
