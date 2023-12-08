@@ -23,7 +23,8 @@ const ProjectInfo = ({
   setImageURL,
   setVideoURL,
   imageURL,
-  videoURL
+  videoURL,
+  type
 }) => {
   const [focused, setFocused] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -152,7 +153,7 @@ const ProjectInfo = ({
         <input
           value={launchDate}
           type="date"
-          min={today}
+          min={type != "edit" ? today : launchDate}
           max={launchLimit()}
           onChange={launchChange}
           className="input-field"

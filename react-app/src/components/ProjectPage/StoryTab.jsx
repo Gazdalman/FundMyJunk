@@ -7,7 +7,7 @@ const StoryTab = ({ story, projectUser, id, user }) => {
       <h2>Story</h2>
       <span>{story.text}</span>
       <span>{story.risks_challenges}</span>
-      {(story && projectUser == user.id) && <div id="buttons-links">
+      {(story && user && projectUser == user.id ) && <div id="buttons-links">
         <OpenModalButton
           modalComponent={<EditStoryForm story={story} projectId={id} />}
           modalClasses={["edit-project-button"]}
@@ -23,7 +23,7 @@ const StoryTab = ({ story, projectUser, id, user }) => {
       <h1>Story</h1>
       <div id="pp-add-story">
         <span>No Story on this project</span>
-        {projectUser == user.id &&
+        {(user && projectUser == user.id) &&
           <OpenModalButton
             modalClasses={["pp-add-product-btn"]}
             modalComponent={<PPStoryForm projectId={id} />}

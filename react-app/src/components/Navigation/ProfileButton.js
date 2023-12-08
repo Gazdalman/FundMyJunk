@@ -54,11 +54,11 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button id="p-menu-button" onClick={openMenu}>
         <img id="profile-pic" src="https://fmjbucket.s3.us-east-2.amazonaws.com/677b3a3f405b4f0aa984a2102a32dfcc.png"/>
         {/* <i className="fas fa-user-circle" /> */}
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul id="p-menu" className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li>{user.username}</li>

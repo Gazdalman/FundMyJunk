@@ -38,7 +38,7 @@ export const createStory = (story, projectId) => async dispatch => {
     method: "POST",
     body: story
   })
-  
+
   if (res.ok) {
     return "ok"
   }
@@ -102,6 +102,17 @@ export const editStory = (story, storyId) => async dispatch => {
   }
   const err = await res.json()
   return err
+}
+
+export const deleteReward = (rewardId) => async dispatch => {
+  const res = await fetch(`/api/rewards/${rewardId}/delete`, {
+    method: "DELETE"
+  })
+
+  const err = await res.json()
+  if (res.ok) {
+    return "ok"
+  }
 }
 
 const projects = (state = {}, action) => {

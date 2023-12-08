@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { setRequestedProject } from "../../store/userProjects";
-import OpenModalButton from "../OpenModalButton";
-import EditProject from "../EditProject/EditProject";
 import StoryTab from "./StoryTab";
 import RewardTab from "./PPReward/RewardTab";
+import "./ProjectPage.css"
 
 const ProjectPage = () => {
   const history = useHistory();
@@ -57,7 +56,7 @@ const ProjectPage = () => {
       </div>
       <div id="pp-project-details">
         <div id="pp-image-container">
-          {!project.video ? <img src={project.image} alt={`image for project ${project.id}`} /> : <video src={project.video} controls controlsList="nodownload"></video>}
+          {!project.video ? <img id="pp-image" src={project.image} alt={`image for project ${project.id}`} /> : <video id="pp-video" src={project.video} controls controlsList="nodownload"></video>}
         </div>
         <div id="pp-details-container">
           <progress value={project.earned} max={project.goal} />
@@ -65,16 +64,20 @@ const ProjectPage = () => {
           <span>{project.launched ? (setHours() <= 48 ? setHours() : setDays()) : "Not"}<span>{project.launched ? (setHours() <= 48 ? "Hours Left" : "Days Left") : "Launched"}</span></span>
         </div>
       </div>
+      <div id="pp-tabs">
+        <span onClick={() => setTab("story")} id="story-tab">Story</span>
+        <span onClick={() => setTab("rewards")} id="rewards-tab">Rewards</span>
+      </div>
       {tab == "story" && <div id="pp-story-tab">
         <StoryTab
-        story={project.story}
-        projectUser={project.userId}
-        id={project.id}
-        user={user}
+          story={project.story}
+          projectUser={project.userId}
+          id={project.id}
+          user={user}
         />
-        </div>}
+      </div>}
       {tab == "rewards" && <div id="pp-rewards-tab">
-        <RewardTab projId={project.id} rewards={project.rewards} user={user ? user.id : 0} projectOwner={project.userId}/>
+        <RewardTab projId={project.id} rewards={project.rewards} user={user ? user.id : 0} projectOwner={project.userId} />
       </div>}
 
 

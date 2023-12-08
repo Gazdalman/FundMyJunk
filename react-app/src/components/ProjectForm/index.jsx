@@ -142,6 +142,7 @@ const ProjectForm = ({ type, project }) => {
           setImageURL={setImageURL}
           setLaunchDate={setLaunchDate}
           setEndDate={setEndDate}
+          type={type}
         />}
         <button disabled={disabled}> Confirm Project</button>
       </form>

@@ -2,10 +2,56 @@
   position: absolute;
 }
 
+#home-logo {
+  width: 30px;
+}
+
+nav {
+  border-bottom: grey 1px solid;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left:0px;
+  background-color: white;
+  padding-top: 0;
+  height: 70px;
+  z-index: 1000;
+}
+
+#p-menu {
+  left:20px
+}
+
+#profile-button {
+  list-style: none;
+}
+
+#nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px lightgray solid;
+}
+
+#home {
+  height: fit-content;
+  display: flex;
+  align-content: center;
+}
+
+#home-logo-text {
+font-family: Sans;
+}
+
 .hidden {
   display: none;
 }
 
 #profile-pic {
-display:none;
+width: 20px;
+height: 30px;
+}
+
+#p-menu-button {
+  border-radius: 30px;
 }
