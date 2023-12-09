@@ -1,6 +1,7 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 from faker import Faker
+from random import choice
 fake = Faker()
 
 
@@ -12,7 +13,9 @@ def seed_users():
         first_name='Demo',
         last_name='Noodle',
         password='password',
-        display_name='Demoted INC'
+        display_name='Demoted INC',
+        private=False,
+        biography="This is the demo user created for you to experiment with. Now go frivolously spend money!"
     )
     db.session.add(user)
 
@@ -23,7 +26,9 @@ def seed_users():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             password='password',
-            display_name=fake.name()
+            display_name=fake.name(),
+            private=choice([True,False]),
+            biography=fake.paragraph()
         )
 
         db.session.add(user)

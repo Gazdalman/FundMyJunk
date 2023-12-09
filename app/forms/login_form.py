@@ -8,7 +8,7 @@ from sqlalchemy import or_
 def user_exists(form, field):
     # Checking if user exists
     cred = field.data
-    user = User.query.filter(User.email == cred or User.username == cred).first()
+    user = User.query.filter(or_(User.email == cred, User.username == cred)).first()
     if not user:
         raise ValidationError('Credential provided not found.')
 

@@ -5,7 +5,7 @@ from wtforms.validators import Length
 from app.api.aws_helper import ALLOWED_IMG_EXTENSIONS
 
 class ProfileEditForm(FlaskForm):
-  displayName = StringField('display name', validators=[Length(50)])
+  displayName = StringField('display name', validators=[Length(max=50)])
   image = FileField('profile pic', validators=[FileAllowed(ALLOWED_IMG_EXTENSIONS)])
-  biography = TextAreaField('biography', validators=[Length(1000)])
+  biography = TextAreaField('biography', validators=[Length(max=1000)])
   private = BooleanField('private')

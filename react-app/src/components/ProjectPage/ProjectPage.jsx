@@ -94,7 +94,7 @@ const ProjectPage = () => {
       {tab == "rewards" && <div id="pp-rewards-tab">
         <RewardTab projId={project.id} rewards={project.rewards} user={user ? user.id : 0} projectOwner={project.userId} />
       </div>}
-      {user.id == project.userId && <div id="user-project-buttons">
+      {(user && user.id == project.userId) && <div id="user-project-buttons">
         <button onClick={e => editClick(e, project.id)}>Edit Project</button>
         <OpenModalButton
         modalClasses={["delete-button"]}

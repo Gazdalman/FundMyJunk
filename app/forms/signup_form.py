@@ -26,10 +26,10 @@ class SignUpForm(FlaskForm):
     username = StringField(
         'username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists])
-    firstName = StringField('first name', validators=[DataRequired(), Length(3, 50)])
-    lastName = StringField('first name', validators=[Length(0, 50)])
+    firstName = StringField('first name', validators=[DataRequired(), Length(min=3, max=50)])
+    lastName = StringField('first name', validators=[Length(min=0, max=50)])
     password = StringField('password', validators=[DataRequired()])
-    displayName = StringField('displayName', validators=[Length(max=50)])
+    displayName = StringField('displayName', validators=[Length(min=0,max=50)])
     private = BooleanField('private')
     biography = TextAreaField('biography', Length(max=1000))
     image = FileField('profile pic', validators=[FileAllowed(ALLOWED_IMG_EXTENSIONS)])

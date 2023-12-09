@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProject, getUserProjects } from "../../store/userProjects";
 import { useHistory } from "react-router-dom";
+import "./ProfilePage.css"
 
 const ProfilePage = () => {
   const dispatch = useDispatch()
@@ -40,12 +41,12 @@ const ProfilePage = () => {
     <>
       <h1>{currUser.id}</h1>
       {projArr.map(project => (
-        <div key={project.id}>
-          <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} >{project.title}</h3>
+        <div key={project.id} className="profile-page-projects">
+          <h3 id="ppp-title" className="link" onClick={() => goTo(`/projects/${project.id}`)} >{project.title}</h3>
           <button onClick={e => editClick(e, project.id)}>Edit This</button>
           <button onClick={e => deleteClick(e, project.id)}>Delete This</button>
         </div>
-      
+
       ))}
     </>
   ) : <h1 className="loading-message">We Loadin...</h1>
