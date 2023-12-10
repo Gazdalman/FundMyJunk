@@ -73,21 +73,21 @@ def sign_up():
             if 'url' not in upload:
                 return upload
 
-            user = User(
-                username=form.data['username'],
-                email=form.data['email'],
-                first_name=form.data['firstName'],
-                last_name=form.data['lastName'],
-                password=form.data['password'],
-                private=form.data['private'],
-                profile_picture=upload['url'],
-                biography=form.data['biography'],
-                display_name=form.data['displayName']
-            )
-            db.session.add(user)
-            db.session.commit()
-            login_user(user)
-            return user.to_dict()
+        user = User(
+            username=form.data['username'],
+            email=form.data['email'],
+            first_name=form.data['firstName'],
+            # last_name=form.data['lastName'],
+            password=form.data['password'],
+            # private=form.data['private'],
+            # profile_picture=upload['url'] if upload and upload['url'] else None,
+            # biography=form.data['biography'],
+            # display_name=form.data['displayName']
+        )
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

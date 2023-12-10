@@ -4,6 +4,7 @@ import ProjectInfo from "./ProjectInfo/ProjectInfo";
 import { useDispatch } from "react-redux";
 import { createProject, editProject } from "../../store/project";
 import { useHistory } from "react-router-dom";
+import "./ProjectForm.css"
 
 const ProjectForm = ({ type, project }) => {
   const history = useHistory()
@@ -12,7 +13,7 @@ const ProjectForm = ({ type, project }) => {
   const [flip, setFlip] = useState("on")
   const [disabled, setDisabled] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [tab, setTab] = useState("project-info");
+  const [tab, setTab] = useState("basics");
   const [title, setTitle] = useState(type == "edit" ? project.title : "");
   const [subtitle, setSubtitle] = useState(type == "edit" ? project.subtitle : "");
   const [location, setLocation] = useState(type == "edit" ? project.location : "");
@@ -77,7 +78,8 @@ const ProjectForm = ({ type, project }) => {
   }
 
   useEffect(() => {
-    if (subtitle.length >= 10
+    if (
+      subtitle.length >= 10
       && projType
       // && (type != "edit" && image)
       && goal >= 1
@@ -104,10 +106,10 @@ const ProjectForm = ({ type, project }) => {
 
   return !uploading ? (
     <div id="project-form-container">
-      <div id="form-tabs">
+      {/* <div id="form-tabs">
         <span onClick={() => setTab("project-info")} id="project-info-tab">Project Details</span>
         <span onClick={() => setTab("basics")} id="basics-tab">Basics</span>
-      </div>
+      </div> */}
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         {tab == "basics" && <Basics
           mainCategory={mainCategory}
@@ -120,6 +122,7 @@ const ProjectForm = ({ type, project }) => {
           setSecondSubcat={setSecondSubcat}
           location={location}
           setLocation={setLocation}
+          setTab={setTab}
         />}
         {tab == "project-info" && <ProjectInfo
           endDate={endDate}
@@ -143,13 +146,18 @@ const ProjectForm = ({ type, project }) => {
           setLaunchDate={setLaunchDate}
           setEndDate={setEndDate}
           type={type}
+          setTab={setTab}
         />}
         <button disabled={disabled}> Confirm Project</button>
       </form>
       <div></div>
     </div>
 
-  ) : <h1 className="loading-message">We Loadin...</h1>
+  ) : (
+    <div id="project-form-container">
+      <h1 className="loading-message">We Loadin...</h1>
+    </div>
+  )
 }
 
 export default ProjectForm

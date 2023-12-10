@@ -13,14 +13,15 @@ function OpenModalButton({
   if (modalClasses) {
     classes = modalClasses.length > 1 ? modalClasses.join(' ') : modalClasses[0]
   }
-  const onClick = () => {
+  const onClick = (e) => {
+    e.preventDefault()
     if (onModalClose) setOnModalClose(onModalClose);
     setModalContent(modalComponent);
     if (onButtonClick) onButtonClick();
   };
 
   return (
-    <button  className={classes} onClick={onClick}>{buttonText}</button>
+    <button id={classes} className={classes} onClick={onClick}>{buttonText}</button>
   );
 }
 

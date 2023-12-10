@@ -9,7 +9,7 @@ class Reward(db.Model):
     __table_args__ = {'schema': SCHEMA}
 
   id = db.Column(db.Integer, primary_key=True)
-  project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")))
+  project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
   image = db.Column(db.String(50), nullable=False)
   title = db.Column(db.String(50), nullable=False)
   description = db.Column(db.String(2000))

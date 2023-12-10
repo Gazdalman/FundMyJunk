@@ -7,11 +7,14 @@ import RewardTab from "./PPReward/RewardTab";
 import "./ProjectPage.css"
 import DeleteModal from "../utilities/deleteModal";
 import OpenModalButton from "../OpenModalButton";
+import PledgeForm from "./PledgeForm";
+import LoginFormModal from "../LoginFormModal";
 
 const ProjectPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false)
+  const [showForm, setShowForm] = useState("")
   const [tab, setTab] = useState("rewards")
   const { projectId } = useParams();
   const project = useSelector(state => state.userProjects)
@@ -26,6 +29,10 @@ const ProjectPage = () => {
     //   return Math.floor(difference / (1000 * 60 * 60 * 24))
 
     return Math.floor(difference / (1000 * 60 * 60))
+  }
+
+  const addCommas = (number) => {
+    if (number) return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   const editClick = (e, projectId) => {
@@ -74,9 +81,44 @@ const ProjectPage = () => {
           {!project.video ? <img id="pp-image" src={project.image} alt={`image for project ${project.id}`} /> : <video id="pp-video" src={project.video} controls controlsList="nodownload"></video>}
         </div>
         <div id="pp-details-container">
-          <progress value={project.earned} max={project.goal} />
-          <span>${project.earned}<span>earned toward goal of ${project.goal}</span></span>
-          <span>{project.launched ? (setHours() <= 48 ? setHours() : setDays()) : "Not"}<span>{project.launched ? (setHours() <= 48 ? "Hours Left" : "Days Left") : "Launched"}</span></span>
+          <progress id="pp-progress-bar" value={project.earned} max={project.goal} />
+          {!user || user && user.id != project.userId ? <OpenModalButton
+            modalClasses={["pp-pledge-button"]}
+            buttonText={user ? "Burn Your Money" : "Login To Pledge"}
+            modalComponent={user ? <PledgeForm projId={project.id} /> : <LoginFormModal />}
+          /> :
+          (!showForm && <div id="user-project-buttons">
+          <button onClick={e => editClick(e, project.id)}>Edit Project</button>
+          <OpenModalButton
+            modalClasses={["delete-button"]}
+            modalComponent={<DeleteModal project={project} type={"project"} />}
+            buttonText={"Delete Project"}
+          />
+        </div>)
+          }
+          <div id="pp-details-main">
+            <div id="pp-earned">
+              <span id="pp-earned-upper">${addCommas(project.earned)}
+              </span>
+              <span id="pp-earned-lower">earned of ${addCommas(project.goal)}
+              </span>
+            </div>
+            <div id="pp-date">
+              <span id="pp-date-upper">{project.launched ?
+                (setHours() <= 48 ? setHours() : setDays()) :
+                "Not"}
+              </span>
+              <span id="pp-date-lower">
+                {project.launched ? (setHours() <= 48 ?
+                  "Hours Left" :
+                  "Days Left") :
+                  "Launched"}
+              </span>
+            </div>
+
+
+          </div>
+
         </div>
       </div>
       <div id="pp-tabs">
@@ -92,15 +134,14 @@ const ProjectPage = () => {
         />
       </div>}
       {tab == "rewards" && <div id="pp-rewards-tab">
-        <RewardTab projId={project.id} rewards={project.rewards} user={user ? user.id : 0} projectOwner={project.userId} />
-      </div>}
-      {(user && user.id == project.userId) && <div id="user-project-buttons">
-        <button onClick={e => editClick(e, project.id)}>Edit Project</button>
-        <OpenModalButton
-        modalClasses={["delete-button"]}
-        modalComponent={<DeleteModal project={project} type={"project"}/>}
-        buttonText={"Delete Project"}
-         />
+        <RewardTab
+          projId={project.id}
+          rewards={project.rewards}
+          user={user ? user.id : 0}
+          projectOwner={project.userId}
+          setShowForm={setShowForm}
+          showForm={showForm}
+        />
       </div>}
     </div>
   )

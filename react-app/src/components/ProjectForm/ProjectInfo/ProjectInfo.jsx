@@ -24,8 +24,10 @@ const ProjectInfo = ({
   setVideoURL,
   imageURL,
   videoURL,
-  type
+  type,
+  setTab
 }) => {
+  const originalDate = endDate
   const [focused, setFocused] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const today = new Date().toISOString().split("T")[0];
@@ -39,6 +41,11 @@ const ProjectInfo = ({
     let lastDay = new Date()
     lastDay.setDate(lastDay.getDate() + 30)
     return lastDay.toISOString().split('T')[0];
+  }
+
+  const tabChange = (e) => {
+    e.preventDefault()
+    setTab("basics")
   }
 
   const endLimit = () => {
@@ -70,7 +77,9 @@ const ProjectInfo = ({
       endDay.setDate(endDay.getDate() + 60)
       setEndDate(endDay.toISOString().split("T")[0])
     } else if (selectedOption == "specific") {
-      setEndDate("")
+      if (type != 'edit') {
+        setEndDate("")
+      }
     }
   }, [selectedOption])
 
@@ -149,7 +158,7 @@ const ProjectInfo = ({
           <option value="personal">Personal</option>
         </select>
       </div>
-      <div id="dates-div">
+      {(type != "edit" || today >= new Date(launchDate)) && <div id="dates-div">
         <input
           value={launchDate}
           type="date"
@@ -202,7 +211,8 @@ const ProjectInfo = ({
             className="input-field"
           />
         </div>
-      </div>
+      </div>}
+      <button onClick={tabChange}>Back To Basics</button>
     </div>
   )
 }

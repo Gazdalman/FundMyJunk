@@ -104,6 +104,46 @@ export const editStory = (story, storyId) => async dispatch => {
   return err
 }
 
+export const editReward = (reward, rewardId) => async dispatch => {
+  const res = await fetch(`/api/rewards/${rewardId}/edit`, {
+    method: "PUT",
+    body: reward
+  })
+
+  const err = await res.json()
+  if (res.ok) {
+    return "ok"
+  }
+
+  return err
+}
+
+export const editItem = (item, itemId) => async dispatch => {
+  const res = await fetch(`/api/reward_items/${itemId}/edit`, {
+    method: "PUT",
+    body: item
+  })
+
+  const err = await res.json()
+  if (res.ok) {
+    return "ok"
+  }
+
+  return err
+}
+
+export const deleteItem = (itemId) => async dispatch => {
+  const res = await fetch(`/api/reward_items/${itemId}/delete`, {
+    method: "DELETE"
+  })
+
+  const err = await res.json()
+
+  if (res.ok) return "ok"
+
+  return err
+}
+
 export const deleteReward = (rewardId) => async dispatch => {
   const res = await fetch(`/api/rewards/${rewardId}/delete`, {
     method: "DELETE"

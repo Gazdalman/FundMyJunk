@@ -21,7 +21,7 @@ const Location = ({ location, setLocation }) => {
         onChange={(e) => setLocation(e.target.value)}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="input-field"
+        className={`location-input input-field ${isFocused ? "focused-input" : null}`}
       />
     </div>
   )

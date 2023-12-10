@@ -24,13 +24,17 @@ const HomePage = () => {
     return history.push(link)
   }
 
+  const addCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   useEffect(() => {
     dispatch(getAllProjects())
     setIsLoaded(true)
   }, [dispatch])
 
   return isLoaded && projArr.length ? (
-    <>
+    <div>
       <h1 id="home-page-title">Top Earners</h1>
       <div id="home-page-cards">
         {projArr.map(project => (
@@ -44,9 +48,20 @@ const HomePage = () => {
                 </span>
               </span>
               <progress id="hp-progress" value={project.earned} max={project.goal}></progress>
-              <span id="hp-earned">${project.earned.toFixed(2)} pledged</span>
-              <span id="hp-percent-earned">{(+project.earned / +project.goal).toFixed(2) * 100}% earned</span>
-              <span id="hp-days-left">{daysLeft(project.endDate) + 1} days left</span>
+              <div id="hp-mid">
+                <div id="hp-earned">
+                  <span id="hp-earned-upper">${addCommas(project.earned.toFixed(2))}</span>
+                  <span id="hp-earned-lower">pledged</span>
+                </div>
+                <div id="hp-percent-earned">
+                  <span id="hp-percent-earned-upper">{(+project.earned / +project.goal).toFixed(2) * 100}%</span>
+                  <span id="hp-percent-earned-lower">earned</span>
+                </div>
+                <div id="hp-days-left">
+                  <span id="hp-days-left-upper">{daysLeft(project.endDate) + 1}</span>
+                  <span id="hp-days-left-lower">days left</span>
+                </div>
+              </div>
               <div id="hp-bottom">
                 <span id="hp-subcategory">{project.mainSub}</span>
                 <span id="hp-location">{project.location}</span>
@@ -55,7 +70,7 @@ const HomePage = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   ) : null
 }
 

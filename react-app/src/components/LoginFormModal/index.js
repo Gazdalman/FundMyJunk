@@ -3,6 +3,8 @@ import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import OpenModalButton from "../OpenModalButton";
+import SignupFormModal from "../SignupFormModal";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -55,6 +57,11 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <OpenModalButton
+        modalClasses={["logInRedirect"]}
+        modalComponent={<SignupFormModal />}
+        buttonText="... or Sign Up Here"
+      />
         <button onClick={loginDemo}>Demo User</button>
       </form>
     </>

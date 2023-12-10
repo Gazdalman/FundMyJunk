@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react"
 import { useModal } from "../../../context/Modal";
 import PhotoField from "../../utilities/PhotoField";
+import { useDispatch } from "react-redux";
+import { editItem } from "../../../store/project";
+import { setRequestedProject } from "../../../store/userProjects";
 
-const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setIndex }) => {
+const EditRewardItemForm = ({ item, projectId }) => {
+  const dispatch = useDispatch()
   const { closeModal } = useModal()
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState(item.title)
   const [focused, setFocused] = useState("");
   const [disabled, setDisabled] = useState(true)
-  const [quantity, setQuantity] = useState("")
+  const [quantity, setQuantity] = useState(item.quantity)
   const [image, setImage] = useState("")
-  const [imageURL, setImageURL] = useState("")
+  const [imageURL, setImageURL] = useState(item.image)
 
   const handleFocus = (field) => {
     setFocused(field);
@@ -34,21 +38,11 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
     newItemData.append("quantity", quantity)
     newItemData.append("title", title)
 
-    const item = {
-      index,
-      title,
-      image,
-      quantity
+    const res = await dispatch(editItem(newItemData, item.id))
+    if (res == "ok") {
+      await dispatch(setRequestedProject(projectId))
+      closeModal()
     }
-
-    const newIDObj = {...itemData}
-    newIDObj[index] = newItemData
-    const newItems = {...items}
-    newItems[index] = item
-    setItems({...newItems})
-    setItemData({...newIDObj})
-    setIndex(index+1)
-    closeModal()
   }
 
   useEffect(() => {
@@ -70,7 +64,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
             onChange={(e) => setTitle(e.target.value)}
             onFocus={(e) => handleFocus("title", e)}
             onBlur={handleBlur}
-            className={`rtf-input input-field ${focused == 'title' ? "focused-input" : null}`}
+            className="rtf-input input-field"
           />
         </div>
         <div className={`item-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
@@ -84,7 +78,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
             onChange={(e) => setQuantity(e.target.value)}
             onFocus={(e) => handleFocus("quantity", e)}
             onBlur={handleBlur}
-            className={`rqf-input input-field ${focused == 'title' ? "focused-input" : null}`}
+            className="rqf-input input-field"
           />
         </div>
         (Image is optional for item)
@@ -96,10 +90,10 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
           imageURL={imageURL}
         />
         <button id="hide-item-form" onClick={cancel}>Cancel</button>
-        <button disabled={title.length < 3 || !quantity} id="save-item">Add Item</button>
+        <button disabled={title.length < 3 || !quantity} id="save-item" onClick={addItem}>Add Item</button>
       </form>
     </div>
   )
 }
 
-export default RewardItemForm
+export default EditRewardItemForm

@@ -7,11 +7,14 @@ import { setRequestedProject } from "../../../store/userProjects";
 import { useHistory } from "react-router-dom"
 import { deleteReward } from "../../../store/project";
 import DeleteModal from "../../utilities/deleteModal";
+import PPEditRewardTab from "../PPForms/EditReward";
+import RewardItemForm from "../../ProjectForm/Rewards/RewardItem";
+import EditRewardItemForm from "../PPForms/EditRewardItem";
 
-const RewardTab = ({ rewards, user, projectOwner, projId }) => {
+const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const [showForm, setShowForm] = useState(false)
+  const [singleReward, setSingleReward] = useState("")
 
   const changeDate = (date) => {
     const selectedDate = new Date(date);
@@ -19,6 +22,10 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
     const month = selectedDate.toLocaleString('default', { month: 'long' });
     const year = selectedDate.getFullYear();
     return `${month.slice(0, 3)} ${year}`
+  }
+
+  const addCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   const loginRedirect = (e) => {
@@ -32,9 +39,14 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
     window.alert("You can't spend your money yet. Which is good because this is a terrible idea...")
   }
 
-  const openRewardForm = (e) => {
+  const openRewardForm = (e, type, reward) => {
     e.preventDefault()
-    setShowForm(true)
+    if (type == "create") {
+      setShowForm(type)
+    } else {
+      setSingleReward(reward)
+      setShowForm(type)
+    }
   }
 
   const deleteAReward = async (e, id) => {
@@ -57,7 +69,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
           <div id="pp-reward-card-details">
             <div id="pp-rcd-upper">
               <h3 id="pp-rcd-title">{reward.title}</h3>
-              <h3 id="pp-rcd-amount">${reward.amount}</h3>
+              <h3 id="pp-rcd-amount">${addCommas(reward.amount)}</h3>
             </div>
             <div id="pp-rcd-mid">
               {reward.physicalItems &&
@@ -79,21 +91,49 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
             </div>
             <div id="pp-rcd-lower">
               {reward.description ? <p id="pp-rcd-desc">{reward.description}</p> : <p>No Description</p>}
+              {(user && user == projectOwner) && <OpenModalButton
+                modalClasses={["pp-item-form"]}
+                modalComponent={<RewardItemForm />}
+                buttonText={"Add Item"}
+              />}
               {reward.items.map(item => (
-                <div key={item.id} id="pp-rcd-item">
-                  <div id="pp-item-details">
-                    <p>{item.title}</p>
-                    <p>Quantity: {item.quantity}</p>
+                <div key={item.id} id="pp-prod-item-card">
+                  <div id="pp-rcd-item">
+                    <div id="pp-item-details">
+                      <p>{item.title}</p>
+                      <p>Quantity: {item.quantity}</p>
+                    </div>
+                    {item.image && <img id="pp-item-image" src={item.image} />}
                   </div>
-                  {item.image && <img id="pp-item-image" src={item.image} />}
+                  {(user && user == projectOwner) && <div id="item-button-div">
+                    <OpenModalButton
+                      modalClasses={["pp-edit-item-form"]}
+                      modalComponent={<EditRewardItemForm
+                        item={item}
+                        projectId={projId}
+                      />}
+                      buttonText={"Edit Item"}
+                    />
+                    <OpenModalButton
+                      modalClasses={["delete-item-button"]}
+                      modalComponent={<DeleteModal item={item} projId={projId} type={"item"} />}
+                      buttonText={"Delete Item"}
+                    />
+                  </div>}
                 </div>
               ))}
               {user ? (user != projectOwner ?
-                <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Pledge ${reward.amount}</button> :         <OpenModalButton
-                modalClasses={["delete-button"]}
-                modalComponent={<DeleteModal reward={reward} type={"reward"}/>}
-                buttonText={"Delete Reward"}
-                 />) :
+                <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Burn ${addCommas(reward.amount)}</button> :
+                <div>
+                  <OpenModalButton
+                    modalClasses={["delete-reward-button"]}
+                    modalComponent={<DeleteModal reward={reward} type={"reward"} />}
+                    buttonText={"Delete Reward"}
+                  />
+                  <button onClick={e => openRewardForm(e, "edit", reward)} id="edit-reward-button">Edit Reward</button>
+                </div>
+
+              ) :
                 <button id="no-user-login-pledge" onClick={e => loginRedirect(e)}>Login to Pledge</button>
               }
             </div>
@@ -103,13 +143,23 @@ const RewardTab = ({ rewards, user, projectOwner, projId }) => {
 
       ))}
       {(user && user == projectOwner) ?
-        <button onClick={openRewardForm} id="add-reward-button">Add Reward</button> : null}
+        <button onClick={e => openRewardForm(e, "create")} id="add-reward-button">Add Reward</button> : null}
     </div>
     )
-      : <PPRewardTab
+      : (showForm == "create" ? <PPRewardTab
         projectId={projId}
         setShowForm={setShowForm}
-      />) : ""
+      /> :
+        <PPEditRewardTab
+          projectId={projId}
+          setShowForm={setShowForm}
+          reward={singleReward}
+          setReward={setSingleReward}
+        />)) : (user && user == projectOwner) ?
+    <div>
+      <h3>No rewards listed for this project</h3>
+      <button onClick={openRewardForm} id="add-reward-button">Add Reward</button>
+    </div> : <h3>No rewards listed for this project</h3>
 }
 
 export default RewardTab

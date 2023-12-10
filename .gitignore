@@ -6,6 +6,6 @@ __pycache__/
 .vscode/
 example_env.py
 example_alembic.ini
-test.py
+test*
 instances
 *.db

@@ -3,10 +3,23 @@
   height: auto;
 }
 
+.pp-item-form {
+  width: 100%;
+}
+
+#pp-prod-item-card {
+  display: flex;
+}
+
 #pp-item-image {
   width: 75px;
   height: 75px;
   margin-right: 10px;
+}
+
+#item-button-div {
+  display: flex;
+  flex-direction: column;
 }
 
 #preview-image{

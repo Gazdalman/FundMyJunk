@@ -39,7 +39,7 @@ def seed_rewards():
       title=f"A Very {fake.word(ext_word_list=adjectives).title()} Something or Other",
       description=fake.sentence(),
       physical_items=True,
-      shipping="Everywhere",
+      shipping=choice(["Digital rewards", "Local event", "Ships to anywhere"]),
       delivery_date=fake.future_date(end_date='+100d'),
       amount=randint(1,80000),
       unlimited=True
@@ -50,7 +50,7 @@ def seed_rewards():
       title=f"A Very {fake.word(ext_word_list=adjectives).title()} Something or Other",
       description=fake.sentence(),
       physical_items=True,
-      shipping="Everywhere",
+      shipping=choice(["Digital rewards", "Local event", "Ships to anywhere"]),
       delivery_date=fake.future_date(end_date='+100d'),
       amount=randint(1,80000),
       unlimited=False,
@@ -62,7 +62,7 @@ def seed_rewards():
       title=f"A Very {fake.word(ext_word_list=adjectives).title()} Something or Other",
       description=fake.sentence(),
       physical_items=True,
-      shipping="Everywhere",
+      shipping=choice(["Digital rewards", "Local event", "Ships to anywhere"]),
       delivery_date=fake.future_date(end_date='+100d'),
       amount=randint(1,80000),
       unlimited=True

@@ -14,7 +14,8 @@ const Basics = (
     setSecondCat,
     secondCat,
     secondSubcat,
-    setSecondSubcat
+    setSecondSubcat,
+    setTab
   }
 ) => {
   const [page, setPage] = useState(1)
@@ -27,6 +28,11 @@ const Basics = (
       setPage(page + 1)
     }
 
+  }
+
+  const tabChange = (e) => {
+    e.preventDefault()
+    setTab("project-info")
   }
 
   return (
@@ -60,7 +66,9 @@ const Basics = (
           {page == 2 && "Back to Main Category"}
           {page == 3 && "Back to Second Category"}
         </button>}
-        {page < 3 && <button onClick={e => pageChange(e, "up")} disabled={(page == 1 && !mainCategory || !mainSubcat)}>Next</button>}
+        {page < 3 ? <button onClick={e => pageChange(e, "up")} disabled={(page == 1 && !mainCategory || !mainSubcat)}>Next</button> :
+        <button disabled={!location} onClick={tabChange}>Next: Project Details</button>
+        }
       </div>
     </div>
   )

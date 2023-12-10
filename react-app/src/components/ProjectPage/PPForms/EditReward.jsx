@@ -3,11 +3,12 @@ import PhotoField from "../../utilities/PhotoField";
 import { useHistory, useParams } from "react-router-dom";
 import RewardItemForm from "../../ProjectForm/Rewards/RewardItem";
 import { useDispatch } from "react-redux";
-import { createReward } from "../../../store/project";
+import { editReward } from "../../../store/project";
 import { useModal } from "../../../context/Modal";
+import { setRequestedProject } from "../../../store/userProjects";
 
 
-const PPRewardTab = ({ reward, projectId }) => {
+const PPEditRewardTab = ({ reward, projectId, setShowForm, setReward }) => {
   const dispatch = useDispatch()
   const history = useHistory();
   const {closeModal} = useModal()
@@ -18,17 +19,15 @@ const PPRewardTab = ({ reward, projectId }) => {
   const [selectedIndex, setSelectedIndex] = useState("")
   const [rewardTitle, setRewardTitle] = useState(reward.title)
   const [itemForm, setItemForm] = useState(false)
-  const [selectedShipping, setSelectedShipping] = useState("");
-  const [selectedQuantity, setSelectedQuantity] = useState("")
-  const [selectedItem, setSelectedItem] = useState("")
-  const [amount, setAmount] = useState("")
+  const [selectedShipping, setSelectedShipping] = useState(reward.shipping);
+  const [selectedQuantity, setSelectedQuantity] = useState(reward.unlimited ? "unlimited" : "limited")
+  const [selectedItem, setSelectedItem] = useState(reward.physicalItems == true ? "true" : "false")
+  const [amount, setAmount] = useState(reward.amount)
   const [image, setImage] = useState("")
-  const [imageURL, setImageURL] = useState("")
-  const [description, setDescription] = useState("")
-  const [items, setItems] = useState(reward.items)
-  const [itemData, setItemData] = useState([])
+  const [imageURL, setImageURL] = useState(reward.image)
+  const [description, setDescription] = useState(reward.description)
   const [physicalItems, setPhysicalItems] = useState(reward.physicalItems)
-  const [deliveryDate, setDeliveryDate] = useState(reward.deliveryDate)
+  const [deliveryDate, setDeliveryDate] = useState(new Date(reward.deliveryDate).toISOString().split("T")[0])
   const [shipping, setShipping] = useState(reward.shipping)
   const [unlimited, setUnlimited] = useState(reward.unlimited)
   const [quantity, setQuantity] = useState(reward.quantity)
@@ -36,7 +35,7 @@ const PPRewardTab = ({ reward, projectId }) => {
 
   const cancel = (e) => {
     e.preventDefault()
-    closeModal()
+    setShowForm("")
   }
 
   const handleFocus = (field) => {
@@ -76,27 +75,12 @@ const PPRewardTab = ({ reward, projectId }) => {
     return `${month} ${year}`
   }
 
-  const showItemForm = (e) => {
-    e.preventDefault()
-    setItemForm(true)
-  }
-
-  const deleteItem = (key, e) => {
-    e.preventDefault()
-    const newItems = { ...items }
-    const newItemData = { ...itemData }
-    delete newItems[key]
-    delete newItemData[key]
-    setItems({ ...newItems })
-    setItemData({ ...newItemData })
-  }
-
   const handleRewardSubmit = async (e) => {
     e.preventDefault()
 
     const rewardData = new FormData()
     rewardData.append("title", rewardTitle)
-    rewardData.append("image", image)
+    if (image) rewardData.append("image", image)
     rewardData.append("amount", amount)
     if (description) rewardData.append("description", description)
     rewardData.append("physicalItems", physicalItems)
@@ -107,20 +91,17 @@ const PPRewardTab = ({ reward, projectId }) => {
 
     setLoading(true)
 
-    const res = await dispatch(createReward(rewardData, Object.values(itemData), projectId))
+    const res = await dispatch(editReward(rewardData, reward.id))
 
-    if (!res.errors) return history.replace(`/projects/${projectId}`)
+    if (!res.errors) dispatch(setRequestedProject(projectId))
 
-    console.log(res);
-  }
+    setShowForm("")
 
-  const skipStep = () => {
-    return history.replace(`/projects/${projectId}`)
   }
 
   useEffect(() => {
     if (rewardTitle.length > 3 &&
-      image &&
+      (image || reward.image) &&
       shipping &&
       deliveryDate &&
       amount
@@ -133,10 +114,10 @@ const PPRewardTab = ({ reward, projectId }) => {
     if (description && description.length < 10) {
       setDisabled(true)
     }
-
+    console.log(physicalItems);
   })
 
-  return !itemForm ? (!loading ? (
+  return !loading ? (
     <div id="reward-form-div">
       <div id="reward-input-container">
         <form id="reward-form" onSubmit={handleRewardSubmit} encType="multipart/form-data">
@@ -174,17 +155,6 @@ const PPRewardTab = ({ reward, projectId }) => {
               setImageURL={setImageURL}
               imageURL={imageURL}
             />
-          </div>
-          <div id="add-item-div">
-            <h4>Items</h4>
-            {Object.values(items) && Object.values(items).map((item) => (
-              <>
-                <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
-                <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
-              </>
-            ))}
-            <button id="show-item-form" onClick={showItemForm}>Add Item</button>
-
           </div>
           <div className={`reward-description-field floating-input ${focused == "description" ? 'focused' : ''}`}>
             <label className={`rdf-label input-label ${focused == "description" || description ? 'label-focus' : ''}`}>
@@ -304,7 +274,7 @@ const PPRewardTab = ({ reward, projectId }) => {
                 <h5>{description ? description : "This is where the description of your pyramid scheme will go."}</h5>
                 <h6>Includes:</h6>
                 <ul>
-                  {Object.values(items).length > 0 ? Object.values(items).map(item => (
+                  {reward.items.length > 0 ? reward.items.map(item => (
                     <h6 key={item.title}>
                       <li>{item.quantity > 1 ? `${item.quantity}x` : ""} {item.title}</li>
                     </h6>
@@ -324,16 +294,7 @@ const PPRewardTab = ({ reward, projectId }) => {
       </div>
     </div >
 
-  ) : <h1>We Loadin...</h1>) : <RewardItemForm
-    setItems={setItems}
-    items={items}
-    setItemData={setItemData}
-    itemData={itemData}
-    setItemForm={setItemForm}
-    itemForm={itemForm}
-    index={index}
-    setIndex={setIndex}
-  />
+  ) : <h1>We Loadin...</h1>
 }
 
-export default PPRewardTab
+export default PPEditRewardTab

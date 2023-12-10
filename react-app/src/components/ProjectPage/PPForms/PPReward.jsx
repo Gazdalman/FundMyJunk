@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { createReward } from "../../../store/project";
 import { useModal } from "../../../context/Modal";
 import { setRequestedProject } from "../../../store/userProjects";
+import OpenModalButton from "../../OpenModalButton";
 
 
 const PPRewardTab = ({ projectId, setShowForm }) => {
@@ -37,7 +38,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
 
   const cancel = (e) => {
     e.preventDefault()
-    setShowForm(false)
+    setShowForm("")
   }
 
   const handleFocus = (field) => {
@@ -112,7 +113,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
 
     if (!res.errors) {
       dispatch(setRequestedProject(projectId))
-      setShowForm(false)
+      setShowForm("")
     }
 
     console.log(res);
@@ -187,8 +188,19 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
                 <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
               </>
             ))}
-            <button id="show-item-form" onClick={showItemForm}>Add Item</button>
-
+            {/* <button id="show-item-form" onClick={showItemForm}>Add Item</button> */}
+              <OpenModalButton
+              modalClasses={["pp-item-form"]}
+              modalComponent={<RewardItemForm
+              items={items}
+              setIndex={setIndex}
+              setItems={setItems}
+              setItemData={setItemData}
+              itemData={itemData}
+              index={setIndex}
+                 />}
+              buttonText={"Add Item"}
+              />
           </div>
           <div className={`reward-description-field floating-input ${focused == "description" ? 'focused' : ''}`}>
             <label className={`rdf-label input-label ${focused == "description" || description ? 'label-focus' : ''}`}>
