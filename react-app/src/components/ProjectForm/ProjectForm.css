@@ -15,8 +15,9 @@
 }
 
 #project-title-description>p,
-#project-subtitle-description>p {
-  width: 370px;
+#project-subtitle-description>p,
+#project-goal-description>p {
+  width: 30vw;
 }
 
 #main-cat-info>h2,
@@ -34,7 +35,8 @@
 }
 
 #project-title-area,
-#project-subtitle-area {
+#project-subtitle-area,
+#project-goal-area {
   border-bottom: 1px lightgrey solid;
 }
 
@@ -137,4 +139,10 @@
 #to-project-details {
   width: 125px;
   height: 35px;
+}
+
+#project-image-field,
+#video-field {
+  padding-bottom: 20px;
+  border-bottom: 1px lightgrey solid;
 }

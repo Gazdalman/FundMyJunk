@@ -61,6 +61,8 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
 
   return rewards ? (
     !showForm ? (<div>
+      <h2>Rewards</h2>
+      {rewards.length < 1 ? <span>No rewards listed for this project</span> : null}
       {rewards.map(reward => (
         <div key={reward.id} id="pp-reward-card">
           <div id="pp-reward-card-image">
@@ -157,9 +159,9 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
           setReward={setSingleReward}
         />)) : (user && user == projectOwner) ?
     <div>
-      <h3>No rewards listed for this project</h3>
+      <span>No rewards listed for this project</span>
       <button onClick={openRewardForm} id="add-reward-button">Add Reward</button>
-    </div> : <h3>No rewards listed for this project</h3>
+    </div> : <span>No rewards listed for this project</span>
 }
 
 export default RewardTab

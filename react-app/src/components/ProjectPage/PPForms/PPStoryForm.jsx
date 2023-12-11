@@ -70,7 +70,7 @@ const PPStoryForm = ({projectId}) => {
   //   setIsLoaded(true)
   // }, [dispatch]);
   return (
-    <div id="story-form-container">
+    <div id="story-modal-container">
       <form onSubmit={handleStorySubmit} encType="multipart/form-data">
         <h1>Add a Story</h1>
         <div id="ai-input-field">
@@ -118,8 +118,8 @@ const PPStoryForm = ({projectId}) => {
           </div>
         </div>
         <button disabled={disabled}>Save Story</button>
+        <button onClick={cancel}>Cancel</button>
       </form>
-      <button onClick={cancel}>Cancel</button>
     </div>
   )
 }

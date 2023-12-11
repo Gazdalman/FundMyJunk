@@ -24,12 +24,14 @@ const Location = ({ location, setLocation }) => {
       <div id="location-input" className={`floating-input ${isFocused ? 'focused' : ''}`}>
         <input
           type="text"
+          maxLength={50}
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={`location-input input-field ${isFocused ? "focused-input" : null}`}
         />
+        <span><span style={location.length < 5 ? {"color": "red"} : {color: "green"}} id="curr-length">{location.length}</span>/50</span>
       </div>
     </div>
   )

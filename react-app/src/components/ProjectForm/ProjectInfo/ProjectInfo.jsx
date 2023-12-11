@@ -102,18 +102,20 @@ const ProjectInfo = ({
           <h2>Title</h2>
           <div id="project-title-description">
             <p>Name your project something interesting so that you can grab the short attention spans of the public and convince them to spend their hard earned money on your awful idea!</p>
-            <p style={{ "color": "red" }}>{errs.title ? errs.title : "(Make it at least 3 characters good sir)"}</p>
+            <p style={errs.title ? { "color": "red" } : {}}>{errs.title ? errs.title : "(Make it at least 3 characters good sir)"}</p>
           </div>
         </div>
         <div className={`proj-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
           <input
             type="text"
+            maxLength={50}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onFocus={e => handleFocus("title", e)}
             onBlur={handleBlur}
             className="ptf-input input-field"
           />
+          <span><span style={title.length < 3 ? {"color": "red"} : {color: "green"}} id="curr-length">{title.length}</span>/50</span>
         </div>
       </div>
       <div id="project-subtitle-area">
@@ -121,18 +123,20 @@ const ProjectInfo = ({
           <h2>Subtitle</h2>
           <div id="project-title-description">
             <p>This should explain your project a bit. Just! A! Bit!</p>
-            <p style={{ "color": "red" }}>(May be squished or stretched beyond belief)</p>
+            <p style={errs.subtitle ? { "color": "red" } : {}}>{errs.subtitle ? errs.subtitle : "(10 to 100 characters)"}</p>
           </div>
         </div>
         <div className={`proj-subtitle-field floating-input ${focused == "subtitle" ? 'focused' : ''}`}>
           <input
             type="text"
+            maxLength={100}
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
             onFocus={e => handleFocus("subtitle", e)}
             onBlur={handleBlur}
             className="psf-input input-field"
           />
+          <span><span style={subtitle.length < 10 ? {"color": "red"} : {color: "green"}} id="curr-length">{subtitle.length}</span>/100</span>
         </div>
       </div>
       <div id="project-goal-area">
@@ -140,6 +144,7 @@ const ProjectInfo = ({
           <h2>Goal</h2>
           <div id="project-goal-description">
             <p>This, my friend, is the beautiful number of monies the people will pay us and by extension, YOU! <span style={{ "font-size": "10px" }}>maybe</span></p>
+            <p style={errs.goal ? { "color": "red" } : {}}>{errs.goal ? errs.goal : "(You better put AT LEAST $100)"}</p>
           </div>
         </div>
         <div className={`proj-goal-field floating-input ${focused == "goal" ? 'focused' : ''}`}>
@@ -158,7 +163,7 @@ const ProjectInfo = ({
           <h2>Project Image</h2>
           <div id="project-image-description">
             <p>Give the people a pretty picture to gawk at!</p>
-            <p style={{ "color": "red" }}>(10 to 100 characters)</p>
+            <p style={errs.image ? { "color": "red" } : {}}>{errs.image ? errs.image : "(May be squished or stretched beyond belief)"}</p>
           </div>
         </div>
         <div id="project-dnd-box">
@@ -171,7 +176,13 @@ const ProjectInfo = ({
         </div>
       </div>
       <div id="video-field">
-        <h2>Project Video (Optional)</h2>
+        <div id="video-info">
+          <h2>Project Video (Optional)</h2>
+          <div id="project-image-description">
+            <p>This is optional. However, Marvel makes more money off the movies than the comics. Just sayin'.</p>
+            {/* <p style={{ "color": "red" }}>(10 to 100 characters)</p> */}
+          </div>
+        </div>
         <div id="project-dnd-box">
           <VideoField
             setVideo={setVideo}
@@ -182,9 +193,13 @@ const ProjectInfo = ({
         </div>
       </div>
       <div id="type-select">
-        <label id="type-label">
-          Project Type
-        </label>
+        <div id="project-type-info">
+          <h2>Project Type</h2>
+          <div id="project-type-description">
+            <p>Select whether this is personal (Niiiice), business (For the books? I gotcha), or non-profit (gross...)</p>
+            <p style={errs.goal ? { "color": "red" } : {}}>{errs.projType ? errs.projType : "(Do you though)"}</p>
+          </div>
+        </div>
         <select onChange={e => setProjType(e.target.value)} value={projType} className="input-field" id="type-selector">
           <option value="" disabled>--Select--</option>
           <option value="business">Business</option>
@@ -192,6 +207,14 @@ const ProjectInfo = ({
           <option value="personal">Personal</option>
         </select>
       </div>
+      <div id="project-dates-area">
+      <div id="project-dates-info">
+          <h2>Project Dates</h2>
+          <div id="project-dates-description">
+            <p>I mean... Self explanatory... Gotta launch your project at some point...</p>
+            <p style={errs.date ? { "color": "red" } : {}}>{errs.date ? errs.date : "(So hurry up and make some money!)"}</p>
+          </div>
+        </div>
       {(type != "edit" || today >= new Date(launchDate)) && <div id="dates-div">
         <input
           value={launchDate}
@@ -246,6 +269,7 @@ const ProjectInfo = ({
           />
         </div>
       </div>}
+      </div>
       <div id="back-button-container">
         <button id="back-basics-button" onClick={tabChange}>Back To Basics</button>
       </div>

@@ -5,8 +5,10 @@ const StoryTab = ({ story, projectUser, id, user }) => {
   return story ? (
     <>
       <h2>Story</h2>
-      <span>{story.text}</span>
-      <span>{story.risks_challenges}</span>
+      <h3>About This Project</h3>
+      <span style={{overflowWrap: "break-word"}}>{story.text}</span>
+      <h3>Potential Risks</h3>
+      <span style={{overflowWrap: "break-word"}}>{story.risks_challenges}</span>
       {(story && user && projectUser == user.id ) && <div id="buttons-links">
         <OpenModalButton
           modalComponent={<EditStoryForm story={story} projectId={id} />}
@@ -20,13 +22,14 @@ const StoryTab = ({ story, projectUser, id, user }) => {
 
   ) : (
     <>
-      <h1>Story</h1>
+      <h2>Story</h2>
       <div id="pp-add-story">
         <span>No Story on this project</span>
         {(user && projectUser == user.id) &&
           <OpenModalButton
-            modalClasses={["pp-add-product-btn"]}
+            modalClasses={["pp-add-story-btn"]}
             modalComponent={<PPStoryForm projectId={id} />}
+            buttonText={"Add Story"}
           />}
       </div>
     </>

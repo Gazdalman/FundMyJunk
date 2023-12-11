@@ -4,6 +4,12 @@
   height: auto;
 }
 
+#pp-add-story-btn,
+#add-reward-button {
+  width: 150px;
+  height: 30px;
+}
+
 #pp-item-form {
   width: 25%;
   height: 20px;
@@ -32,6 +38,43 @@
 
 #pp-image-container {
   text-align: center;
+}
+
+#pp-add-story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#pp-story-tab>h2,
+#pp-rewards-tab>h2
+ {
+  width: fit-content;
+  margin: auto;
+}
+
+#pp-story-tab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+}
+
+#story-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  padding-bottom: 30px;
+}
+
+#pp-tabs {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 #pp-pledge-button {

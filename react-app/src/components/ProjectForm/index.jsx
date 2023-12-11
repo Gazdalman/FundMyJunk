@@ -11,9 +11,10 @@ const ProjectForm = ({ type, project }) => {
   const dispatch = useDispatch();
   const id = type == "edit" ? project.id : null
   const [flip, setFlip] = useState("on")
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [tab, setTab] = useState("basics");
+  const [errs, setErrs] = useState({})
   const [title, setTitle] = useState(type == "edit" ? project.title : "");
   const [subtitle, setSubtitle] = useState(type == "edit" ? project.subtitle : "");
   const [location, setLocation] = useState(type == "edit" ? project.location : "");
@@ -30,11 +31,22 @@ const ProjectForm = ({ type, project }) => {
   const [secondCat, setSecondCat] = useState(type == "edit" ? project.secondCat : "");
   const [secondSubcat, setSecondSubcat] = useState(type == "edit" ? project.secondSub : "");
   const [launched, setLaunched] = useState(false);
-  const errs = {}
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    const errors = {}
+
+    if (!title || title.length < 3) errors.title = "Title must be at least 3 characters long"
+    if (!subtitle || subtitle.length < 10) errors.subtitle = "Subtitle must be at least 3 characters"
+    if (!goal || goal < 100 || goal > 100000000) errors.goal = "NO LESS THAN $100! But also no more than $99,999,999 (We ain't that greedy)"
+    if (!image) errors.image = "Gotta have an image"
+    if (!projType) errors.projType = "Couldn't even choose a type huh? No wonder you couldn't make it on Kickstarter..."
+    if (!launchDate || !endDate) errors.date = "Do you just uhhhh... not wanna make us... I mean you... money?"
+    if (Object.values(errors).length){
+      setErrs(errors)
+      return
+    }
     const projectData = new FormData()
 
     projectData.append("title", title)
@@ -58,7 +70,7 @@ const ProjectForm = ({ type, project }) => {
 
     projectData.append("goal", goal)
     const launch = new Date(launchDate)
-    projectData.append("launchDate", launch.toISOString().split("T")[0])
+    projectData.append("launchDate", (launch.toISOString().split("T")[0]))
     const end = new Date(endDate)
     projectData.append("endDate", end.toISOString().split("T")[0])
     projectData.append("mainCategory", mainCategory)
@@ -151,7 +163,7 @@ const ProjectForm = ({ type, project }) => {
           errs={errs}
         />}
         <div id="cpb-container">
-          <button id="create-project-btn" disabled={disabled}> Confirm Project</button>
+          {tab=="project-info" && <button id="create-project-btn" disabled={disabled}> Confirm Project</button>}
         </div>
       </form>
       <div></div>
