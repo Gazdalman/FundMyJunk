@@ -91,11 +91,11 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
             </div>
             <div id="pp-rcd-lower">
               {reward.description ? <p id="pp-rcd-desc">{reward.description}</p> : <p>No Description</p>}
-              {(user && user == projectOwner) && <OpenModalButton
+              {(user && user == projectOwner) ? <OpenModalButton
                 modalClasses={["pp-item-form"]}
                 modalComponent={<RewardItemForm />}
                 buttonText={"Add Item"}
-              />}
+              /> : null}
               {reward.items.map(item => (
                 <div key={item.id} id="pp-prod-item-card">
                   <div id="pp-rcd-item">
@@ -105,7 +105,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
                     </div>
                     {item.image && <img id="pp-item-image" src={item.image} />}
                   </div>
-                  {(user && user == projectOwner) && <div id="item-button-div">
+                  {(user && user == projectOwner) ? <div id="item-button-div">
                     <OpenModalButton
                       modalClasses={["pp-edit-item-form"]}
                       modalComponent={<EditRewardItemForm
@@ -119,7 +119,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
                       modalComponent={<DeleteModal item={item} projId={projId} type={"item"} />}
                       buttonText={"Delete Item"}
                     />
-                  </div>}
+                  </div> : null}
                 </div>
               ))}
               {user ? (user != projectOwner ?

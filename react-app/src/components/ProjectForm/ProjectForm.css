@@ -1,7 +1,140 @@
 #project-form-container {
+  width: 80%;
+  margin: auto;
   margin-top: 100px;
+}
+
+#project-title-info,
+#project-subtitle-info {
+  width: 50%;
+}
+
+#project-title-description,
+#project-subtitle-description {
+  width: 90%;
+}
+
+#project-title-description>p,
+#project-subtitle-description>p {
+  width: 370px;
+}
+
+#main-cat-info>h2,
+#second-cat-info>h2,
+#location-info>h2 {
+  text-align: center;
+}
+
+#main-category-description,
+#second-category-description,
+#location-description {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+}
+
+#project-title-area,
+#project-subtitle-area {
+  border-bottom: 1px lightgrey solid;
 }
 
 #story-form-container {
   margin-top: 100px;
+
+}
+
+/* #location-description {
+  width: 50%;
+} */
+
+#project-dnd-box {
+  width: 575px;
+  height: 390px;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  border-radius: 10px;
+  background-color: rgb(213, 213, 213);
+}
+
+#main-cat-input,
+#second-cat-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#main-cat-label,
+#main-subcat-label,
+#second-cat-label,
+#second-subcat-label {
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+
+#main-subcat-input,
+#second-subcat-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#main-cat-fields,
+#second-cat-fields {
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 15px;
+}
+
+#back-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+#back-basics-button {
+  width: 125px;
+  height: 35px;
+}
+
+.form-nav {
+  width: fit-content;
+  margin: auto;
+  display: flex;
+}
+
+#location-input {
+  display: flex;
+  justify-content: center;
+}
+
+.project-next-button {
+  width: 125px;
+  height: 35px;
+}
+
+#project-back-button {
+  border: none;
+  background-color: white;
+  margin-right: 30px;
+}
+
+#project-back-button:hover {
+  color: #951019;
+}
+
+#create-project-btn {
+  width: 125px;
+  height: 35px;
+}
+
+#cpb-container {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+#to-project-details {
+  width: 125px;
+  height: 35px;
 }

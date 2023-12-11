@@ -34,7 +34,7 @@ const HomePage = () => {
   }, [dispatch])
 
   return isLoaded && projArr.length ? (
-    <div>
+    <div id="home-page">
       <h1 id="home-page-title">Top Earners</h1>
       <div id="home-page-cards">
         {projArr.map(project => (

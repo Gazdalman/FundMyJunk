@@ -30,6 +30,7 @@ const ProjectForm = ({ type, project }) => {
   const [secondCat, setSecondCat] = useState(type == "edit" ? project.secondCat : "");
   const [secondSubcat, setSecondSubcat] = useState(type == "edit" ? project.secondSub : "");
   const [launched, setLaunched] = useState(false);
+  const errs = {}
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -77,25 +78,25 @@ const ProjectForm = ({ type, project }) => {
     }
   }
 
-  useEffect(() => {
-    if (
-      subtitle.length >= 10
-      && projType
-      // && (type != "edit" && image)
-      && goal >= 1
-      && mainCategory
-      && mainSubcat
-      && (title.length >= 3)
-      && launchDate
-      && endDate
-      && location
-    ) {
-      setDisabled(false)
-    } else {
-      setDisabled(true)
-    }
-    setFlip(flip == "on" ? "off" : "on")
-  }, [mainCategory, subtitle, title, mainSubcat, launchDate, goal, projType, image, location])
+  // useEffect(() => {
+  //   if (
+  //     subtitle.length >= 10
+  //     && projType
+  //     // && (type != "edit" && image)
+  //     && goal >= 1
+  //     && mainCategory
+  //     && mainSubcat
+  //     && (title.length >= 3)
+  //     && launchDate
+  //     && endDate
+  //     && location
+  //   ) {
+  //     setDisabled(false)
+  //   } else {
+  //     setDisabled(true)
+  //   }
+  //   // setFlip(flip == "on" ? "off" : "on")
+  // }, [mainCategory, subtitle, title, mainSubcat, launchDate, goal, projType, image, location])
 
   useEffect(() => {
     if (type == "edit") {
@@ -147,8 +148,11 @@ const ProjectForm = ({ type, project }) => {
           setEndDate={setEndDate}
           type={type}
           setTab={setTab}
+          errs={errs}
         />}
-        <button disabled={disabled}> Confirm Project</button>
+        <div id="cpb-container">
+          <button id="create-project-btn" disabled={disabled}> Confirm Project</button>
+        </div>
       </form>
       <div></div>
     </div>

@@ -61,13 +61,13 @@ const Basics = (
           setLocation={setLocation}
         />
       }
-      <div id="form-nav">
-        {page > 1 && <button onClick={e => pageChange(e, "down")} >
+      <div className="form-nav">
+        {page > 1 && <button id="project-back-button" onClick={e => pageChange(e, "down")} >
           {page == 2 && "Back to Main Category"}
           {page == 3 && "Back to Second Category"}
         </button>}
-        {page < 3 ? <button onClick={e => pageChange(e, "up")} disabled={(page == 1 && !mainCategory || !mainSubcat)}>Next</button> :
-        <button disabled={!location} onClick={tabChange}>Next: Project Details</button>
+        {page < 3 ? <button className="project-next-button" id={`page-${page}`} onClick={e => pageChange(e, "up")} disabled={(page == 1 && !mainCategory || !mainSubcat)}>Next</button> :
+        <button id="to-project-details" disabled={location.length < 5} onClick={tabChange}>Next: Project Details</button>
         }
       </div>
     </div>

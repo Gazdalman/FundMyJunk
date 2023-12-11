@@ -22,12 +22,30 @@
   flex-direction: column;
 }
 
-#preview-image{
+#preview-image {
   width: 20px;
 }
 
+#no-image-there {
+  width: fit-content;
+}
+
+#photo-field-buttons {
+  width: fit-content;
+}
+
+.drag-drop-box {
+  width: fit-content;
+  height:50px;
+  margin-top: 20px;
+}
+
+
 .thumbnails-noname {
-  width: 20px;
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  background-color: rgb(213, 213, 213);
 }
 
 #reward-modal-form {
@@ -40,11 +58,17 @@
   width: 60vw;
   display: flex;
   justify-content: space-between;
-  border:black solid 1px;
+  border: black solid 1px;
   border-radius: 10px;
   align-content: center;
 }
 
 #reward-dnd-box {
-width: 20px
+  width: 575px;
+  height: 390px;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  border-radius: 10px;
+  background-color: rgb(213, 213, 213);
 }

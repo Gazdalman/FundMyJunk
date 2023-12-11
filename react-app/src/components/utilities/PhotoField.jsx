@@ -66,7 +66,7 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
 
   return (
     <div
-      className={`drag-drop-box ${extraClass}`}
+      className={`drag-drop-box ${extraClass ? extraClass : ""}`}
       onDrop={handleDrop}
       onDragOver={(e) => {
         e.preventDefault();
@@ -76,9 +76,9 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
       {imageURL ? (
         <img src={imageURL} className="thumbnails-noname"></img>
       ) : (
-        <p>Drag & Drop Image Here</p>
+        <p id="no-image-there">Drag & Drop Image Here</p>
       )}
-      <div>
+      <div id="photo-field-buttons">
         ... or <button onClick={handleButtonClick}>Choose File</button>
         <button onClick={removeImage} style={!image ? {"display": "none"} : {"display": "block"}}>Remove Photo</button>
         <input

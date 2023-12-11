@@ -43,9 +43,15 @@ nav {
 }
 
 .eh {
-  position: relative;
-  left: 315px;
   text-decoration: none;
+}
+
+#home {
+  display: flex;
+  justify-content: end;
+  width: 60%;
+  max-width: 1025px;
+  text-align: right;
 }
 
 #nav-bar {

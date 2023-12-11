@@ -1,6 +1,23 @@
 #pp-video {
   width: 100%;
+  max-width: 850px;
   height: auto;
+}
+
+#pp-item-form {
+  width: 25%;
+  height: 20px;
+}
+
+#pp-reward-card {
+  margin-bottom: 15px;
+  border-bottom: 1px grey solid;
+  padding-bottom: 15px;
+}
+
+#reward-modal-form {
+  width: 80%;
+  margin: auto;
 }
 
 #project-page-container {
@@ -26,6 +43,7 @@
 
 #pp-image {
   width: 100%;
+  max-width: 850px;
   max-height: 400px;
   /* max-width: 100%; */
 }

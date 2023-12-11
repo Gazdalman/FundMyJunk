@@ -1,5 +1,25 @@
+html {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 #not-found {
   margin-top: 100px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+select {
+  cursor: pointer;
+}
+
+#error-message {
+  min-height: 20px;
 }
 
 #unauthorized {
@@ -26,7 +46,7 @@
 .input-field {
   font-size: 16px;
   padding: 8px 0px 08px 08px;
-  width: 500px;
+  width: 30vw;
   border: 1px solid #aaa;
   border-radius: 5px;
   transition: all 0.3s;

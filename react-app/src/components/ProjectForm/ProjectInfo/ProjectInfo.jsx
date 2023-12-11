@@ -25,7 +25,8 @@ const ProjectInfo = ({
   imageURL,
   videoURL,
   type,
-  setTab
+  setTab,
+  errs
 }) => {
   const originalDate = endDate
   const [focused, setFocused] = useState("");
@@ -96,57 +97,90 @@ const ProjectInfo = ({
 
   return (
     <div id="proj-info-form">
-      <div className={`proj-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
-        <label className={`ptf-label input-label ${focused == "title" || title ? 'label-focus' : ''}`}>
-          Title
-        </label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          onFocus={e => handleFocus("title", e)}
-          onBlur={handleBlur}
-          className="ptf-input input-field"
-        />
+      <div id="project-title-area">
+        <div id="project-title-info">
+          <h2>Title</h2>
+          <div id="project-title-description">
+            <p>Name your project something interesting so that you can grab the short attention spans of the public and convince them to spend their hard earned money on your awful idea!</p>
+            <p style={{ "color": "red" }}>{errs.title ? errs.title : "(Make it at least 3 characters good sir)"}</p>
+          </div>
+        </div>
+        <div className={`proj-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onFocus={e => handleFocus("title", e)}
+            onBlur={handleBlur}
+            className="ptf-input input-field"
+          />
+        </div>
       </div>
-      <div className={`proj-subtitle-field floating-input ${focused == "subtitle" ? 'focused' : ''}`}>
-        <label className={`psf-label input-label ${focused == "subtitle" || subtitle ? 'label-focus' : ''}`}>
-          Subtitle
-        </label>
-        <input
-          type="text"
-          value={subtitle}
-          onChange={(e) => setSubtitle(e.target.value)}
-          onFocus={e => handleFocus("subtitle", e)}
-          onBlur={handleBlur}
-          className="psf-input input-field"
-        />
+      <div id="project-subtitle-area">
+        <div id="project-subtitle-info">
+          <h2>Subtitle</h2>
+          <div id="project-title-description">
+            <p>This should explain your project a bit. Just! A! Bit!</p>
+            <p style={{ "color": "red" }}>(May be squished or stretched beyond belief)</p>
+          </div>
+        </div>
+        <div className={`proj-subtitle-field floating-input ${focused == "subtitle" ? 'focused' : ''}`}>
+          <input
+            type="text"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            onFocus={e => handleFocus("subtitle", e)}
+            onBlur={handleBlur}
+            className="psf-input input-field"
+          />
+        </div>
       </div>
-      <div className={`proj-goal-field floating-input ${focused == "goal" ? 'focused' : ''}`}>
-        <label className={`pgf-label input-label ${focused == "goal" || goal ? 'label-focus' : ''}`}>
-          Goal
-        </label>
-        <input
-          type="number"
-          value={goal}
-          onChange={(e) => setGoal(e.target.value)}
-          onFocus={e => handleFocus("goal", e)}
-          onBlur={handleBlur}
-          className="pgf-input input-field"
-        />
+      <div id="project-goal-area">
+        <div id="project-gaol-info">
+          <h2>Goal</h2>
+          <div id="project-goal-description">
+            <p>This, my friend, is the beautiful number of monies the people will pay us and by extension, YOU! <span style={{ "font-size": "10px" }}>maybe</span></p>
+          </div>
+        </div>
+        <div className={`proj-goal-field floating-input ${focused == "goal" ? 'focused' : ''}`}>
+          <input
+            type="number"
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+            onFocus={e => handleFocus("goal", e)}
+            onBlur={handleBlur}
+            className="pgf-input input-field"
+          />
+        </div>
       </div>
-      <PhotoField
-        image={image}
-        setImage={setImage}
-        setImageURL={setImageURL}
-        imageURL={imageURL}
-      />
-      <VideoField
-        setVideo={setVideo}
-        video={video}
-        videoURL={videoURL}
-        setVideoURL={setVideoURL}
-      />
+      <div id="project-image-field">
+        <div id="project-image-info">
+          <h2>Project Image</h2>
+          <div id="project-image-description">
+            <p>Give the people a pretty picture to gawk at!</p>
+            <p style={{ "color": "red" }}>(10 to 100 characters)</p>
+          </div>
+        </div>
+        <div id="project-dnd-box">
+          <PhotoField
+            image={image}
+            setImage={setImage}
+            setImageURL={setImageURL}
+            imageURL={imageURL}
+          />
+        </div>
+      </div>
+      <div id="video-field">
+        <h2>Project Video (Optional)</h2>
+        <div id="project-dnd-box">
+          <VideoField
+            setVideo={setVideo}
+            video={video}
+            videoURL={videoURL}
+            setVideoURL={setVideoURL}
+          />
+        </div>
+      </div>
       <div id="type-select">
         <label id="type-label">
           Project Type
@@ -212,7 +246,9 @@ const ProjectInfo = ({
           />
         </div>
       </div>}
-      <button onClick={tabChange}>Back To Basics</button>
+      <div id="back-button-container">
+        <button id="back-basics-button" onClick={tabChange}>Back To Basics</button>
+      </div>
     </div>
   )
 }

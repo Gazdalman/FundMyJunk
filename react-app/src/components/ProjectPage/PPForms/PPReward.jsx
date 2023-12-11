@@ -34,6 +34,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
   const [shipping, setShipping] = useState("")
   const [unlimited, setUnlimited] = useState(false)
   const [quantity, setQuantity] = useState("")
+  const errs = useState({})
   const today = new Date().toISOString().split("T")[0];
 
   const cancel = (e) => {
@@ -159,6 +160,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
               className="rtf-input input-field"
             />
           </div>
+          <span id="error-message">{errs.title}</span>
           <div className={`reward-amount-field floating-input ${focused == "amount" ? 'focused' : ''}`}>
             <label className={`raf-label input-label ${focused == "amount" || amount ? 'label-focus' : ''}`}>
               Amount
@@ -215,7 +217,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
               className="rdf-input input-field"
             />
           </div>
-          <div id="physical-items">
+          <div id="pp-physical-items">
             <label>
               <input
                 value="true"

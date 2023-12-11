@@ -30,7 +30,7 @@ function LoginFormModal() {
   };
 
   return (
-    <>
+    <div>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -64,7 +64,7 @@ function LoginFormModal() {
       />
         <button onClick={loginDemo}>Demo User</button>
       </form>
-    </>
+    </div>
   );
 }
 

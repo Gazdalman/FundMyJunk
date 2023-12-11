@@ -4,30 +4,40 @@ const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat
 
   return (
     <div id="main-cat-form">
-      <span id="main-cat-input">
-        <label>Main Category</label>
-        <select
-          value={mainCategory}
-          onChange={(e) => {
-            setMainSubcat("")
-            setMainCategory(e.target.value)
-          }}
-        >
-          <option value="">--Select--</option>
-          <option value="Art">Just gonna say 'Art' for now</option>
-        </select>
-      </span>
-      <span id="main-cat-input">
-        <label>Main SubCategory</label>
-        <select
-        disabled={!mainCategory}
-          value={mainSubcat}
-          onChange={(e) => setMainSubcat(e.target.value)}
-        >
-          <option value="">--Select--</option>
-          <option value="Ceramics">Just gonna say 'Ceramics' for now</option>
-        </select>
-      </span>
+      <div id="main-cat-info">
+        <h2>Main Category</h2>
+        <div id="main-category-description">
+          <p>This is what we will use when you pay us enough to care to implement filtering and searching.</p>
+        </div>
+      </div>
+      <div id="main-cat-fields">
+        <span id="main-cat-input">
+          <label id="main-cat-label">Main Category</label>
+          <select
+          className="input-field"
+            value={mainCategory}
+            onChange={(e) => {
+              setMainSubcat("")
+              setMainCategory(e.target.value)
+            }}
+          >
+            <option value="">--Select--</option>
+            <option value="Art">Just gonna say 'Art' for now</option>
+          </select>
+        </span>
+        <span id="main-subcat-input">
+          <label id="main-subcat-label">Main SubCategory</label>
+          <select
+          className="input-field"
+            disabled={!mainCategory}
+            value={mainSubcat}
+            onChange={(e) => setMainSubcat(e.target.value)}
+          >
+            <option value="">--Select--</option>
+            <option value="Ceramics">Just gonna say 'Ceramics' for now</option>
+          </select>
+        </span>
+      </div>
     </div>
   );
 }

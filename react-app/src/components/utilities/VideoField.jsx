@@ -59,13 +59,6 @@ const VideoField = ({ setVideo, video, videoURL, setVideoURL }) => {
 
   return (
     <>
-    <div id="video-field-description">
-      <h3 id="vfd-header">Project Video (Optional)</h3>
-      <p id="vfd-description">Add a video if you want. We don't care, but the Marvel
-      movies make more than the comics...
-      
-      </p>
-    </div>
       <div
         className="drag-drop-box"
         onDrop={handleDrop}
