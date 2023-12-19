@@ -83,7 +83,7 @@ def seed_rewards():
 
 def does_table_exist(table_name, schema_name):
     query = text(
-        """
+        f"""
         SELECT EXISTS (
             SELECT 1
             FROM information_schema.tables
