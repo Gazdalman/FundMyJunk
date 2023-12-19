@@ -143,7 +143,7 @@ const ProjectInfo = ({
         <div id="project-gaol-info">
           <h2>Goal</h2>
           <div id="project-goal-description">
-            <p>This, my friend, is the beautiful number of monies the people will pay us and by extension, YOU! <span style={{ "font-size": "10px" }}>maybe</span></p>
+            <p>This, my friend, is the beautiful number of monies the people will pay us and by extension, YOU! <span style={{ "fontSize": "10px" }}>maybe</span></p>
             <p style={errs.goal ? { "color": "red" } : {}}>{errs.goal ? errs.goal : "(You better put AT LEAST $100)"}</p>
           </div>
         </div>

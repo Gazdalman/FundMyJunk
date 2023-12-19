@@ -30,7 +30,7 @@ function LoginFormModal() {
   };
 
   return (
-    <div>
+    <div id="login-form-modal">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>

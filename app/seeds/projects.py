@@ -48,9 +48,26 @@ def seed_projects():
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
+
+def does_table_exist(table_name, schema_name):
+    query = text(
+        """
+        SELECT EXISTS (
+            SELECT 1
+            FROM information_schema.tables
+            WHERE table_schema = :schema AND table_name = :table
+        );
+        """
+    )
+
+    result = db.session.execute(query, {'schema': schema_name, 'table': table_name})
+    exists = result.scalar()
+    return exists
+
 def undo_projects():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.projects RESTART IDENTITY CASCADE;")
+        if does_table_exist("projects", SCHEMA):
+          db.session.execute(f"TRUNCATE table {SCHEMA}.projects RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM projects"))
 

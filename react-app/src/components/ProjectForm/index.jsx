@@ -40,7 +40,7 @@ const ProjectForm = ({ type, project }) => {
     if (!title || title.length < 3) errors.title = "Title must be at least 3 characters long"
     if (!subtitle || subtitle.length < 10) errors.subtitle = "Subtitle must be at least 3 characters"
     if (!goal || goal < 100 || goal > 100000000) errors.goal = "NO LESS THAN $100! But also no more than $99,999,999 (We ain't that greedy)"
-    if (!image) errors.image = "Gotta have an image"
+    if (!image && !imageURL) errors.image = "Gotta have an image"
     if (!projType) errors.projType = "Couldn't even choose a type huh? No wonder you couldn't make it on Kickstarter..."
     if (!launchDate || !endDate) errors.date = "Do you just uhhhh... not wanna make us... I mean you... money?"
     if (Object.values(errors).length){
@@ -113,7 +113,7 @@ const ProjectForm = ({ type, project }) => {
   useEffect(() => {
     if (type == "edit") {
       const today = new Date().toISOString().split("T")[0];
-      if (today >= project.launchDate) setLaunched(true)
+      if (new Date().getTime() - new Date(project.launchDate).getTime() > 0) setLaunched(true)
     }
   }, [])
 
@@ -161,6 +161,7 @@ const ProjectForm = ({ type, project }) => {
           type={type}
           setTab={setTab}
           errs={errs}
+          launched={launched}
         />}
         <div id="cpb-container">
           {tab=="project-info" && <button id="create-project-btn" disabled={disabled}> Confirm Project</button>}
