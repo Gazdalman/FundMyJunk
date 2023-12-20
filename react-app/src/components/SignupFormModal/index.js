@@ -51,11 +51,11 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
+		<div id="sign-up-modal-form">
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
 				<ul>
-					{(!email || !isValidEmail(email)) && <li>Email must be... well.. an email.</li>}
+					{((!email || !isValidEmail(email)) && focused == "email") && <li>Email must be... well.. an email.</li>}
 				</ul>
 				<div className={`sum-email-field floating-input ${focused == "email" ? 'focused' : ''}`}>
 					<label className={`sef-label input-label ${focused == "email" || email ? 'label-focus' : ''}`}>
@@ -104,7 +104,7 @@ function SignupFormModal() {
 						Password
 					</label>
 					<input
-						type="text"
+						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						onFocus={e => handleFocus("password", e)}
@@ -118,7 +118,7 @@ function SignupFormModal() {
 						Confirm Password
 					</label>
 					<input
-						type="text"
+						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						onFocus={e => handleFocus("confirmPassword", e)}
@@ -129,7 +129,7 @@ function SignupFormModal() {
 				</div>
 				<button type="submit">Sign Up</button>
 			</form>
-		</>
+		</div>
 	);
 }
 

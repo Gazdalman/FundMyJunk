@@ -1,0 +1,33 @@
+#login-form-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+}
+
+#logInRedirect {
+  margin-left: 5px;
+  border: none;
+  background-color: white;
+  color: #951019;
+  font-size: 15px;
+}
+
+#logInRedirect:hover {
+  text-decoration: underline;
+}
+
+#log-in-button,
+#demo-user-btn {
+  width: 100px;
+  height: 25px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: #951019;
+  color: white;
+}
+
+#log-in-button:hover,
+#demo-user-btn:hover {
+  background-color: #620a10;
+}
