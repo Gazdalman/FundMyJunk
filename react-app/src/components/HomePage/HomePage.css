@@ -17,9 +17,15 @@
   margin-top: 20px;
 }
 
+#root {
+  height: fit-content;
+}
+
 #home-page {
   width: 90%;
   margin: auto;
+  padding-top: 75px;
+  height: 2100px;
 }
 
 #hp-bottom {
@@ -61,7 +67,7 @@
 }
 
 #home-page-title {
-  margin-top: 75px;
+  /* margin-top: 75px; */
   text-align: center;
 }
 
@@ -111,6 +117,7 @@ progress::-webkit-progress-value {
   }
 
   #home-page {
-    width: 95%
+    width: 95%;
+    height: 1500px;
   }
 }

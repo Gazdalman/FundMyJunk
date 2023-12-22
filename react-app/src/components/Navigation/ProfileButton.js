@@ -49,7 +49,7 @@ function ProfileButton({ user }) {
     dispatch(logout());
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown" + (showMenu ? (user ? " user-menu" : " non-user-menu") + " visible" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (
@@ -78,6 +78,7 @@ function ProfileButton({ user }) {
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
+              modalClasses={["p-menu-form-btn"]}
               modalComponent={<LoginFormModal />}
               onButtonClick={() => setShowMenu(false)}
             />
@@ -85,6 +86,7 @@ function ProfileButton({ user }) {
             <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}
+              modalClasses={["p-menu-form-btn"]}
               modalComponent={<SignupFormModal />}
               onButtonClick={() => setShowMenu(false)}
             />

@@ -40,8 +40,8 @@ function LoginFormModal() {
   };
 
   return (
-    <div id="login-form-modal">
-      <h1>Log In</h1>
+    <div id="login-modal-container">
+      <h1 id="lm-header">Log In</h1>
       <form id="login-form-modal" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -76,8 +76,8 @@ function LoginFormModal() {
             required
           />
         </div>
-        <button id="log-in-button" type="submit">Log In</button>
-        <button id="demo-user-btn" onClick={loginDemo}>Demo User</button>
+        <button className="account-button" type="submit">Log In</button>
+        <button className="account-button" onClick={loginDemo}>Demo User</button>
         <div>... or
           <OpenModalButton
             modalClasses={["logInRedirect"]}

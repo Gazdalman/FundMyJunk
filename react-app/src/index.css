@@ -1,9 +1,14 @@
 html {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  height: fit-content;
 }
 
 #not-found {
   margin-top: 100px;
+}
+
+#main-content {
+  height: fit-content;
 }
 
 button {
@@ -28,7 +33,7 @@ select {
 
 .floating-input {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .input-label {

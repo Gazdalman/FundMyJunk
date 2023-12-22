@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
+import LoginFormModal from "../LoginFormModal";
+import OpenModalButton from "../OpenModalButton";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -11,6 +13,7 @@ function SignupFormModal() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
+	const [disabled, setDisabled] = useState(false)
 	const [lastName, setLastName] = useState("");
 	const [displayName, setDisplayName] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,8 +34,8 @@ function SignupFormModal() {
 	};
 
 	const handleBlur = () => {
-    setFocused("false");
-  };
+		setFocused("false");
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -50,13 +53,17 @@ function SignupFormModal() {
 		}
 	};
 
+	// useEffect(() => {
+	// 	if (!isValidEmail) setDisabled(true)
+	// 	if (!password.length >= 8) setDisabled(true)
+	// 	if (!firstName) setDisabled(true)
+	// 	if (!)
+	// })
+
 	return (
 		<div id="sign-up-modal-form">
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
-				<ul>
-					{((!email || !isValidEmail(email)) && focused == "email") && <li>Email must be... well.. an email.</li>}
-				</ul>
 				<div className={`sum-email-field floating-input ${focused == "email" ? 'focused' : ''}`}>
 					<label className={`sef-label input-label ${focused == "email" || email ? 'label-focus' : ''}`}>
 						Email*
@@ -71,6 +78,7 @@ function SignupFormModal() {
 						required
 					/>
 				</div>
+				{errors.email ? <p className="field-req">{errors.email}</p> : <p className="field-req">Email must be, as you can guess, an email</p>}
 				<div className={`sum-username-field floating-input ${focused == "username" ? 'focused' : ''}`}>
 					<label className={`suf-label input-label ${focused == "username" || username ? 'label-focus' : ''}`}>
 						Username*
@@ -85,6 +93,7 @@ function SignupFormModal() {
 						required
 					/>
 				</div>
+				{errors.username ? <p className="field-req">{errors.username}</p> : <p className="field-req">Username must be a least 5 characters</p>}
 				<div className={`sum-first-field floating-input ${focused == "firstName" ? 'focused' : ''}`}>
 					<label className={`sff-label input-label ${focused == "firstName" || firstName ? 'label-focus' : ''}`}>
 						First Name*
@@ -99,6 +108,7 @@ function SignupFormModal() {
 						required
 					/>
 				</div>
+					{errors.firstName ? <p className="field-req">{errors.firstName}</p> : <p className="field-req">Must put in your first name</p>}
 				<div className={`sum-password-field floating-input ${focused == "password" ? 'focused' : ''}`}>
 					<label className={`spf-label input-label ${focused == "password" || password ? 'label-focus' : ''}`}>
 						Password
@@ -113,11 +123,13 @@ function SignupFormModal() {
 						required
 					/>
 				</div>
-				<div className={`sum-confirm-field floating-input ${focused == "confirmPassword" ? 'focused' : ''}`}>
+				{errors.password ? <p className="field-req">{errors.password}</p> : <p className="field-req">Password must be at least 8 characters</p>}
+				<div style={!confirmPassword || confirmPassword == password ? {"marginBottom": "38px"} : {}} className={`sum-confirm-field floating-input ${focused == "confirmPassword" ? 'focused' : ''}`}>
 					<label className={`scf-label input-label ${focused == "confirmPassword" || confirmPassword ? 'label-focus' : ''}`}>
 						Confirm Password
 					</label>
 					<input
+						// disabled={!password.length}
 						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
@@ -127,7 +139,17 @@ function SignupFormModal() {
 						required
 					/>
 				</div>
-				<button type="submit">Sign Up</button>
+				<p style={{"color": "red"}} className="field-req">{confirmPassword && confirmPassword != password ? "Passwords don't match": ""}</p>
+				<div id="signup-modal-btn">
+					<button disabled={!(confirmPassword && confirmPassword == password)} className="account-button" type="submit">Sign Up</button>
+					<div>... or
+						<OpenModalButton
+							modalClasses={["logInRedirect"]}
+							modalComponent={<LoginFormModal />}
+							buttonText="Log In Here"
+						/>
+					</div>
+				</div>
 			</form>
 		</div>
 	);

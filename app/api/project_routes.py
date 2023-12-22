@@ -33,7 +33,7 @@ def get_home_projects():
   Returns home page projects
   """
 
-  projects = Project.query.filter(Project.launch_date <= datetime.now()).paginate(page=1, per_page=6)
+  projects = Project.query.filter(Project.launch_date <= datetime.now(), Project.end_date >= datetime.now()).paginate(page=1, per_page=6)
 
   proj_dict = {project.id: project.to_dict() for project in projects}
 

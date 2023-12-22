@@ -19,6 +19,7 @@ import EditStoryForm from "./components/ProjectPage/PPForms/EditStory";
 import NotFound from "./components/utilities/NotFound";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 import PPRewardTab from "./components/ProjectPage/PPForms/PPReward";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <div id="main-content">
       {isLoaded && (
         <Switch>
           <Route exact path="/">
@@ -75,7 +77,8 @@ function App() {
             <Redirect to="/not_found"/>
           </Route>
         </Switch>
-      )}
+      )}</div>
+      <Footer />
     </>
   );
 }
