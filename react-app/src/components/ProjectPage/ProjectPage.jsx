@@ -88,9 +88,9 @@ const ProjectPage = () => {
             modalComponent={user ? <PledgeForm projId={project.id} /> : <LoginFormModal />}
           /> :
           (!showForm && <div id="user-project-buttons">
-          <button onClick={e => editClick(e, project.id)}>Edit Project</button>
+          <button id="owner-edit-btn" onClick={e => editClick(e, project.id)}>Edit Project</button>
           <OpenModalButton
-            modalClasses={["delete-button"]}
+            modalClasses={["owner-delete-button"]}
             modalComponent={<DeleteModal project={project} type={"project"} />}
             buttonText={"Delete Project"}
           />

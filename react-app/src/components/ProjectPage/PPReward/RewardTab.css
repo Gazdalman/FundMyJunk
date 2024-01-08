@@ -19,8 +19,11 @@
   background-color: #620a10;
 }
 
-#pp-rcd-pledge-button {
-  margin: auto;
+.no-user-login-pledge {
+  background-color: #951019;
+  color: white;
+  border-radius: 5px;
+  height: 25px;
 }
 
 #ms-header,
@@ -89,6 +92,29 @@
   margin-top: 20px;
 }
 
+#reward-buttons > * {
+  width: 105px;
+}
+
+#edit-reward-button {
+  margin-left: 10px;
+}
+
+.pp-item-form {
+  background-color: #951019;
+  color: white;
+  border-radius: 5px;
+}
+
+.pp-item-form:hover {
+  background-color: #620a10;
+}
+
+#add-item-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 
 .thumbnails-noname {
   width: 100%;

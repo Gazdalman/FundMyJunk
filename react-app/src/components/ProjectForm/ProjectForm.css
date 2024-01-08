@@ -38,6 +38,7 @@
 #project-subtitle-area,
 #project-goal-area {
   border-bottom: 1px lightgrey solid;
+  padding-bottom: 20px;
 }
 
 #story-form-container {
@@ -136,9 +137,30 @@
   justify-content: center;
 }
 
+#location-input {
+  margin-bottom: 10px;
+}
+
+.project-next-button {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+.project-next-button:hover {
+  background-color: #620a10;
+}
+
 #to-project-details {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
   width: 125px;
   height: 35px;
+}
+
+#to-project-details:hover {
+  background-color: #620a10;
 }
 
 #project-image-field,

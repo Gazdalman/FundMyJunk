@@ -111,9 +111,35 @@
   margin-top: 5px;
 }
 
-#user-project-buttons  > button{
-  width: 50%;
+#user-project-buttons > button{
+  width: 48%;
   height: 40px;
+}
+
+.owner-delete-button {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+.owner-delete-button:hover {
+  background-color: #620a10;
+}
+
+#owner-edit-btn {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#add-reward-button {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#owner-edit-btn:hover {
+  background-color: #620a10;
 }
 
 #pp-details-main {

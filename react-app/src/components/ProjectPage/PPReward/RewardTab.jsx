@@ -10,6 +10,7 @@ import DeleteModal from "../../utilities/deleteModal";
 import PPEditRewardTab from "../PPForms/EditReward";
 import RewardItemForm from "../../ProjectForm/Rewards/RewardItem";
 import EditRewardItemForm from "../PPForms/EditRewardItem";
+import LoginFormModal from "../../LoginFormModal";
 
 const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm }) => {
   const dispatch = useDispatch()
@@ -93,11 +94,14 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
             </div>
             <div id="pp-rcd-lower">
               {reward.description ? <p id="pp-rcd-desc">{reward.description}</p> : <p>No Description</p>}
-              {(user && user == projectOwner) ? <OpenModalButton
+              {(user && user == projectOwner) ?
+              <div id="add-item-btn">
+              <OpenModalButton
                 modalClasses={["pp-item-form"]}
                 modalComponent={<RewardItemForm />}
                 buttonText={"Add Item"}
-              /> : null}
+              />
+              </div> : null}
               {reward.items.map(item => (
                 <div key={item.id} id="pp-prod-item-card">
                   <div id="pp-rcd-item">
@@ -136,7 +140,11 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
                     <button onClick={e => openRewardForm(e, "edit", reward)} id="edit-reward-button">Edit Reward</button>
                   </>
                 ) :
-                  <button id="no-user-login-pledge" onClick={e => loginRedirect(e)}>Login to Pledge</button>
+                  <OpenModalButton
+                  modalClasses={["no-user-login-pledge"]}
+                  modalComponent={<LoginFormModal />}
+                  buttonText={"Login to Pledge"}
+                  />
                 }
               </div>
             </div>
