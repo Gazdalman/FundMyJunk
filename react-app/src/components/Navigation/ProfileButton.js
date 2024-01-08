@@ -64,13 +64,13 @@ function ProfileButton({ user }) {
             <li>{user.username}</li>
             <li>{user.email}</li>
             {location.pathname != "/profile" && <li>
-              <button onClick={redirect}>Your Account</button>
+              <button className="user-btn" onClick={redirect}>Your Account</button>
             </li>}
             {location.pathname != "/new_project" && <li>
-              <button onClick={createRedirect}>Start a Project</button>
+              <button className="user-btn" onClick={createRedirect}>Start a Project</button>
               </li>}
             <li>
-              <button onClick={handleLogout}>Log Out</button>
+              <button className="user-btn" onClick={handleLogout}>Log Out</button>
             </li>
           </>
         ) : (

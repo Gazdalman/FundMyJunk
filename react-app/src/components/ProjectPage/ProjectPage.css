@@ -82,6 +82,13 @@
   width: 80%;
   margin: auto;
   margin-top: 5px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#pp-pledge-button:hover {
+  background-color: #620a10;
 }
 
 #pp-image {

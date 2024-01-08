@@ -3,12 +3,61 @@
   height: auto;
 }
 
+#reward-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#pp-rcd-pledge-button {
+  background-color: #951019;
+  color: white;
+  border-radius: 5px;
+  height: 25px;
+}
+
+#pp-rcd-pledge-button:hover {
+  background-color: #620a10;
+}
+
+#pp-rcd-pledge-button {
+  margin: auto;
+}
+
+#ms-header,
+#md-header,
+#mq-header {
+  font-weight: bold;
+}
+
+#pp-rcd-amount {
+  text-align: center;
+}
+
+#pp-rcd-title {
+  text-align: center;
+}
+
+#pp-reward-card-image {
+  display: flex;
+  justify-content: center;
+}
+
+#pp-rcd-mid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#pp-rcd-mid > * {
+  text-align: center;
+}
+
 .pp-item-form {
   width: 100%;
 }
 
 #pp-prod-item-card {
   display: flex;
+  margin-bottom: 20px;
 }
 
 #pp-item-image {
@@ -53,6 +102,11 @@
   flex-direction: column;
 }
 
+#rewards-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 #pp-rcd-item {
   width: 60vw;

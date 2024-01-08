@@ -1,6 +1,7 @@
 .home-project-card {
   width: 375px;
   border: solid 1px black;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,6 +94,7 @@ progress::-webkit-progress-value {
 
 #hp-card-img {
   border-bottom: 1px solid grey;
+  border-radius: 10px;
 }
 
 #home-page-cards {

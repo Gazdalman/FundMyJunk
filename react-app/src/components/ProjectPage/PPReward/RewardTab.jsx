@@ -60,7 +60,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
   }
 
   return rewards ? (
-    !showForm ? (<div>
+    !showForm ? (<div id="rewards-div">
       <h2>Rewards</h2>
       {rewards.length < 1 ? <span>No rewards listed for this project</span> : null}
       {rewards.map(reward => (
@@ -124,20 +124,21 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
                   </div> : null}
                 </div>
               ))}
-              {user ? (user != projectOwner ?
-                <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Burn ${addCommas(reward.amount)}</button> :
-                <div>
-                  <OpenModalButton
-                    modalClasses={["delete-reward-button"]}
-                    modalComponent={<DeleteModal reward={reward} type={"reward"} />}
-                    buttonText={"Delete Reward"}
-                  />
-                  <button onClick={e => openRewardForm(e, "edit", reward)} id="edit-reward-button">Edit Reward</button>
-                </div>
-
-              ) :
-                <button id="no-user-login-pledge" onClick={e => loginRedirect(e)}>Login to Pledge</button>
-              }
+              <div id="reward-buttons">
+                {user ? (user != projectOwner ?
+                  <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Burn ${addCommas(reward.amount)}</button> :
+                  <>
+                    <OpenModalButton
+                      modalClasses={["delete-reward-button"]}
+                      modalComponent={<DeleteModal reward={reward} type={"reward"} />}
+                      buttonText={"Delete Reward"}
+                    />
+                    <button onClick={e => openRewardForm(e, "edit", reward)} id="edit-reward-button">Edit Reward</button>
+                  </>
+                ) :
+                  <button id="no-user-login-pledge" onClick={e => loginRedirect(e)}>Login to Pledge</button>
+                }
+              </div>
             </div>
           </div>
 

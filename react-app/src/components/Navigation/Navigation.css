@@ -23,6 +23,23 @@
   width: 30px;
 }
 
+.user-btn {
+  width: 120px;
+  height: 25px;
+  margin-bottom: 5px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+.user-btn:hover {
+  background-color: #620a10;
+}
+
+#p-menu.user-menu {
+  height: fit-content;
+}
+
 nav {
   /* border-bottom: grey 1px solid; */
   width: 100%;
