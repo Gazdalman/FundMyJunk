@@ -20,6 +20,10 @@
   width: 30vw;
 }
 
+#reward-input-container {
+  margin-top: 100px;
+}
+
 #main-cat-info>h2,
 #second-cat-info>h2,
 #location-info>h2 {

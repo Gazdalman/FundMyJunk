@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import PhotoField from "../../utilities/PhotoField";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import RewardItemForm from "./RewardItem";
 import { useDispatch } from "react-redux";
 import { createReward } from "../../../store/project";
@@ -8,6 +8,7 @@ import OpenModalButton from "../../OpenModalButton";
 import SkipStep from "../../utilities/SkipStep";
 
 const RewardInfo = () => {
+  const location = useLocation();
   const dispatch = useDispatch()
   const history = useHistory();
   const [focused, setFocused] = useState("");

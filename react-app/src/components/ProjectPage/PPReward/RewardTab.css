@@ -24,6 +24,7 @@
   color: white;
   border-radius: 5px;
   height: 25px;
+  width: 120px;
 }
 
 #ms-header,
@@ -92,7 +93,7 @@
   margin-top: 20px;
 }
 
-#reward-buttons > * {
+#reward-buttons > *:not(#no-user-login-pledge) {
   width: 105px;
 }
 
