@@ -14,9 +14,9 @@ function LoginFormModal() {
   const { closeModal } = useModal();
   const [focused, setFocused] = useState("");
 
-  const loginDemo = (e) => {
+  const loginDemo = async (e) => {
     e.preventDefault()
-    dispatch(login('demoNoodle', 'password'))
+    await dispatch(login('demoNoodle', 'password'))
     closeModal()
   }
 
