@@ -10,7 +10,7 @@ class Reward(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
-  image = db.Column(db.String(50), nullable=False)
+  image = db.Column(db.String(1000), nullable=False)
   title = db.Column(db.String(50), nullable=False)
   description = db.Column(db.String(2000))
   physical_items = db.Column(db.Boolean, nullable=False, default=False)
