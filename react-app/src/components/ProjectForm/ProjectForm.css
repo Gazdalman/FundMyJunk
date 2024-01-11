@@ -20,8 +20,25 @@
   width: 30vw;
 }
 
-#reward-input-container {
+#reward-form {
   margin-top: 100px;
+}
+
+#reward-item-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#item-dnd-box {
+  width: 500px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  border-radius: 10px;
+  background-color: rgb(213, 213, 213);
+  margin: 0, 15px;
 }
 
 #main-cat-info>h2,

@@ -60,6 +60,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
   return (
     <div id="reward-item-input-div">
       <form id="reward-item-form" onSubmit={addItem} encType="multipart/form-data">
+        <h2>Add Item</h2>
         <div className={`item-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
           <label className={`itf-label input-label ${focused == "title" || title ? 'label-focus' : ''}`}>
             Title
@@ -88,6 +89,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
           />
         </div>
         (Image is optional for item)
+        <div id="item-dnd-box">
         <PhotoField
           extraClass={"item-form-image"}
           image={image}
@@ -95,6 +97,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
           setImageURL={setImageURL}
           imageURL={imageURL}
         />
+        </div>
         <button id="hide-item-form" onClick={cancel}>Cancel</button>
         <button disabled={title.length < 3 || !quantity} id="save-item">Add Item</button>
       </form>

@@ -82,6 +82,7 @@ const EditRewardItemForm = ({ item, projectId }) => {
           />
         </div>
         (Image is optional for item)
+        <div id="item-dnd-box">
         <PhotoField
           extraClass={"item-form-image"}
           image={image}
@@ -89,6 +90,7 @@ const EditRewardItemForm = ({ item, projectId }) => {
           setImageURL={setImageURL}
           imageURL={imageURL}
         />
+        </div>
         <button id="hide-item-form" onClick={cancel}>Cancel</button>
         <button disabled={title.length < 3 || !quantity} id="save-item" onClick={addItem}>Add Item</button>
       </form>

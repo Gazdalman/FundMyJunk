@@ -55,7 +55,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button id="p-menu-button" onClick={openMenu}>
-        <img id="profile-pic" src="https://fmjbucket.s3.us-east-2.amazonaws.com/677b3a3f405b4f0aa984a2102a32dfcc.png"/>
+        <img id="profile-pic" src="https://fmjbucket.s3.us-east-2.amazonaws.com/79dd0d67ffc34097b913489257727a00.gif"/>
         {/* <i className="fas fa-user-circle" /> */}
       </button>
       <ul id="p-menu" className={ulClassName} ref={ulRef}>
