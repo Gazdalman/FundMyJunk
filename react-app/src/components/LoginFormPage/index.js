@@ -3,6 +3,7 @@ import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import './LoginForm.css';
+import OpenModalButton from "../OpenModalButton";
 
 function LoginFormPage() {
   const history = useHistory()
@@ -29,8 +30,9 @@ function LoginFormPage() {
     const data = await dispatch(login(cred, password));
     if (data) {
       setErrors(data);
+    } else {
+      return history.goBack()
     }
-    return history.goBack()
   };
 
   const loginDemo = (e) => {
@@ -40,9 +42,9 @@ function LoginFormPage() {
   }
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+    <div id="login-page">
+      <h1 id="login-page-h1">Log In</h1>
+      <form id="login-page-form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
@@ -62,7 +64,7 @@ function LoginFormPage() {
             required
           />
         </div>
-        <div className={`lm-email-field floating-input ${focused == "password" ? 'focused' : ''}`}>
+        <div className={`lm-password-field floating-input ${focused == "password" ? 'focused' : ''}`}>
           <label className={`lef-label input-label ${focused == "password" || password ? 'label-focus' : ''}`}>
             Password
           </label>
@@ -76,10 +78,16 @@ function LoginFormPage() {
             required
           />
         </div>
+        <div id="login-page-buttons">
         <button className="account-button" type="submit">Log In</button>
         <button className="account-button" onClick={loginDemo}>Demo User</button>
+        </div>
+        <div id="signup-switch">
+          <span>...or </span>
+          <a href="/signup">Sign Up</a>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

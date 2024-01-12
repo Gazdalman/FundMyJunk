@@ -53,12 +53,9 @@ function SignupFormPage() {
 	};
 
 	return (
-		<>
-			<h1>Sign Up</h1>
+		<div id="signup-page">
+			<h1 id="signup-page-title">Sign Up</h1>
 			<form onSubmit={handleSubmit}>
-				<ul>
-					{(!email || !isValidEmail(email)) && <li>Email must be... well.. an email.</li>}
-				</ul>
 				<div className={`sum-email-field floating-input ${focused == "email" ? 'focused' : ''}`}>
 					<label className={`sef-label input-label ${focused == "email" || email ? 'label-focus' : ''}`}>
 						Email*
@@ -73,6 +70,7 @@ function SignupFormPage() {
 						required
 					/>
 				</div>
+				{errors.email ? <p className="field-req">{errors.email}</p> : <p className="field-req">Email must be, as you can guess, an email</p>}
 				<div className={`sum-username-field floating-input ${focused == "username" ? 'focused' : ''}`}>
 					<label className={`suf-label input-label ${focused == "username" || username ? 'label-focus' : ''}`}>
 						Username*
@@ -87,6 +85,7 @@ function SignupFormPage() {
 						required
 					/>
 				</div>
+				{errors.username ? <p className="field-req">{errors.username}</p> : <p className="field-req">Username must be a least 5 characters</p>}
 				<div className={`sum-first-field floating-input ${focused == "firstName" ? 'focused' : ''}`}>
 					<label className={`sff-label input-label ${focused == "firstName" || firstName ? 'label-focus' : ''}`}>
 						First Name*
@@ -101,12 +100,13 @@ function SignupFormPage() {
 						required
 					/>
 				</div>
+					{errors.firstName ? <p className="field-req">{errors.firstName}</p> : <p className="field-req">Must put in your first name</p>}
 				<div className={`sum-password-field floating-input ${focused == "password" ? 'focused' : ''}`}>
 					<label className={`spf-label input-label ${focused == "password" || password ? 'label-focus' : ''}`}>
 						Password
 					</label>
 					<input
-						type="text"
+						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						onFocus={e => handleFocus("password", e)}
@@ -115,12 +115,14 @@ function SignupFormPage() {
 						required
 					/>
 				</div>
-				<div className={`sum-confirm-field floating-input ${focused == "confirmPassword" ? 'focused' : ''}`}>
+				{errors.password ? <p className="field-req">{errors.password}</p> : <p className="field-req">Password must be at least 8 characters</p>}
+				<div style={!confirmPassword || confirmPassword == password ? {"marginBottom": "38px"} : {}} className={`sum-confirm-field floating-input ${focused == "confirmPassword" ? 'focused' : ''}`}>
 					<label className={`scf-label input-label ${focused == "confirmPassword" || confirmPassword ? 'label-focus' : ''}`}>
 						Confirm Password
 					</label>
 					<input
-						type="text"
+						// disabled={!password.length}
+						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						onFocus={e => handleFocus("confirmPassword", e)}
@@ -129,9 +131,16 @@ function SignupFormPage() {
 						required
 					/>
 				</div>
-				<button type="submit">Sign Up</button>
+				<p style={{"color": "red"}} className="field-req">{confirmPassword && confirmPassword != password ? "Passwords don't match": ""}</p>
+				<div id="signup-modal-btn">
+					<button disabled={!(confirmPassword && confirmPassword == password)} className="account-button" type="submit">Sign Up</button>
+					<div id="login-switch">
+						<span>... or </span>
+						<a href="/login">Log In</a>
+					</div>
+				</div>
 			</form>
-		</>
+		</div>
   );
 }
 

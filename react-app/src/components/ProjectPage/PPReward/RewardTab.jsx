@@ -8,9 +8,9 @@ import { useHistory } from "react-router-dom"
 import { deleteReward } from "../../../store/project";
 import DeleteModal from "../../utilities/deleteModal";
 import PPEditRewardTab from "../PPForms/EditReward";
-import RewardItemForm from "../../ProjectForm/Rewards/RewardItem";
 import EditRewardItemForm from "../PPForms/EditRewardItem";
 import LoginFormModal from "../../LoginFormModal";
+import AddRewardItem from "../PPForms/AddRewardItem";
 
 const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm }) => {
   const dispatch = useDispatch()
@@ -98,7 +98,10 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
               <div id="add-item-btn">
               <OpenModalButton
                 modalClasses={["pp-item-form"]}
-                modalComponent={<RewardItemForm />}
+                modalComponent={<AddRewardItem
+                  rewardId={reward.id}
+                  projectId={projId}
+                  />}
                 buttonText={"Add Item"}
               />
               </div> : null}

@@ -91,6 +91,21 @@ export const editProject = (project, id) => async dispatch => {
   return editedProject
 }
 
+export const createItem = (newItem, rewardId) => async dispatch => {
+  const res = await fetch(`/api/rewards/${rewardId}/items/new`, {
+    method: "POST",
+    body: newItem
+  })
+
+  const item = await res.json();
+
+  if (res.ok) {
+    return "okay"
+  }
+
+  return item;
+}
+
 export const editStory = (story, storyId) => async dispatch => {
   const res = await fetch(`/api/stories/${storyId}/edit`, {
     method: "PUT",

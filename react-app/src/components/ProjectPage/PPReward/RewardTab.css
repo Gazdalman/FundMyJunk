@@ -3,6 +3,18 @@
   height: auto;
 }
 
+#delete-reward-button,
+#edit-reward-button {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#delete-reward-button:hover,
+#edit-reward-button:hover {
+  background-color: #620a10;
+}
+
 #reward-buttons {
   display: flex;
   justify-content: center;
@@ -62,6 +74,8 @@
 #pp-prod-item-card {
   display: flex;
   margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
 }
 
 #pp-item-image {
@@ -72,7 +86,20 @@
 
 #item-button-div {
   display: flex;
-  flex-direction: column;
+  width: 250px;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+#item-button-div > * {
+  width: 85px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#item-button-div > *:hover {
+  background-color: #620a10;
 }
 
 #preview-image {

@@ -7,6 +7,12 @@
   justify-content: center;
 }
 
+.home-project-card:hover {
+  height: 105%;
+  width: 105%;
+  box-shadow: 0 0 20px #951019;
+}
+
 #hp-mid {
   display: flex;
   justify-content: space-between;
