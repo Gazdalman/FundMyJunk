@@ -41,6 +41,10 @@
   margin: 0, 15px;
 }
 
+#reward-form-header {
+  text-align: center;
+}
+
 #main-cat-info>h2,
 #second-cat-info>h2,
 #location-info>h2 {

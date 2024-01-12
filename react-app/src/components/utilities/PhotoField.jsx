@@ -59,9 +59,13 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
   };
 
   const removeImage = (e) => {
-    e.preventDefault()
-    setImageURL("")
-    setImage("")
+    e.preventDefault();
+    setImageURL("");
+    setImage("");
+    setFilename("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
   }
 
   return (

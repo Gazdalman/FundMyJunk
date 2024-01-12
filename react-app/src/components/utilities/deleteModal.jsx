@@ -29,7 +29,7 @@ const DeleteModal = ({ method, project, reward, item, projId, type }) => {
   }
 
   return (
-    <>
+    <div id="delete-modal">
       <h1 id="delete-form-title">Confirm Delete</h1>
         <p
           style={{ width: 200 }}
@@ -56,7 +56,7 @@ const DeleteModal = ({ method, project, reward, item, projId, type }) => {
             type === "reward" ? "Keep Reward" :
               (type == "project" ? "Keep Project" :
                 "Keep Item")})</button>
-    </>
+    </div>
   )
 }
 

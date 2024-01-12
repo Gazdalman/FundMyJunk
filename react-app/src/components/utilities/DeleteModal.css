@@ -1,9 +1,21 @@
 #confirm-delete:hover {
-  background-color: rgb(149, 37, 37);
+  background-color: #620a10;
+}
+
+#delete-text {
+  text-align: center;
+}
+
+#delete-modal {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
 }
 
 #confirm-delete {
-  background-color: rgb(247, 87, 87);
+  background-color: #951019;
+  color: white;
 }
 
 #modal-content #cancel-delete:hover {
