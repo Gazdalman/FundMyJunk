@@ -127,10 +127,6 @@ const RewardInfo = () => {
       setDisabled(true)
     }
 
-    if (description && description.length < 10) {
-      setDisabled(true)
-    }
-
   })
 
   return !itemForm ? (!loading ? (
