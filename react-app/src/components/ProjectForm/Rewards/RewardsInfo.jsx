@@ -23,6 +23,7 @@ const RewardInfo = () => {
   const [selectedQuantity, setSelectedQuantity] = useState("")
   const [selectedItem, setSelectedItem] = useState("")
   const [amount, setAmount] = useState("")
+  const [errors, setErrors] = useState("")
   const [image, setImage] = useState("")
   const [imageURL, setImageURL] = useState("")
   const [description, setDescription] = useState("")
@@ -79,12 +80,12 @@ const RewardInfo = () => {
 
   const deleteItem = (key, e) => {
     e.preventDefault()
-    const newItems = {...items}
-    const newItemData = {...itemData}
+    const newItems = { ...items }
+    const newItemData = { ...itemData }
     delete newItems[key]
     delete newItemData[key]
-    setItems({...newItems})
-    setItemData({...newItemData})
+    setItems({ ...newItems })
+    setItemData({ ...newItemData })
   }
 
   const handleRewardSubmit = async (e) => {
@@ -139,7 +140,7 @@ const RewardInfo = () => {
           <h1 id="reward-form-header">Add a Reward</h1>
           <div className={`reward-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
             <label className={`rtf-label input-label ${focused == "title" || rewardTitle ? 'label-focus' : ''}`}>
-              Title
+              {focused == "title" || rewardTitle ? "Title" : "Title*"}
             </label>
             <input
               type="text"
@@ -149,10 +150,12 @@ const RewardInfo = () => {
               onBlur={handleBlur}
               className="rtf-input input-field"
             />
+            <span id="length-counter"><span style={rewardTitle.length > 5 ? { "color": "green" } : { "color": "red" }}>{rewardTitle.length}</span>/50</span>
           </div>
+          {errors.email ? <p className="field-req">{errors.email}</p> : <p className="field-req">Give us a nice title for your reward.</p>}
           <div className={`reward-amount-field floating-input ${focused == "amount" ? 'focused' : ''}`}>
             <label className={`raf-label input-label ${focused == "amount" || amount ? 'label-focus' : ''}`}>
-              Amount
+              {focused == "amount" || rewardTitle ? "Amount" : "Amount*"}
             </label>
             <input
               type="number"
@@ -162,7 +165,9 @@ const RewardInfo = () => {
               onBlur={handleBlur}
               className="raf-input input-field"
             />
+
           </div>
+          {errors.email ? <p className="field-req">{errors.email}</p> : <p className="field-req">Set the amount a backer has to pledge to earn this reward</p>}
           <div id="reward-dnd-box">
             <PhotoField
               image={image}
@@ -175,16 +180,15 @@ const RewardInfo = () => {
             <h4>Items</h4>
             {Object.values(items) && Object.values(items).map((item) => (
               <>
-              <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
-              <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
+                <span >{item.quantity ? `${item.quantity}x` : ""} {item.title}</span>
+                <button onClick={(e) => deleteItem(item.index, e)} id="edit-item-form">Remove Item</button>
               </>
             ))}
             <button id="show-item-form" onClick={showItemForm}>Add Item</button>
-
           </div>
-          <div className={`reward-description-field floating-input ${focused == "description" ? 'focused' : ''}`}>
+          <div id="reward-description-field" className={`reward-description-field floating-input ${focused == "description" ? 'focused' : ''}`}>
             <label className={`rdf-label input-label ${focused == "description" || description ? 'label-focus' : ''}`}>
-              Description
+              {focused == "description" || description ? "Description" : "Description (Optional)"}
             </label>
             <input
               type="text"
@@ -194,58 +198,65 @@ const RewardInfo = () => {
               onBlur={handleBlur}
               className="rdf-input input-field"
             />
+            <span id="length-counter"><span style={{ "color": "green" }}>{description.length}</span>/2000</span>
           </div>
-          <div id="physical-items">
-            <label>
-              <input
-                value="true"
-                type="radio"
-                checked={selectedItem == "true"}
-                onChange={handleItemChange}
-              />
-              Physical Items
-            </label>
-            <label>
-              <input
-                value="false"
-                type="radio"
-                checked={selectedItem == "false"}
-                onChange={handleItemChange}
-              />
-              Digital Goods Only
-            </label>
+          <div id="pi-div">
+            <p>Choose the types of items*</p>
+            <div id="physical-items">
+              <label>
+                <input
+                  value="true"
+                  type="radio"
+                  checked={selectedItem == "true"}
+                  onChange={handleItemChange}
+                />
+                Physical Items
+              </label>
+              <label>
+                <input
+                  value="false"
+                  type="radio"
+                  checked={selectedItem == "false"}
+                  onChange={handleItemChange}
+                />
+                Digital Goods Only
+              </label>
+            </div>
           </div>
-          <div id="shipping-radio">
-            <label className="shipping-option">
-              <input
-                disabled={selectedItem == "false"}
-                type="radio"
-                value="Ships to anywhere"
-                checked={selectedShipping === "Ships to anywhere"}
-                onChange={handleShippingChange}
-              />
-              Ships to anywhere in the world
-            </label>
-            <label className="shipping-option">
-              <input
-                disabled={selectedItem == "false"}
-                type="radio"
-                value="Local event"
-                checked={selectedShipping === "Local event"}
-                onChange={handleShippingChange}
-              />
-              Local pickup (not sketchy AT ALL), event, or service (no shipping)
-            </label>
-            <label className="shipping-option">
-              <input
-                disabled={selectedItem == "true"}
-                type="radio"
-                value="Digital rewards"
-                checked={selectedShipping === "Digital rewards"}
-                onChange={handleShippingChange}
-              />
-              Digital Reward (no shipping)
-            </label>
+          <div id="sr-div">
+            <p>Choose your shipping type*</p>
+            <div id="shipping-radio">
+              <label className="shipping-option">
+                <input
+                  disabled={selectedItem == "false"}
+                  type="radio"
+                  value="Ships to anywhere"
+                  checked={selectedShipping === "Ships to anywhere"}
+                  onChange={handleShippingChange}
+                />
+                Ships to anywhere in the world
+              </label>
+              <label className="shipping-option">
+                <input
+                  disabled={selectedItem == "false"}
+                  type="radio"
+                  value="Local event"
+                  checked={selectedShipping === "Local event"}
+                  onChange={handleShippingChange}
+                />
+                Local pickup (not sketchy AT ALL), event, or service (no shipping)
+              </label>
+              <label className="shipping-option">
+                <input
+                  disabled={selectedItem == "true"}
+                  type="radio"
+                  value="Digital rewards"
+                  checked={selectedShipping === "Digital rewards"}
+                  onChange={handleShippingChange}
+                />
+                Digital Reward (no shipping)
+              </label>
+            </div>
           </div>
           {selectedShipping && <input
             value={deliveryDate}
@@ -254,50 +265,53 @@ const RewardInfo = () => {
             onChange={(e) => setDeliveryDate(e.target.value)}
             className="input-field"
           />}
-          <div id="quantity-input-field">
-            <label>
-              <input
-                value="unlimited"
-                type="radio"
-                checked={selectedQuantity === "unlimited"}
-                onChange={handleQuantityChange}
-              />
-              Unlimited
-            </label>
-            <label>
-              <input
-                value="limited"
-                type="radio"
-                checked={selectedQuantity === "limited"}
-                onChange={handleQuantityChange}
-              />
-              Limited
-            </label>
-          </div>
-          {selectedQuantity == "limited" &&
-            <div className={`reward-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
-              <label className={`rqf-label input-label ${focused == "quantity" || quantity != "" ? 'label-focus' : ''}`}>
-                Quantity
+          <div id="quant-div">
+            <p>Choose the quantity of this reward available*</p>
+            <div id="quantity-input-field">
+              <label>
+                <input
+                  value="unlimited"
+                  type="radio"
+                  checked={selectedQuantity === "unlimited"}
+                  onChange={handleQuantityChange}
+                />
+                Unlimited
               </label>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                onFocus={() => handleFocus("quantity")}
-                onBlur={() => handleBlur("quantity")}
-                className="rqf-input input-field"
-              />
+              <label>
+                <input
+                  value="limited"
+                  type="radio"
+                  checked={selectedQuantity === "limited"}
+                  onChange={handleQuantityChange}
+                />
+                Limited
+              </label>
             </div>
-          }
+            {selectedQuantity == "limited" &&
+              <div className={`reward-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
+                <label className={`rqf-label input-label ${focused == "quantity" || quantity != "" ? 'label-focus' : ''}`}>
+                  Quantity*
+                </label>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  onFocus={() => handleFocus("quantity")}
+                  onBlur={() => handleBlur("quantity")}
+                  className="rqf-input input-field"
+                />
+              </div>
+            }
+          </div>
           <div id="reward-preview-div">
             <div id="reward-preview">
               <div id="preview-image">
-                <img src={imageURL} />
+                {imageURL ? <img src={imageURL} /> : <p>ADD IMAGE</p>}
               </div>
               <div id="preview-mid">
                 <h3>Pledge ${amount ? amount : 1} or more</h3>
                 <h4>{rewardTitle ? rewardTitle : "Totally Legit Project Title Here"}</h4>
-                <h5>{description ? description : "This is where the description of your pyramid scheme will go."}</h5>
+                <h5 id="preview-description">{description ? description : "This is where the description of your pyramid scheme will go."}</h5>
                 <h6>Includes:</h6>
                 <ul>
                   {Object.values(items).length > 0 ? Object.values(items).map(item => (
@@ -316,23 +330,23 @@ const RewardInfo = () => {
           </div>
           <button disabled={disabled} >Add Reward</button>
         </form>
-          <OpenModalButton
-          modalComponent={<SkipStep skipStep={skipStep}/>}
+        <OpenModalButton
+          modalComponent={<SkipStep skipStep={skipStep} />}
           buttonText={"Skip Step"}
           modalClasses={["skip-step-button"]}
-          />
+        />
       </div>
     </div >
 
-  ): <h1>We Loadin...</h1>) : <RewardItemForm
-  setItems={setItems}
-  items={items}
-  setItemData={setItemData}
-  itemData={itemData}
-  setItemForm={setItemForm}
-  itemForm={itemForm}
-  index={index}
-  setIndex={setIndex}
+  ) : <h1>We Loadin...</h1>) : <RewardItemForm
+    setItems={setItems}
+    items={items}
+    setItemData={setItemData}
+    itemData={itemData}
+    setItemForm={setItemForm}
+    itemForm={itemForm}
+    index={index}
+    setIndex={setIndex}
   />
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useModal } from "../../../context/Modal";
 import PhotoField from "../../utilities/PhotoField";
 
-const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setIndex }) => {
+const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setIndex, setItemForm }) => {
   const { closeModal } = useModal()
   const [title, setTitle] = useState("")
   const [focused, setFocused] = useState("");
@@ -24,7 +24,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
 
   const cancel = (e) => {
     e.preventDefault()
-    closeModal()
+    setItemForm(false)
   }
 
   const addItem = async (e) => {
@@ -48,7 +48,7 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
     setItems({...newItems})
     setItemData({...newIDObj})
     setIndex(index+1)
-    closeModal()
+    setItemForm(false)
   }
 
   useEffect(() => {
@@ -61,20 +61,22 @@ const RewardItemForm = ({ setItems, items, setItemData, itemData, index, setInde
     <div id="reward-item-input-div">
       <form id="reward-item-form" onSubmit={addItem} encType="multipart/form-data">
         <h2>Add Item</h2>
-        <div className={`item-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
+        <div id="item-title-field" className={`item-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
           <label className={`itf-label input-label ${focused == "title" || title ? 'label-focus' : ''}`}>
             Title
           </label>
           <input
             type="text"
             value={title}
+            maxLength={50}
             onChange={(e) => setTitle(e.target.value)}
             onFocus={(e) => handleFocus("title", e)}
             onBlur={handleBlur}
             className={`rtf-input input-field ${focused == 'title' ? "focused-input" : null}`}
           />
+          <span id="length-counter"><span style={title.length > 5 ? { "color": "green" } : { "color": "red" }}>{title.length}</span>/50</span>
         </div>
-        <div className={`item-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
+        <div id="item-quantity-field" className={`item-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
           <label className={`iqf-label input-label ${focused == "quantity" || quantity ? 'label-focus' : ''}`}>
             Quantity
           </label>

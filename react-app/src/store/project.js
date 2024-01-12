@@ -55,8 +55,7 @@ export const createReward = (reward, items, projectId) => async dispatch => {
   let broken
   const err = await res.json()
   if (res.ok) {
-    // console.log(err.id);
-    const id = err.id
+    
     items.forEach(async (item) => {
       const itemRes = await fetch(`/api/rewards/${err.id}/items/new`, {
         method: "POST",

@@ -61,8 +61,8 @@ function ProfileButton({ user }) {
       <ul id="p-menu" className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
+            <li>Hello<br/>{user.username.length <= 10 ? user.username : user.username.slice(0, 10) + "..."}</li>
+            {/* <li>{user.email}</li> */}
             {location.pathname != "/profile" && <li>
               <button className="user-btn" onClick={redirect}>Your Account</button>
             </li>}

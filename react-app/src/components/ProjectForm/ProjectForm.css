@@ -4,6 +4,125 @@
   margin-top: 100px;
 }
 
+#add-item-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#physical-items {
+  width: 350px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 15px;
+}
+
+#sr-div>p {
+  text-align: center;
+  font-weight: bold;
+}
+
+#quant-div {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#quant-div>p {
+  font-weight: bold;
+}
+
+#quantity-input-field {
+  display: flex;
+  width: 350px;
+  justify-content: space-evenly;
+  margin-bottom: 25px;
+}
+
+#pi-div>p {
+  text-align: center;
+  font-weight: bold;
+}
+
+#shipping-radio {
+  display: flex;
+  flex-direction: column;
+}
+
+#reward-description-field {
+  margin-bottom: 20px;
+}
+
+#reward-item-input-div {
+  margin-top: 70px
+}
+
+#hide-item-form,
+#save-item {
+  width: 70px;
+  margin-bottom: 10px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#hide-item-form:hover,
+#save-item:hover {
+  background-color: #620a10;
+}
+
+#show-item-form {
+  margin-top: 20px;
+  width: 95px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#reward-preview-div {
+  width: 400px;
+  border: 1px solid black;
+}
+
+#reward-preview {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin: auto;
+}
+
+#preview-description {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+#edit-item-form {
+  width: 96px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#show-item-form:hover,
+#edit-item-form:hover {
+  background-color: #620a10;
+}
+
+#save-item:disabled {
+  background-color: rgb(219, 217, 217);
+}
+
+#item-title-field,
+#item-quantity-field {
+  margin-bottom: 30px;
+}
+
+#item-dnd-box {
+  margin-bottom: 20px;
+}
+
 #project-title-info,
 #project-subtitle-info {
   width: 50%;
@@ -43,6 +162,21 @@
 
 #reward-form-header {
   text-align: center;
+}
+
+#length-counter {
+  margin-left: 5px;
+}
+
+#reward-title-div {
+  display: flex;
+  align-items: center;
+}
+
+#reward-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #main-cat-info>h2,
