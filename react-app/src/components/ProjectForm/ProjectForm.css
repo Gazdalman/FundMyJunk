@@ -110,6 +110,8 @@
   background-color: #620a10;
 }
 
+create-project-btn
+
 #save-item:disabled {
   background-color: rgb(219, 217, 217);
 }
@@ -254,11 +256,6 @@
   margin: 10px;
 }
 
-#back-basics-button {
-  width: 125px;
-  height: 35px;
-}
-
 .form-nav {
   width: fit-content;
   margin: auto;
@@ -285,9 +282,18 @@
   color: #951019;
 }
 
-#create-project-btn {
+#create-project-btn,
+#back-basics-button {
   width: 125px;
   height: 35px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#create-project-btn:hover,
+#back-basics-button:hover {
+  background-color: #620a10;
 }
 
 #cpb-container {

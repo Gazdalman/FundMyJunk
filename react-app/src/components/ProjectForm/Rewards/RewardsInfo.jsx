@@ -324,13 +324,15 @@ const RewardInfo = () => {
               </div>
             </div>
           </div>
-          <button disabled={disabled} >Add Reward</button>
+          <button id="create-reward" disabled={disabled} >Add Reward</button>
         </form>
-        <OpenModalButton
-          modalComponent={<SkipStep skipStep={skipStep} />}
-          buttonText={"Skip Step"}
-          modalClasses={["skip-step-button"]}
-        />
+        <div id="cancel-div">
+          <OpenModalButton
+            modalComponent={<SkipStep skipStep={skipStep} />}
+            buttonText={"Skip Step"}
+            modalClasses={["skip-step-button"]}
+          />
+        </div>
       </div>
     </div >
 

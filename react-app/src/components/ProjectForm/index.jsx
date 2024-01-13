@@ -38,7 +38,7 @@ const ProjectForm = ({ type, project }) => {
     const errors = {}
 
     if (!title || title.length < 3) errors.title = "Title must be at least 3 characters long"
-    if (!subtitle || subtitle.length < 10) errors.subtitle = "Subtitle must be at least 3 characters"
+    if (!subtitle || subtitle.length < 10) errors.subtitle = "Subtitle must be at least 10 characters"
     if (!goal || goal < 100 || goal > 100000000) errors.goal = "NO LESS THAN $100! But also no more than $99,999,999 (We ain't that greedy)"
     if (!image && !imageURL) errors.image = "Gotta have an image"
     if (!projType) errors.projType = "Couldn't even choose a type huh? No wonder you couldn't make it on Kickstarter..."

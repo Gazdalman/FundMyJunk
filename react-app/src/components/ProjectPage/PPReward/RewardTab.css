@@ -113,6 +113,44 @@
   background-color: #620a10;
 }
 
+#ppr-preview-image {
+  width: 350px;
+  height: 200px;
+}
+
+#create-reward {
+  margin-top: 15px;
+  width: 90px;
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
+}
+
+#cancel-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+#cancel-div > button {
+  background-color: #951019;
+  width: 90px;
+  color: white;
+  border-radius: 10px;
+}
+
+#cancel-div > button:hover {
+  background-color: #620a10;
+}
+
+#create-reward:hover {
+  background-color: #620a10;
+}
+
+#create-reward:disabled {
+  background-color: rgb(219, 217, 217);
+}
+
 #preview-image > img {
   width: 350px;
   height: 200px;

@@ -1,4 +1,5 @@
 import { useModal } from "../../context/Modal"
+import "./SkipStep.css"
 
 const SkipStep = ({ skipStep }) => {
   const { closeModal } = useModal()
@@ -18,8 +19,8 @@ const SkipStep = ({ skipStep }) => {
     <div id="skip-step">
       <h2>Skip This Step?</h2>
       <div id="ss-buttons">
-        <button onClick={handleSkip}>Yes</button>
-        <button onClick={handleCancel}>No</button>
+        <button id="do-skip" onClick={handleSkip}>Yes</button>
+        <button id="no-skip" onClick={handleCancel}>No</button>
       </div>
     </div>
   )
