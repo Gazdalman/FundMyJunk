@@ -72,9 +72,9 @@ const VideoField = ({ setVideo, video, videoURL, setVideoURL }) => {
         ) : (
           <p>Drag & Drop Video Here</p>
         )}
-        <div>
-          ... or <button onClick={handleButtonClick}>Choose File</button>
-          <button onClick={removeVideo} style={!video ? { "display": "none" } : { "display": "block" }}>Remove Video</button>
+        <div id="photo-field-buttons">
+          ... or <button id="choose-file" onClick={handleButtonClick}>Choose File</button>
+          <button id="remove-file" onClick={removeVideo} style={!video ? { "display": "none" } : { "display": "block" }}>Remove Video</button>
           <input
             type="file"
             ref={fileInputRef}
