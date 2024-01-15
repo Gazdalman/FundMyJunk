@@ -50,23 +50,25 @@ const AddRewardItem = ({ rewardId, projectId }) => {
   },[quantity])
 
   return (
-    <div id="reward-item-input-div">
+    <div id="reward-modal-item-input-div">
       <form id="reward-item-form" onSubmit={addItem} encType="multipart/form-data">
         <h2>Add Item</h2>
-        <div className={`item-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
+        <div id="item-title-field" className={`item-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
           <label className={`itf-label input-label ${focused == "title" || title ? 'label-focus' : ''}`}>
             Title
           </label>
           <input
             type="text"
             value={title}
+            maxLength={50}
             onChange={(e) => setTitle(e.target.value)}
             onFocus={(e) => handleFocus("title", e)}
             onBlur={handleBlur}
             className={`rtf-input input-field ${focused == 'title' ? "focused-input" : null}`}
           />
+          <span id="length-counter"><span style={title.length > 5 ? { "color": "green" } : { "color": "red" }}>{title.length}</span>/50</span>
         </div>
-        <div className={`item-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
+        <div id="item-quantity-field" className={`item-quantity-field floating-input ${focused == "quantity" ? 'focused' : ''}`}>
           <label className={`iqf-label input-label ${focused == "quantity" || quantity ? 'label-focus' : ''}`}>
             Quantity
           </label>

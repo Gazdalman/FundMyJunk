@@ -164,9 +164,9 @@
   width: fit-content;
 }
 
-#photo-field-buttons {
+/* #photo-field-buttons {
   width: fit-content;
-}
+} */
 
 .drag-drop-box {
   width: fit-content;
@@ -244,6 +244,7 @@
   border: black solid 1px;
   border-radius: 10px;
   align-content: center;
+  align-items: center;
 }
 
 #reward-dnd-box {

@@ -61,7 +61,7 @@
 
 #hide-item-form,
 #save-item {
-  width: 70px;
+  width: 80px;
   margin-bottom: 10px;
   background-color: #951019;
   color: white;
@@ -155,7 +155,7 @@ create-project-btn
 
 #item-dnd-box {
   width: 500px;
-  height: 400px;
+  height: 420px;
   display: flex;
   justify-content: center;
   /* align-items: center; */
@@ -221,7 +221,7 @@ create-project-btn
 
 #project-dnd-box {
   width: 575px;
-  height: 390px;
+  height: 420px;
   display: flex;
   justify-content: center;
   /* align-items: center; */

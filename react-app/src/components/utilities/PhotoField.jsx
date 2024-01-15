@@ -83,8 +83,8 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
         <p id="no-image-there">Drag & Drop Image Here</p>
       )}
       <div id="photo-field-buttons">
-        ... or <button onClick={handleButtonClick}>Choose File</button>
-        <button onClick={removeImage} style={!image ? {"display": "none"} : {"display": "block"}}>Remove Photo</button>
+        ... or <button id="choose-file" onClick={handleButtonClick}>Choose File</button>
+        <button id="remove-file" onClick={removeImage} style={!image ? {"display": "none"} : {"display": "block"}}>Remove Photo</button>
         <input
           type="file"
           accept=".jpeg, .jpg, .gif, .png"

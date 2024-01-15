@@ -11,17 +11,21 @@ const UserProfilePage = () => {
   const currUser = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false)
 
+  // console.log(pageUser);
+
   useEffect(() => {
     if (currUser && currUser.id == id) {
       return history.push("/profile")
     }
-    dispatch(getSingleUser(id))
+    const mink = dispatch(getSingleUser(id))
+    console.log("mink ->", mink);
     setIsLoaded(true)
   }, [dispatch])
 
   return isLoaded && pageUser? (
     <div id="user-profile-container">
       <h1 id="user-display-name">{pageUser.displayName}</h1>
+      <p>{pageUser.biography}</p>
     </div>
   ) : null
 }

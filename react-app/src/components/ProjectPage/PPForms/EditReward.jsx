@@ -177,7 +177,7 @@ const PPEditRewardTab = ({ reward, projectId, setShowForm, setReward }) => {
               onBlur={handleBlur}
               className="rdf-input input-field"
             />
-            <span id="length-counter"><span style={{ "color": "green" }}>{description.length}</span>/2000</span>
+            <span id="length-counter"><span style={{ "color": "green" }}>{description ? description.length : 0}</span>/2000</span>
           </div>
           <div id="pi-div">
             <p>Choose the types of items*</p>
