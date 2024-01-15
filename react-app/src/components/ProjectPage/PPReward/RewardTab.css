@@ -3,6 +3,10 @@
   height: auto;
 }
 
+#reward-description-field {
+  margin-top: 30px;
+}
+
 #delete-reward-button,
 #edit-reward-button {
   background-color: #951019;
@@ -201,6 +205,17 @@
   background-color: rgb(213, 213, 213);
 }
 
+
+
+.reward-title-field {
+  margin-bottom: 15px;
+}
+
+#pp-rcd-desc {
+  text-align: center;
+  font-weight: bold;
+}
+
 #reward-modal-form {
   display: flex;
   flex-direction: column;
@@ -210,6 +225,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#buttons-link {
+  text-align: center;
+}
+
+.edit-story-button {
+  background-color: #951019;
+  color: white;
+  border-radius: 10px;
 }
 
 #pp-rcd-item {
@@ -229,4 +254,8 @@
   /* align-items: center; */
   border-radius: 10px;
   background-color: rgb(213, 213, 213);
+}
+
+#reward-preview-div {
+  margin-top: 20px;
 }

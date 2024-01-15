@@ -44,6 +44,14 @@ const ProjectInfo = ({
     return lastDay.toISOString().split('T')[0];
   }
 
+  const isLaunched = () => {
+    if (new Date(launchDate) < today) {
+      return true
+    }
+
+    return false
+  }
+
   const tabChange = (e) => {
     e.preventDefault()
     setTab("basics")
@@ -215,7 +223,7 @@ const ProjectInfo = ({
             <p style={errs.date ? { "color": "red" } : {}}>{errs.date ? errs.date : "(So hurry up and make some money!)"}</p>
           </div>
         </div>
-      {(type != "edit" || today >= new Date(launchDate)) && <div id="dates-div">
+      {(type != "edit" || !isLaunched()) && <div id="dates-div">
         <input
           value={launchDate}
           type="date"

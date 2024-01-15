@@ -141,6 +141,8 @@ create-project-btn
   width: 30vw;
 }
 
+#pp-rcd-desc
+
 #reward-form {
   margin-top: 100px;
 }
@@ -175,7 +177,8 @@ create-project-btn
   align-items: center;
 }
 
-#reward-form {
+#reward-form,
+#reward-pp-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -204,7 +207,12 @@ create-project-btn
 
 #story-form-container {
   margin-top: 100px;
+}
 
+#story-modal-container,
+#story-edit-form-container {
+  text-align: center;
+  width: 450px;
 }
 
 /* #location-description {
@@ -289,6 +297,56 @@ create-project-btn
   background-color: #951019;
   color: white;
   border-radius: 10px;
+}
+
+#ai-input-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ai-input-field > p {
+  font-weight: bold;
+}
+
+#story-form-title {
+  text-align: center;
+}
+
+#skip-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#save-story-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#save-story-btn > *,
+.skip-step-button {
+  background-color: #951019;
+  color: white;
+  width: 82px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+#save-story-btn > *:hover,
+.skip-step-button:hover {
+  background-color: #620a10;
+}
+
+#save-story-btn > *:disabled {
+  background-color: rgb(219, 217, 217);;
+}
+
+#ai-options {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
 #create-project-btn:hover,

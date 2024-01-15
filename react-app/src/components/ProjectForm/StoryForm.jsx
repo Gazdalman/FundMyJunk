@@ -70,8 +70,10 @@ const StoryForm = () => {
   return (
     <div id="story-form-container">
       <form onSubmit={handleStorySubmit} encType="multipart/form-data">
-        <h1>Add a Story</h1>
+        <h1 id="story-form-title">Add a Story</h1>
         <div id="ai-input-field">
+          <p>Are you using AI?*</p>
+          <div id="ai-options">
           <label className="ai-option">
             <input
               type="radio"
@@ -90,38 +92,49 @@ const StoryForm = () => {
             />
             No, I am not using AI for my project
           </label>
+          </div>
+          <p>Give us your sob story (People LOVE a sob story!)*</p>
           <div className={`story-text-field floating-input ${focused == "story" ? 'focused' : ''}`}>
             <label className={`stf-label input-label ${focused == "story" || storyText ? 'label-focus' : ''}`}>
               Story Text
             </label>
             <textarea
               value={storyText}
+              maxLength={2000}
               onChange={(e) => setStoryText(e.target.value)}
               onFocus={e => handleFocus("story", e)}
               onBlur={handleBlur}
               className="stf-input input-field"
             />
+            <span id="length-counter"><span style={storyText.length > 2 ? { "color": "green" } : { "color": "red" }}>{storyText.length}</span>/2000</span>
           </div>
+          <p>Explain the potential risks (You can... mislead a little)*</p>
           <div className={`story-risk-field floating-input ${focused == "risk" ? 'focused' : ''}`}>
             <label className={`srf-label input-label ${focused == "risk" || risksChallenges ? 'label-focus' : ''}`}>
               Risks and Challenges
             </label>
             <textarea
               value={risksChallenges}
+              maxLength={2000}
               onChange={(e) => setRisksChallenges(e.target.value)}
               onFocus={e => handleFocus("risk", e)}
               onBlur={handleBlur}
               className="srf-input input-field"
             />
+            <span id="length-counter"><span style={risksChallenges.length > 2 ? { "color": "green" } : { "color": "red" }}>{risksChallenges.length}</span>/2000</span>
           </div>
         </div>
-        <button disabled={disabled}>Save Story</button>
+        <div id="save-story-btn">
+        <button  disabled={disabled}>Save Story</button>
+        </div>
       </form>
+      <div id="skip-button">
       <OpenModalButton
           modalComponent={<SkipStep skipStep={skipStep}/>}
           buttonText={"Skip Step"}
           modalClasses={["skip-step-button"]}
           />
+    </div>
     </div>
   )
 }

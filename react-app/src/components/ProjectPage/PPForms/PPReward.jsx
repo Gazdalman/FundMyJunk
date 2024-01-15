@@ -146,7 +146,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
   return !itemForm ? (!loading ? (
     <div id="reward-form-div">
       <div id="reward-input-container">
-        <form id="reward-form" onSubmit={handleRewardSubmit} encType="multipart/form-data">
+        <form id="reward-pp-form" onSubmit={handleRewardSubmit} encType="multipart/form-data">
           <h1 id="reward-form-header">Add a Reward</h1>
           <div className={`reward-title-field floating-input ${focused == "title" ? 'focused' : ''}`}>
             <label className={`rtf-label input-label ${focused == "title" || rewardTitle ? 'label-focus' : ''}`}>

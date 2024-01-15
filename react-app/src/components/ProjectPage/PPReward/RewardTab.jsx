@@ -93,7 +93,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
               }
             </div>
             <div id="pp-rcd-lower">
-              {reward.description ? <p id="pp-rcd-desc">{reward.description}</p> : <p>No Description</p>}
+              {reward.description ? <p id="pp-rcd-desc">{reward.description}</p> : <p id="pp-rcd-desc">No Description</p>}
               {(user && user == projectOwner) ?
               <div id="add-item-btn">
               <OpenModalButton
