@@ -147,6 +147,10 @@
   border-radius: 10px;
 }
 
+#add-reward-button:hover {
+  background-color: #620a10;
+}
+
 #owner-edit-btn:hover {
   background-color: #620a10;
 }
