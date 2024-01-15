@@ -2,6 +2,10 @@
   background-color: #620a10;
 }
 
+#cancel-delete {
+  border-radius: 10px;
+}
+
 #delete-text {
   text-align: center;
 }
@@ -16,6 +20,8 @@
 #confirm-delete {
   background-color: #951019;
   color: white;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 #modal-content #cancel-delete:hover {
