@@ -256,6 +256,10 @@
   background-color: rgb(213, 213, 213);
 }
 
+#reward-form-div {
+  margin-top: 70px;
+}
+
 #reward-preview-div {
   margin-top: 20px;
 }
