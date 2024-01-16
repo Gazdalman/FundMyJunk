@@ -33,9 +33,14 @@ const AddRewardItem = ({ rewardId, projectId }) => {
 
   const addItem = async (e) => {
     e.preventDefault()
+
+    if (quantity < 0) {
+      setQuantity(1)
+    }
+
     const newItemData = new FormData()
     if (image) newItemData.append("image", image)
-    newItemData.append("quantity", quantity)
+    newItemData.append("quantity", (quantity > 0 ? quantity : 1))
     newItemData.append("title", title)
 
     await dispatch(createItem(newItemData, rewardId))

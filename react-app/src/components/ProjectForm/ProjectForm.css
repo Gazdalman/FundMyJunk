@@ -110,8 +110,6 @@
   background-color: #620a10;
 }
 
-create-project-btn
-
 #save-item:disabled {
   background-color: rgb(219, 217, 217);
 }
