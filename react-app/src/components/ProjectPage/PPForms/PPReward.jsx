@@ -118,7 +118,7 @@ const PPRewardTab = ({ projectId, setShowForm }) => {
       setShowForm("")
     }
 
-    console.log(res);
+    // console.log(res);
   }
 
   const skipStep = () => {

@@ -119,7 +119,7 @@ const PPEditRewardTab = ({ reward, projectId, setShowForm, setReward }) => {
     if (selectedQuantity == "limited" && !quantity) {
       setDisabled(true)
     }
-    console.log(physicalItems);
+    // console.log(physicalItems);
   })
 
   return !loading ? (

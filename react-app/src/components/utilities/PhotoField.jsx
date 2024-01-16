@@ -10,7 +10,7 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       const file = files[0];
-      console.log(file.type);
+      // console.log(file.type);
       if (
         file.type.endsWith("jpg") ||
         file.type.endsWith("jpeg") ||
@@ -55,7 +55,7 @@ const PhotoField = ({ image, setImage, imageURL, setImageURL, extraClass }) => {
     event.preventDefault()
     const selectedFile = event.target.files[0];
     fileWrap(event)
-    console.log('Selected file:', selectedFile);
+    // console.log('Selected file:', selectedFile);
   };
 
   const removeImage = (e) => {

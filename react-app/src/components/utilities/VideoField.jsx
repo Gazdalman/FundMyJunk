@@ -14,7 +14,7 @@ const VideoField = ({ setVideo, video, videoURL, setVideoURL }) => {
         file.type.endsWith("mp4") ||
         file.type.endsWith("avi")
       ) {
-        console.log(file.type);
+        // console.log(file.type);
         setVideo(file)
         const reader = new FileReader();
         reader.onload = (e) => {

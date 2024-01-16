@@ -30,7 +30,7 @@ export const createProject = (data) => async dispatch => {
     return resJson
   }
 
-  console.log("res errors", resJson);
+  // console.log("res errors", resJson);
 }
 
 export const createStory = (story, projectId) => async dispatch => {
@@ -55,7 +55,7 @@ export const createReward = (reward, items, projectId) => async dispatch => {
   let broken
   const err = await res.json()
   if (res.ok) {
-    
+
     items.forEach(async (item) => {
       const itemRes = await fetch(`/api/rewards/${err.id}/items/new`, {
         method: "POST",

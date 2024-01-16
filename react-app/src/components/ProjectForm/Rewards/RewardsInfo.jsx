@@ -108,7 +108,7 @@ const RewardInfo = () => {
 
     if (!res.errors) return history.replace(`/projects/${projectId}`)
 
-    console.log(res);
+    // console.log(res);
   }
 
   const skipStep = () => {

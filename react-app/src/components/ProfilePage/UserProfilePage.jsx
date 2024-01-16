@@ -11,14 +11,14 @@ const UserProfilePage = () => {
   const currUser = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false)
 
-  // console.log(pageUser);
+  console.log(currUser);
 
   useEffect(() => {
     if (currUser && currUser.id == id) {
       return history.push("/profile")
     }
     const mink = dispatch(getSingleUser(id))
-    console.log("mink ->", mink);
+    // console.log("mink ->", mink);
     setIsLoaded(true)
   }, [dispatch])
 
