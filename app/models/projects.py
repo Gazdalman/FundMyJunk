@@ -43,6 +43,17 @@ class Project(db.Model):
     cascade="all, delete-orphan"
   )
 
+  likedUsers = db.relationship(
+    "User",
+    secondary="likes",
+    back_populates="likedProjects"
+  )
+
+  backers = db.relationship(
+    "Backer",
+    back_populates="project"
+  )
+
   def to_dict(self):
     return {
       "id": self.id,
@@ -64,7 +75,7 @@ class Project(db.Model):
       "rewards": sorted([reward.to_dict() for reward in self.rewards], key=lambda reward : reward['amount']),
       "launched": self.launch_date <= datetime.now(),
       "user": self.user.display_name,
-      "earned": round(self.goal / 3, 2)
+      "earned": sum([backer.amount for backer in self.backers])
     }
 
 def on_project_delete(mapper, connection, target):

@@ -27,6 +27,11 @@ function SignupFormPage() {
 		return emailPattern.test(email);
 	}
 
+	const redirect = (e) => {
+		e.preventDefault()
+		history.replace('/login')
+	}
+
 	const handleFocus = (field, e) => {
 		e.preventDefault()
 		setFocused(field);
@@ -136,7 +141,7 @@ function SignupFormPage() {
 					<button disabled={!(confirmPassword && confirmPassword == password)} className="account-button" type="submit">Sign Up</button>
 					<div id="login-switch">
 						<span>... or </span>
-						<a href="/login">Log In</a>
+						<a onClick={redirect} href="/login">Log In</a>
 					</div>
 				</div>
 			</form>

@@ -8,3 +8,4 @@ from .project_edit_form import ProjectEditForm
 from .reward_edit_form import RewardEditForm
 from .profile_edit_form import ProfileEditForm
 from .picture_form import ImageForm
+from .pledge_form import PledgeForm

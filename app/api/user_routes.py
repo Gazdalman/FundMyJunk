@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 from app.models import User, db
-from app.forms import ProfileEditForm
+from app.forms import ProfileEditForm, ImageForm
 from .aws_helper import get_unique_filename, upload_file_to_s3
 
 
@@ -43,6 +43,21 @@ def user(id):
 def curr_user():
   user = User.query.get(current_user.get_id())
 
+  return user.to_dict()
+
+@user_routes.route('/<int:id>/profile_picture', methods=['PUT', 'POST'])
+@login_required
+def edit_profile_picture(id):
+  user = User.query.get(id)
+  if not user:
+    return {'not_found': 'User not found'}, 404
+  image = request.files['image']
+  image.filename = get_unique_filename(image.filename)
+  upload = upload_file_to_s3(image)
+  if 'url' not in upload:
+    return upload
+  user.profile_picture = upload['url']
+  db.session.commit()
   return user.to_dict()
 
 @user_routes.route('/<int:id>/edit', methods=['PUT'])

@@ -8,10 +8,12 @@
 }
 
 .home-project-card:hover {
-  height: 105%;
-  width: 105%;
+  height: 100%;
+  width: 100%;
   box-shadow: 0 0 20px #951019;
+  transition: all .5s ease;
 }
+
 
 #location-form-div {
   display: flex;
@@ -34,11 +36,23 @@
   height: fit-content;
 }
 
+#footer-div {
+  height: fit-content;
+}
+
 #home-page {
   width: 90%;
   margin: auto;
   padding-top: 75px;
-  height: 2100px;
+  height: 2840px;
+}
+
+#hp-like-heart {
+  display: none;
+}
+
+.home-project-card:hover > * > * > #hp-like-heart {
+  display: block;
 }
 
 #hp-bottom {
@@ -52,6 +66,13 @@
 #hp-percent-earned-upper,
 #hp-days-left-upper {
   font-size: 20px;
+}
+
+#title-and-heart {
+  display: flex;
+  height: 55px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #hp-card-details {
@@ -114,24 +135,59 @@ progress::-webkit-progress-value {
   margin: auto;
   display: grid;
   grid-template-columns: 50% 50%;
-  gap: 5%;
+  /* gap: 5%; */
+  row-gap: 40px;
+  column-gap: 1%;
   padding-bottom: 20px;
+  justify-items: center;
+  align-items: center;
 }
 
-@media screen and (max-width: 900px) {
+
+@media screen and (max-width: 1000px) {
   #home-page-cards {
     grid-template-columns: 100%;
-    gap: 1%;
+    /* gap: 1%; */
+    text-align: center;
+    justify-items: center;
+    align-items: center;
   }
-}
 
-@media screen and (min-width: 1350px) {
-  #home-page-cards {
-    grid-template-columns: repeat(3, 1fr);
+  #home-page-cards > *:nth-child(n+4) {
+    display: none;
   }
 
   #home-page {
     width: 95%;
+    height: fit-content;
+    display: flex;
+    margin: auto;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1350px) and (max-width: 1700px) {
+  #home-page-cards {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 1%;
+  }
+
+  /* #home-page {
+    width: 95%;
     height: 1500px;
+  } */
+}
+
+@media screen and (min-width: 1700px) {
+  #home-page-cards {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 20px;
+  }
+
+  #home-page {
+    width: 95%;
+    height: 1900px;
   }
 }

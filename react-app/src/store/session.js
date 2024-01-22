@@ -37,6 +37,19 @@ export const authenticate = () => async (dispatch) => {
 	}
 };
 
+export const refreshUser = (userId) => async dispatch => {
+	const res = await fetch(`/api/users/${userId}`)
+
+	const user = await res.json()
+
+	if (res.ok) {
+		dispatch(setUser(user))
+		return user
+	}
+
+	return user
+}
+
 export const getSingleUser = (userId) => async dispatch => {
 	const res = await fetch(`/api/users/${userId}`)
 

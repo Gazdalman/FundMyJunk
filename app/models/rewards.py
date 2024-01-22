@@ -25,6 +25,12 @@ class Reward(db.Model):
     back_populates="rewards"
   )
 
+  backers = db.relationship(
+    "Backer",
+    back_populates="rewards",
+    secondary="backer_rewards"
+  )
+
   items = db.relationship(
     "RewardItem",
     back_populates="reward",
@@ -45,7 +51,8 @@ class Reward(db.Model):
       "unlimited": self.unlimited,
       "quantity": self.quantity,
       "deliveryDate": self.delivery_date,
-      "items": [item.to_dict() for item in self.items]
+      "items": [item.to_dict() for item in self.items],
+      "backers": [backer.reward_to_dict() for backer in self.backers] if self.backers else ""
     }
 
 def on_reward_delete(mapper, connection, target):

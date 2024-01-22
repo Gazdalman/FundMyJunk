@@ -1,5 +1,6 @@
 import OpenModalButton from "../../OpenModalButton";
 import PPRewardTab from "../PPForms/PPReward";
+import { createPledge } from "../../../store/pledge";
 import "./RewardTab.css"
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -11,6 +12,7 @@ import PPEditRewardTab from "../PPForms/EditReward";
 import EditRewardItemForm from "../PPForms/EditRewardItem";
 import LoginFormModal from "../../LoginFormModal";
 import AddRewardItem from "../PPForms/AddRewardItem";
+import NoRewardPledge from "../../utilities/NoRewardPledge";
 
 const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm }) => {
   const dispatch = useDispatch()
@@ -60,6 +62,14 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
 
   }
 
+  const pledgeForReward = (e, amount) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    dispatch(createPledge({ "amount": amount }, projId));
+    dispatch(setRequestedProject(projId));
+  }
+
   return rewards ? (
     !showForm ? (<div id="rewards-div">
       <h2>Rewards</h2>
@@ -95,16 +105,16 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
             <div id="pp-rcd-lower">
               {reward.description ? <p id="pp-rcd-desc">{reward.description}</p> : <p id="pp-rcd-desc">No Description</p>}
               {(user && user == projectOwner) ?
-              <div id="add-item-btn">
-              <OpenModalButton
-                modalClasses={["pp-item-form"]}
-                modalComponent={<AddRewardItem
-                  rewardId={reward.id}
-                  projectId={projId}
-                  />}
-                buttonText={"Add Item"}
-              />
-              </div> : null}
+                <div id="add-item-btn">
+                  <OpenModalButton
+                    modalClasses={["pp-item-form"]}
+                    modalComponent={<AddRewardItem
+                      rewardId={reward.id}
+                      projectId={projId}
+                    />}
+                    buttonText={"Add Item"}
+                  />
+                </div> : null}
               {reward.items.map(item => (
                 <div key={item.id} id="pp-prod-item-card">
                   <div id="pp-rcd-item">
@@ -133,7 +143,13 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
               ))}
               <div id="reward-buttons">
                 {user ? (user != projectOwner ?
-                  <button id="pp-rcd-pledge-button" onClick={noFundingYet}>Burn ${addCommas(reward.amount)}</button> :
+                  (reward.unlimited || reward.quantity > 0 ? <button id="pp-rcd-pledge-button" onClick={e => pledgeForReward(e, reward.amount)}>Burn ${addCommas(reward.amount)}</button> :
+                    <OpenModalButton
+                      modalClasses={["pp-rcd-pledge-button"]}
+                      modalComponent={<NoRewardPledge projId={reward.projectId} amount={reward.amount}/>}
+                      buttonText={"Burn $" + addCommas(reward.amount)}
+                    />
+                  ) :
                   <>
                     <OpenModalButton
                       modalClasses={["delete-reward-button"]}
@@ -144,9 +160,9 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
                   </>
                 ) :
                   <OpenModalButton
-                  modalClasses={["no-user-login-pledge"]}
-                  modalComponent={<LoginFormModal />}
-                  buttonText={"Login to Pledge"}
+                    modalClasses={["no-user-login-pledge"]}
+                    modalComponent={<LoginFormModal />}
+                    buttonText={"Login to Pledge"}
                   />
                 }
               </div>

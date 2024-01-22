@@ -146,6 +146,19 @@ export const editItem = (item, itemId) => async dispatch => {
   return err
 }
 
+export const likeProject = (projectId) => async dispatch => {
+  const res = await fetch(`/api/projects/${projectId}/like`, {
+    method: "POST"
+  })
+
+  const err = await res.json()
+  if (res.ok) {
+    return "ok"
+  }
+
+  return err
+}
+
 export const deleteItem = (itemId) => async dispatch => {
   const res = await fetch(`/api/reward_items/${itemId}/delete`, {
     method: "DELETE"

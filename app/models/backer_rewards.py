@@ -10,4 +10,3 @@ class BackerReward(db.Model):
   backer_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("backers.id")), nullable=False)
   reward_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("rewards.id")), nullable=False)
 
-  

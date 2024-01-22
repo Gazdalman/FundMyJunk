@@ -11,7 +11,7 @@ const UserProfilePage = () => {
   const currUser = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false)
 
-  console.log(currUser);
+  // console.log(currUser);
 
   useEffect(() => {
     if (currUser && currUser.id == id) {

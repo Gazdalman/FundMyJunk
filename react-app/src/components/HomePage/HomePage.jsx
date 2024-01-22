@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getAllProjects } from "../../store/project";
+import { getAllProjects, likeProject } from "../../store/project";
 import "./HomePage.css"
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import { refreshUser } from "../../store/session";
 
 const HomePage = () => {
   const history = useHistory()
+  const location = useLocation()
+  const user = useSelector(state => state.session.user)
   const projects = useSelector(state => state.projects)
   const projArr = Object.values(projects)
   const [isLoaded, setIsLoaded] = useState(false);
@@ -18,6 +21,23 @@ const HomePage = () => {
     const difference = end - today;
 
     return Math.floor(difference / (1000 * 60 * 60 * 24))
+  }
+
+  const like = async (id) => {
+
+    if (user.id == projects[id].userId) {
+      window.alert("You can't like your own project!")
+      return
+    }
+
+    const res = await dispatch(likeProject(id))
+    if (res == 'ok')
+      await dispatch(refreshUser(user.id))
+    // return history.go(0)
+  }
+
+  const openLoginModal = () => {
+    history.push("/login")
   }
 
   const goTo = (link) => {
@@ -41,7 +61,20 @@ const HomePage = () => {
           <div key={project.id} className="home-project-card">
             <img className="link" id="hp-card-img" onClick={() => goTo(`/projects/${project.id}`)} src={project.image} />
             <div id="hp-card-details">
-              <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} id="hp-title">{project.title}</h3>
+              <div id="title-and-heart">
+                <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} id="hp-title">{project.title}</h3>
+                <div id="hp-like-heart">
+                {user ? (
+                  user.liked.includes(project.id) ? (
+                    <i onClick={() => like(project.id)} className="fas fa-heart" id="hp-heart"></i>
+                  ) : (
+                    <i onClick={() => like(project.id)} className="far fa-heart" id="hp-heart"></i>
+                  )
+                ) : (
+                  <i onClick={() => openLoginModal()} className="far fa-heart" id="hp-heart"></i>
+                )}
+                </div>
+              </div>
               <p id="hp-subtitle">{project.subtitle}</p>
               <span>by
                 <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author"> {project.user}

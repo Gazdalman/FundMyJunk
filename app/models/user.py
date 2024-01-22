@@ -28,6 +28,17 @@ class User(db.Model, UserMixin):
         back_populates="user"
     )
 
+    likedProjects = db.relationship(
+        "Project",
+        secondary="likes",
+        back_populates="likedUsers"
+    )
+
+    backed = db.relationship(
+        "Backer",
+        back_populates="user"
+    )
+
     @property
     def password(self):
         return self.hashed_password
@@ -38,6 +49,13 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def get_rewards(self):
+        rewards = []
+        for backer in self.backed:
+            for reward in backer.rewards:
+                rewards.append(reward)
+        return rewards
 
     def to_dict(self):
         safe_user = {
@@ -50,7 +68,10 @@ class User(db.Model, UserMixin):
             'created_at': self.created_at,
             'private': self.private,
             'profilePic': self.profile_picture,
-            'biography': self.biography
+            'biography': self.biography,
+            'backed': [backer.to_dict() for backer in self.backed],
+            'rewards': [reward.to_dict() for reward in self.get_rewards()],
+            'liked': [project.id for project in self.likedProjects],
         }
         if self.last_name:
             safe_user['lastName'] = self.last_name

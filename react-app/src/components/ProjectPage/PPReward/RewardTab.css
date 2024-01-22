@@ -35,6 +35,11 @@
   background-color: #620a10;
 }
 
+#pp-rcd-pledge-button:disabled {
+  background-color: rgb(219, 217, 217);
+  height: 40px
+}
+
 .no-user-login-pledge {
   background-color: #951019;
   color: white;
