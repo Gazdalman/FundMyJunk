@@ -8,6 +8,9 @@ Create Date: 2024-01-17 17:13:45.476402
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
 revision = '629e2f1ccd02'
@@ -27,6 +30,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE backers SET SCHEMA {SCHEMA};")
+
     op.create_table('likes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -35,6 +42,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
+
     op.create_table('backer_rewards',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('backer_id', sa.Integer(), nullable=False),
@@ -43,6 +54,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['reward_id'], ['rewards.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE backer_rewards SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
