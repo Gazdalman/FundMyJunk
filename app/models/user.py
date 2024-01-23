@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
         back_populates="user"
     )
 
-    likedProjects = db.relationship(
+    liked_projects = db.relationship(
         "Project",
         secondary="likes",
         back_populates="liked_users"

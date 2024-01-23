@@ -43,7 +43,7 @@ class Project(db.Model):
     cascade="all, delete-orphan"
   )
 
-  likedUsers = db.relationship(
+  liked_users = db.relationship(
     "User",
     secondary="likes",
     back_populates="liked_projects"
