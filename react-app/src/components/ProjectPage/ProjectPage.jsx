@@ -40,23 +40,11 @@ const ProjectPage = () => {
     return history.push(`/projects/${projectId}/edit`)
   }
 
-  const deleteClick = async (e, projectId) => {
-    e.preventDefault()
-    setIsLoaded(false)
-    await dispatch(deleteProject(projectId))
-    await dispatch(setRequestedProject(user.id))
-    setIsLoaded(true)
-  }
-
   const setDays = () => {
     const launch = new Date(project.launchDate)
     const end = new Date(project.endDate)
     const difference = end - launch
     return Math.ceil(difference / (1000 * 60 * 60 * 24))
-  }
-
-  const blink = () => {
-    return window.location.reload(true)
   }
 
   useEffect(() => {

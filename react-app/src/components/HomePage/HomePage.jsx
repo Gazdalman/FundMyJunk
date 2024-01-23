@@ -7,7 +7,7 @@ import { refreshUser } from "../../store/session";
 
 const HomePage = () => {
   const history = useHistory()
-  const location = useLocation()
+  // const location = useLocation()
   const user = useSelector(state => state.session.user)
   const projects = useSelector(state => state.projects)
   const projArr = Object.values(projects)
@@ -77,7 +77,8 @@ const HomePage = () => {
               </div>
               <p id="hp-subtitle">{project.subtitle}</p>
               <span>by
-                <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author"> {project.user}
+                <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author">
+                  {project.user}
                 </span>
               </span>
               <progress id="hp-progress" value={project.earned} max={project.goal}></progress>

@@ -41,7 +41,6 @@ def get_home_projects():
 
     return proj_dict, 200
 
-
 @project_routes.route('/search')
 def query_projects():
     """

@@ -28,11 +28,11 @@ class User(db.Model, UserMixin):
         back_populates="user"
     )
 
-    likedProjects = db.relationship(
-        "Project",
-        secondary="likes",
-        back_populates="likedUsers"
-    )
+    # likedProjects = db.relationship(
+    #     "Project",
+    #     secondary="likes",
+    #     back_populates="likedUsers"
+    # )
 
     backed = db.relationship(
         "Backer",
