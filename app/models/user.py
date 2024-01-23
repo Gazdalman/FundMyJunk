@@ -28,11 +28,11 @@ class User(db.Model, UserMixin):
         back_populates="user"
     )
 
-    # likedProjects = db.relationship(
-    #     "Project",
-    #     secondary="likes",
-    #     back_populates="likedUsers"
-    # )
+    likedProjects = db.relationship(
+        "Project",
+        secondary="likes",
+        back_populates="liked_users"
+    )
 
     backed = db.relationship(
         "Backer",
@@ -71,7 +71,7 @@ class User(db.Model, UserMixin):
             'biography': self.biography,
             'backed': [backer.to_dict() for backer in self.backed],
             'rewards': [reward.to_dict() for reward in self.get_rewards()],
-            'liked': [project.id for project in self.likedProjects],
+            'liked': [project.id for project in self.liked_projects],
         }
         if self.last_name:
             safe_user['lastName'] = self.last_name

@@ -242,10 +242,10 @@ def like_project(id):
         return {'errors': 'You own this bro...'}, 403
 
     if project in current_user.likedProjects:
-        current_user.likedProjects.remove(project)
+        current_user.liked_projects.remove(project)
         message = 'Project unliked'
     else:
-        current_user.likedProjects.append(project)
+        current_user.liked_projects.append(project)
         message = 'Project liked'
 
     db.session.commit()
