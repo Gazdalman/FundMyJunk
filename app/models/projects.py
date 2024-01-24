@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .aws_helper import remove_file_from_s3
 from sqlalchemy import event
 from datetime import datetime
+from .likes import Like
 
 class Project(db.Model):
   __tablename__ = "projects"
@@ -45,7 +46,7 @@ class Project(db.Model):
 
   liked_users = db.relationship(
     "User",
-    secondary="likes",
+    secondary=Like.__table__,
     back_populates="liked_projects"
   )
 

@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .aws_helper import remove_file_from_s3
 from sqlalchemy import event
+from .backer_rewards import BackerReward
 
 class Reward(db.Model):
   __tablename__ = "rewards"
@@ -28,7 +29,7 @@ class Reward(db.Model):
   backers = db.relationship(
     "Backer",
     back_populates="rewards",
-    secondary="backer_rewards"
+    secondary=BackerReward.__table__
   )
 
   items = db.relationship(

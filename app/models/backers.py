@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .backer_rewards import BackerReward
 
 
 class Backer(db.Model):
@@ -27,7 +28,7 @@ class Backer(db.Model):
     rewards = db.relationship(
         "Reward",
         back_populates="backers",
-        secondary="backer_rewards"
+        secondary=BackerReward.__table__
     )
 
     def to_dict(self):
