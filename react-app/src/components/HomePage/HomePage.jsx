@@ -76,7 +76,7 @@ const HomePage = () => {
                 </div>
               </div>
               <p id="hp-subtitle">{project.subtitle}</p>
-              <span>by
+              <span>by 
                 <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author">
                   {project.user}
                 </span>
