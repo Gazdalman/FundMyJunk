@@ -3,6 +3,7 @@ from sqlalchemy.sql import text
 from faker import Faker
 from random import choice, randint
 from datetime import datetime, timedelta
+import requests
 
 categories = ["Art", "Comics","Crafts","Dance","Design","Fashion","Film & Video","Food","Games","Journalism","Music","Photography","Publishing","Technology","Theater"]
 fake = Faker()
@@ -22,6 +23,14 @@ adjectives = [
 # Adds a demo project, you can add other projects here if you want
 def seed_projects():
   for _ in range(50):
+
+    res = requests.get("https://picsum.photos/850/400")
+
+    if res.status_code == 200:
+      img_url = res.url
+    else:
+      img_url = "https://picsum.photos/450/500"
+
     launch = datetime.now()
     end = launch + timedelta(days=randint(1,60))
     project = Project(
@@ -31,7 +40,7 @@ def seed_projects():
       location='nowhere, Alaska',
       main_category=choice(categories),
       main_subcat="banana",
-      image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFFFdyEuFvw9ktw7vI0Q5l1JFHKmXVI_8W5mNhLPxhnJKhe8Wf08hr1BAXBaS3nGpBqaI&usqp=CAU",
+      image=img_url,
       type=choice(['individual', 'business', 'non-profit']),
       goal=randint(1, 1000000),
       launch_date=launch,
