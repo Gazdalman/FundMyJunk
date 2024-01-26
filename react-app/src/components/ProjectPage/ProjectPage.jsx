@@ -86,7 +86,7 @@ const ProjectPage = () => {
           }
           <div id="pp-details-main">
             <div id="pp-earned">
-              <span id="pp-earned-upper">${addCommas(project.earned)}
+              <span id="pp-earned-upper">${project.earned > 0 ? addCommas(project.earned) : 0}
               </span>
               <span id="pp-earned-lower">earned of ${addCommas(project.goal)}
               </span>
