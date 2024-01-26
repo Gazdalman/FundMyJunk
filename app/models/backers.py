@@ -47,3 +47,11 @@ class Backer(db.Model):
             "userId": self.user_id,
             "amount": self.amount,
         }
+
+    def user_to_dict(self):
+        return {
+            "id": self.id,
+            "project": self.project.to_dict(),
+            "amount": self.amount,
+            "rewards": [reward.to_dict() for reward in self.rewards]
+        }

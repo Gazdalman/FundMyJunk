@@ -48,6 +48,15 @@ const HomePage = () => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  const setLetter = (number) => {
+    if (number >= 1000000000) {
+      return `${(number / 1000000000).toFixed(2)}B`
+    } else if (number >= 1000000) {
+      return `${(number / 1000000).toFixed(2)}M`
+    }
+  }
+
+
   useEffect(() => {
     dispatch(getAllProjects())
     setIsLoaded(true)
@@ -65,7 +74,7 @@ const HomePage = () => {
                 <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} id="hp-title">{project.title}</h3>
                 <div id="hp-like-heart">
                 {user ? (
-                  user.liked.includes(project.id) ? (
+                  user.liked[project.id] ? (
                     <i onClick={() => like(project.id)} className="fas fa-heart" id="hp-heart"></i>
                   ) : (
                     <i onClick={() => like(project.id)} className="far fa-heart" id="hp-heart"></i>
@@ -76,19 +85,18 @@ const HomePage = () => {
                 </div>
               </div>
               <p id="hp-subtitle">{project.subtitle}</p>
-              <span>by 
-                <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author">
+              <span>by <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author">
                   {project.user}
                 </span>
               </span>
               <progress id="hp-progress" value={project.earned} max={project.goal}></progress>
               <div id="hp-mid">
                 <div id="hp-earned">
-                  <span id="hp-earned-upper">${addCommas(project.earned.toFixed(2))}</span>
+                  <span id="hp-earned-upper">${project.earned <= 9999999 ? addCommas(project.earned.toFixed(2)) : setLetter(project.earned)}</span>
                   <span id="hp-earned-lower">pledged</span>
                 </div>
                 <div id="hp-percent-earned">
-                  <span id="hp-percent-earned-upper">{(+project.earned / +project.goal).toFixed(2) * 100}%</span>
+                  <span id="hp-percent-earned-upper">{((+project.earned / +project.goal) * 100).toFixed(2)}%</span>
                   <span id="hp-percent-earned-lower">earned</span>
                 </div>
                 <div id="hp-days-left">

@@ -4,8 +4,10 @@ import { deleteProject, setRequestedProject } from "../../store/userProjects";
 import "./DeleteModal.css"
 import { deleteItem, deleteReward } from "../../store/project";
 import { useHistory } from "react-router-dom";
+import { deletePledge } from "../../store/pledge";
+import { refreshUser } from "../../store/session";
 
-const DeleteModal = ({ method, project, reward, item, projId, type }) => {
+const DeleteModal = ({ method, project, pledge, reward, item, projId, type }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
@@ -19,11 +21,15 @@ const DeleteModal = ({ method, project, reward, item, projId, type }) => {
     } else if (type == "reward") {
       const res = await dispatch(deleteReward(reward.id));
       if (res === "ok")
-        dispatch(setRequestedProject(reward.projectId));
+        await dispatch(setRequestedProject(reward.projectId));
+    } else if (type == "pledge") {
+      const res = await dispatch(deletePledge(pledge.id));
+      if (res === "ok")
+        await dispatch(refreshUser(user.id));
     } else {
-      const res = await dispatch(deleteItem(item.id))
+const res = await dispatch(deleteItem(item.id))
       if (res == "ok")
-      dispatch(setRequestedProject(projId))
+      await dispatch(setRequestedProject(projId))
     }
     closeModal()
   }
@@ -47,15 +53,16 @@ const DeleteModal = ({ method, project, reward, item, projId, type }) => {
             type === "reward" ?
               "Delete Reward" :
               (type === "project" ?
-                "Delete Project" :
-                "Delete Item")})</button>
+                "Delete Project" : (type === "pledge" ?
+                "Delete Pledge" :
+                "Delete Item"))})</button>
         <button
           type="button"
           style={{ marginBottom: "35px", width: 200, height: 45 }}
           onClick={() => closeModal()} id="cancel-delete">No ({
             type === "reward" ? "Keep Reward" :
               (type == "project" ? "Keep Project" :
-                "Keep Item")})</button>
+                (type == "pledge" ? "Keep Pledge" : "Keep Item"))})</button>
     </div>
   )
 }

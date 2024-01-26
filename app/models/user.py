@@ -72,8 +72,10 @@ class User(db.Model, UserMixin):
             'biography': self.biography,
             'backed': [backer.to_dict() for backer in self.backed],
             'rewards': [reward.to_dict() for reward in self.get_rewards()],
-            'liked': [project.id for project in self.liked_projects],
+            'liked': {project.id: project.to_dict() for project in self.liked_projects},
+            'backed': [backer.user_to_dict() for backer in self.backed],
         }
+
         if self.last_name:
             safe_user['lastName'] = self.last_name
         return safe_user

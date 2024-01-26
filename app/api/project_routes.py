@@ -241,7 +241,7 @@ def like_project(id):
     if user_owns(project):
         return {'errors': 'You own this bro...'}, 403
 
-    if project in current_user.likedProjects:
+    if project in current_user.liked_projects:
         current_user.liked_projects.remove(project)
         message = 'Project unliked'
     else:

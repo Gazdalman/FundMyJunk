@@ -28,7 +28,7 @@
   justify-content: space-between;
 }
 
-#hp-mid > * {
+#hp-mid>* {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -46,20 +46,26 @@
   width: 90%;
   margin: auto;
   padding-top: 75px;
-  height: 2840px;
+  height: 2700px;
 }
 
 #hp-like-heart {
   display: none;
 }
 
-.home-project-card:hover > * > * > #hp-like-heart {
+#hp-like-heart:hover {
+  cursor: pointer;
+  color: #951019;
+  text-shadow: #951019 0px 0px 10px;
+}
+
+.home-project-card:hover>*>*>#hp-like-heart {
   display: block;
 }
 
 #hp-bottom {
   margin-top: 20px;
-  width:100%;
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
 }
@@ -89,7 +95,7 @@
   text-align: center;
 }
 
-.home-project-card > span {
+.home-project-card>span {
   width: fit-content;
 }
 
@@ -100,6 +106,7 @@
 .link {
   cursor: pointer;
   color: #950101;
+  text-decoration: none;
 }
 
 #home-page-title {
@@ -115,10 +122,12 @@
 #hp-progress {
   width: 100%;
 }
+
 progress {
   appearance: none;
   height: 7px;
 }
+
 progress::-webkit-progress-bar {
   background-color: #a3a0a0;
 }
@@ -157,7 +166,7 @@ progress::-webkit-progress-value {
     align-items: center;
   }
 
-  #home-page-cards > *:nth-child(n+4) {
+  #home-page-cards>*:nth-child(n+4) {
     display: none;
   }
 
@@ -179,16 +188,30 @@ progress::-webkit-progress-value {
   }
 }
 
+@media screen and (min-width: 1000px) and (max-width: 1350px) {
+  #home-page-cards {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    column-gap: 20px;
+    max-width: 848px;
+  }
+
+  #home-page {
+    width: 95%;
+    height: 3800px;
+  }
+}
+
 @media screen and (min-width: 1350px) and (max-width: 1700px) {
   #home-page-cards {
     grid-template-columns: repeat(3, 1fr);
     row-gap: 1%;
   }
 
-  /* #home-page {
+  #home-page {
     width: 95%;
-    height: 1500px;
-  } */
+    height: 2600px;
+  }
 }
 
 @media screen and (min-width: 1700px) {
@@ -199,6 +222,6 @@ progress::-webkit-progress-value {
 
   #home-page {
     width: 95%;
-    height: 1900px;
+    height: fit-content;
   }
 }

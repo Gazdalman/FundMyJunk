@@ -7,7 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage/HomePage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
+import ProfilePage from "./components/ProfilePage/CurrUserProfilePage/ProfilePage";
 import ProjectForm from "./components/ProjectForm";
 import UserProfilePage from "./components/ProfilePage/UserProfilePage";
 import EditProject from "./components/EditProject/EditProject";
@@ -33,6 +33,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       <div id="main-content">
       {isLoaded && (
+        <>
         <Switch>
           <Route exact path="/">
             <HomePage />
@@ -77,8 +78,9 @@ function App() {
             <Redirect to="/not_found"/>
           </Route>
         </Switch>
-      )}</div>
       <Footer />
+      </>
+      )}</div>
     </>
   );
 }

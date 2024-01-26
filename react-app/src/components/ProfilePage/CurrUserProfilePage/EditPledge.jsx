@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createPledge } from "../../store/pledge";
-import { useModal } from "../../context/Modal";
-import { setRequestedProject } from "../../store/userProjects";
+import { useModal } from "../../../context/Modal";
+import { editPledge } from "../../../store/pledge";
+import { refreshUser } from "../../../store/session";
 
-const PledgeForm = ({ projId }) => {
+const EditPledge = ({ pledge, userId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [amount, setAmount] = useState("");
@@ -12,8 +12,15 @@ const PledgeForm = ({ projId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await dispatch(createPledge({"amount": amount}, projId));
-    await dispatch(setRequestedProject(projId));
+    const res = await dispatch(editPledge({ "amount": amount }, pledge.id));
+    if (res) {
+      await dispatch(refreshUser(userId));
+      closeModal();
+    }
+  };
+
+  const cancel = (e) => {
+    e.preventDefault();
     closeModal();
   }
 
@@ -27,10 +34,10 @@ const PledgeForm = ({ projId }) => {
   };
 
   return (
-    <div id="pledge-div">
-    <h1>Pledge</h1>
-    <form onSubmit={handleSubmit}>
-    <div className={`pledge-field floating-input ${focused == "pledge" ? 'pledge' : ''}`}>
+    <div id="edit-pledge-form">
+      <h1>Edit Pledge</h1>
+      <form onSubmit={handleSubmit}>
+      <div className={`pledge-field floating-input ${focused == "pledge" ? 'pledge' : ''}`}>
           <label className={`pledge-label input-label ${focused == "pledge" || amount ? 'label-focus' : ''}`}>
             Amount
           </label>
@@ -44,10 +51,13 @@ const PledgeForm = ({ projId }) => {
             required
           />
         </div>
-      <button type="submit">Pledge</button>
-    </form>
+        <div id="pledge-edit-btns">
+          <button type="submit">Edit Pledge</button>
+          <button id="edit-pledge-cancel" onClick={e => cancel(e)}>Cancel</button>
+        </div>
+      </form>
     </div>
-  )
+  );
 }
 
-export default PledgeForm
+export default EditPledge;

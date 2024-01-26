@@ -46,7 +46,7 @@ nav {
   position: fixed;
   top: 0px;
   left: 0px;
-  background-color: white;
+  background-color: rgb(0, 0, 0);
   border-bottom: 1px lightgray solid;
   padding-top: 0;
   height: 70px;
@@ -120,7 +120,7 @@ nav {
 
 #home-logo-text {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  color: black;
+  color: white;
   font-size: 40px;
 }
 

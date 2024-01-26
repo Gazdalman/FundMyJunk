@@ -1,6 +1,6 @@
 html {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  height: fit-content;
+  height: 10px;
 }
 
 #not-found {
@@ -78,4 +78,46 @@ select {
 .file-inputs-container {
   position: relative; /* This allows the elements within it to be positioned without taking this element out of the document flow. As it's parent is NOT positioned, it only effects the children. */
   margin-bottom: 32px;
+}
+
+#footer-div {
+  width: 99vw; /* 100% of the viewport width */
+  background-color: black; /* Add your desired background color */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add padding if needed */
+  box-sizing: border-box;
+  padding-bottom: 70px;
+  position: relative;
+  right: 10px;
+  color: white;
+}
+
+#contact-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 55%;
+  margin: auto;
+  align-items: center;
+}
+
+#footer-h4 {
+  margin-left: 10px;
+}
+
+#actual-contact-links {
+  display: flex;
+  justify-content: space-between;
+  /* width: 50%; */
+  margin: auto;
+  margin-left: 30px;
+}
+
+#acl-link {
+  color: white;
+  text-decoration: none;
+}
+
+#acl-link:hover {
+  color: #951019;
 }
