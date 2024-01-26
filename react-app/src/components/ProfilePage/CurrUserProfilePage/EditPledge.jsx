@@ -42,7 +42,7 @@ const EditPledge = ({ pledge, userId }) => {
             Amount
           </label>
           <input
-            type="password"
+            type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             onFocus={e => handleFocus("pledge", e)}

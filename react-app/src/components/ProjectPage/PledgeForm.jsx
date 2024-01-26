@@ -29,13 +29,13 @@ const PledgeForm = ({ projId }) => {
   return (
     <div id="pledge-div">
     <h1>Pledge</h1>
-    <form onSubmit={handleSubmit}>
+    <form id="actual-pledge-form" onSubmit={handleSubmit}>
     <div className={`pledge-field floating-input ${focused == "pledge" ? 'pledge' : ''}`}>
           <label className={`pledge-label input-label ${focused == "pledge" || amount ? 'label-focus' : ''}`}>
             Amount
           </label>
           <input
-            type="password"
+            type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             onFocus={e => handleFocus("pledge", e)}

@@ -8,6 +8,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 375px;
+  height: 170px;
+}
+
+#actual-pledge-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 375px;
+}
+
+#actual-pledge-form > button {
+  background-color: #951019;
+  width: 85px;
+  color: white;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 #pp-add-story-btn,
