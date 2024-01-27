@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { createPledge } from "../../store/pledge";
 import { useModal } from "../../context/Modal";
 import { setRequestedProject } from "../../store/userProjects";
+import { refreshUser } from "../../store/session";
 
-const PledgeForm = ({ projId }) => {
+const PledgeForm = ({ projId,userId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [amount, setAmount] = useState("");
@@ -14,6 +15,7 @@ const PledgeForm = ({ projId }) => {
     e.preventDefault();
     const res = await dispatch(createPledge({"amount": amount}, projId));
     await dispatch(setRequestedProject(projId));
+    await dispatch(refreshUser(userId))
     closeModal();
   }
 

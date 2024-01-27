@@ -53,7 +53,20 @@
   display: none;
 }
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 #hp-like-heart:hover {
+  animation: pulse 1s infinite;
   cursor: pointer;
   color: #951019;
   text-shadow: #951019 0px 0px 10px;

@@ -11,8 +11,21 @@
   min-height: 700px;
 }
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 #pp-like-heart:hover {
   color: #951019;
+  animation: pulse 1s infinite;
   cursor: pointer;
   text-shadow: #951019 0px 0px 10px;
 }

@@ -73,7 +73,7 @@ const ProjectPage = () => {
           {!user || user && user.id != project.userId ? <OpenModalButton
             modalClasses={["pp-pledge-button"]}
             buttonText={user ? "Burn Your Money" : "Login To Pledge"}
-            modalComponent={user ? <PledgeForm projId={project.id} /> : <LoginFormModal />}
+            modalComponent={user ? <PledgeForm projId={project.id} userId={user.id}/> : <LoginFormModal />}
           /> :
           (!showForm && <div id="user-project-buttons">
           <button id="owner-edit-btn" onClick={e => editClick(e, project.id)}>Edit Project</button>
