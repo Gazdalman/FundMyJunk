@@ -1,4 +1,4 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, User, environment, SCHEMA, UserProfile
 from sqlalchemy.sql import text
 from faker import Faker
 from random import choice
@@ -15,6 +15,18 @@ def seed_users():
     )
     db.session.add(user)
 
+    profile = UserProfile(
+        user_id=user.id,
+        bio='I am a demo user',
+        first_name='Demo',
+        last_name='Noodle',
+        location= f"{fake.city()}, {fake.state()}",
+        website='https://gazdalman.github.io/',
+        private=False,
+    )
+
+    user.profile.append(profile)
+
     for _ in range(10):
         user = User(
             username=fake.user_name(),
@@ -24,6 +36,19 @@ def seed_users():
         )
 
         db.session.add(user)
+
+        profile = UserProfile(
+            bio=fake.text(max_nb_chars=500),
+            first_name=fake.first_name(),
+            last_name=fake.last_name(),
+            location= f"{fake.city()}, {fake.state()}",
+            website="https://gazdalman.github.io/",
+            private=choice([True, False]),
+        )
+
+        user.profile.append(profile)
+
+
     db.session.commit()
 
 
@@ -51,9 +76,13 @@ def does_table_exist(table_name, schema_name):
 
 def undo_users():
     if environment == "production":
+        if does_table_exist("user_profiles", SCHEMA):
+            db.session.execute(f"TRUNCATE table {SCHEMA}.user_profiles RESTART IDENTITY CASCADE;")
+
         if does_table_exist("users", SCHEMA):
             db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
+        db.session.execute(text("DELETE FROM user_profiles"))
         db.session.execute(text("DELETE FROM users"))
 
     db.session.commit()

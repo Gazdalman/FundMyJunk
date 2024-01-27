@@ -36,7 +36,8 @@ class User(db.Model, UserMixin):
 
     profile = db.relationship(
         "UserProfile",
-        back_populates="user"
+        back_populates="user",
+        cascade="all, delete-orphan"
     )
 
     @property
@@ -67,9 +68,9 @@ class User(db.Model, UserMixin):
             'rewards': [reward.to_dict() for reward in self.get_rewards()],
             'liked': {project.id: project.to_dict() for project in self.liked_projects},
             'backed': [backer.user_to_dict() for backer in self.backed],
-            'profile': self.profile.to_dict() if self.profile else None
+            'profile': self.profile[0].to_dict() if self.profile else None
         }
 
-        if self.last_name:
-            safe_user['lastName'] = self.last_name
+        # if self.last_name:
+        #     safe_user['lastName'] = self.last_name
         return safe_user

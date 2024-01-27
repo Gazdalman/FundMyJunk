@@ -27,14 +27,24 @@ const ProfilePage = () => {
   }, [dispatch])
   return isLoaded ? (
     <div id="ppp-div">
-      <h1>{currUser.username}</h1>
+      <div id="ppp-header">
+        <div id="ppp-header-left">
+          <img id="ppp-profile-pic" src={currUser.profile.profilePic ? currUser.profile.profilePic : "https://fmjbucket.s3.us-east-2.amazonaws.com/79dd0d67ffc34097b913489257727a00.gif"} alt="profile-pic" />
+          <i className="fas fa-camera"></i>
+        </div>
+        <div id="ppp-header-mid">
+          <h3>{currUser.displayName}</h3>
+          <h2>{currUser.profile.private ? currUser.username : `${currUser.profile.firstName} ${currUser.profile.lastName}`}</h2>
+
+        </div>
+      </div>
       <div id="ppp-tabs">
         <h3 id="ppp-projects-tab" className="link" onClick={() => setTab("projects")}>Projects</h3>
         <h3 id="ppp-rewards-tab" className="link" onClick={() => setTab("pledges")}>Pledges</h3>
         <h3 id="ppp-backed-tab" className="link" onClick={() => setTab("liked")}>Liked</h3>
       </div>
       {tab == "projects" && <ProjectTab projArr={projArr} />}
-      {tab == "pledges" && <EarnedRewards earnedRewards={currUser.backed} userId={currUser.id}/>}
+      {tab == "pledges" && <EarnedRewards earnedRewards={currUser.backed} userId={currUser.id} />}
       {tab == "liked" && <LikedProjects userId={currUser.id} likedProjects={Object.values(currUser.liked)} />}
     </div>
   ) : <h1 className="loading-message">We Loadin...</h1>

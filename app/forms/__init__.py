@@ -9,3 +9,4 @@ from .reward_edit_form import RewardEditForm
 from .user_edit_form import UserEditForm
 from .picture_form import ImageForm
 from .pledge_form import PledgeForm
+from .profile_form import UserProfileForm

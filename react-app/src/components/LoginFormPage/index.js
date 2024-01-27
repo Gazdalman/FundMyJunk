@@ -40,9 +40,9 @@ function LoginFormPage() {
       }
     };
 
-    const loginDemo = (e) => {
+    const loginDemo = async (e) => {
       e.preventDefault()
-      dispatch(login('demoNoodle', 'password'))
+      await dispatch(login('demoNoodle', 'password'))
       return history.goBack()
     }
 

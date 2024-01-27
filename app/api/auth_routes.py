@@ -99,19 +99,11 @@ def edit_user(id):
     form = UserEditForm()
     user = User.query.get(id)
     if form.validate_on_submit():
-        upload = None
-        image = form.data['image']
+        user.display_name=form.data['displayName'] if form.data['displayName'] else user.username
 
-        if image:
-            image.filename = get_unique_filename(image.filename)
-            upload = upload_file_to_s3(image)
-            if 'url' not in upload:
-                return upload
+        if form.data['password']:
+            user.password=form.data['password']
 
-        user.profile_picture=form.data['image']
-        user.display_name=form.data['displayName']
-        user.biography=form.data['biography']
-        user.private=form.data['private']
         db.session.commit()
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
