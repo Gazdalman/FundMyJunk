@@ -110,8 +110,8 @@ const ProjectPage = () => {
         </div>
       </div>
       <div id="pp-tabs">
-        <span onClick={() => setTab("story")} id="story-tab">Story</span>
-        <span onClick={() => setTab("rewards")} id="rewards-tab">Rewards</span>
+        <h3 className="link" onClick={() => setTab("story")} id="story-tab">Story</h3>
+        <h3 className="link" onClick={() => setTab("rewards")} id="rewards-tab">Rewards</h3>
       </div>
       {tab == "story" && <div id="pp-story-tab">
         <StoryTab
