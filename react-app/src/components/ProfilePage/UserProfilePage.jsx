@@ -25,7 +25,7 @@ const UserProfilePage = () => {
   return isLoaded && pageUser? (
     <div id="user-profile-container">
       <h1 id="user-display-name">{pageUser.displayName}</h1>
-      {/* <p>{pageUser.biography}</p> */}
+      <p>{pageUser.biography}</p>
     </div>
   ) : null
 }

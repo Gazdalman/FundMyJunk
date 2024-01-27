@@ -14,9 +14,15 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50))
     hashed_password = db.Column(db.String(255), nullable=False)
+    profile_picture = db.Column(db.String(75))
+    user_credit = db.Column(db.FLOAT, default=10000)
     display_name = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=(datetime.now()))
+    private = db.Column(db.Boolean, default=False)
+    biography = db.Column(db.String(1000))
 
     projects = db.relationship(
         "Project",
@@ -31,11 +37,6 @@ class User(db.Model, UserMixin):
 
     backed = db.relationship(
         "Backer",
-        back_populates="user"
-    )
-
-    profile = db.relationship(
-        "UserProfile",
         back_populates="user"
     )
 
@@ -60,14 +61,19 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         safe_user = {
             'id': self.id,
+            'firstName': self.first_name,
             'username': self.username,
             'email': self.email,
+            'userCredit': self.user_credit,
             'displayName': self.display_name if self.display_name else self.username,
             'created_at': self.created_at,
+            'private': self.private,
+            'profilePic': self.profile_picture,
+            'biography': self.biography,
+            'backed': [backer.to_dict() for backer in self.backed],
             'rewards': [reward.to_dict() for reward in self.get_rewards()],
             'liked': {project.id: project.to_dict() for project in self.liked_projects},
             'backed': [backer.user_to_dict() for backer in self.backed],
-            'profile': self.profile.to_dict() if self.profile else None
         }
 
         if self.last_name:
