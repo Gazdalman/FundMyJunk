@@ -7,3 +7,4 @@ from .stories import Story
 from .likes import Like
 from .backers import Backer
 from .backer_rewards import BackerReward
+from .user_profiles import UserProfile

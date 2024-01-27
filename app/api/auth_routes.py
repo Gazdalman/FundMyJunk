@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request
 from sqlalchemy import or_
-from app.models import User, db
-from app.forms import LoginForm, SignUpForm, ProfileEditForm
+from app.models import User, db, UserProfile
+from app.forms import LoginForm, SignUpForm, UserEditForm
 from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -76,15 +76,17 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            first_name=form.data['firstName'],
-            # last_name=form.data['lastName'],
             password=form.data['password'],
-            # private=form.data['private'],
-            # profile_picture=upload['url'] if upload and upload['url'] else None,
-            # biography=form.data['biography'],
-            # display_name=form.data['displayName']
+            display_name=form.data['displayName']
         )
         db.session.add(user)
+
+        user_profile = UserProfile(
+            user_id=user.id
+        )
+
+        db.session.add(user_profile)
+
         db.session.commit()
         login_user(user)
         return user.to_dict()
@@ -94,7 +96,7 @@ def sign_up():
 @auth_routes.route('/<int:id>/edit', methods=['PUT'])
 @login_required
 def edit_user(id):
-    form = ProfileEditForm()
+    form = UserEditForm()
     user = User.query.get(id)
     if form.validate_on_submit():
         upload = None
