@@ -8,9 +8,9 @@ const EarnedRewards = ({ earnedRewards, userId }) => {
 
   return (
     <div id="earned-rewards">
-      <h2 className="tab-title">Earned Rewards</h2>
+      <h2 className="tab-title">Projects Pledged To</h2>
       <div id="earned-rewards-container">
-        {earnedRewards.map((backedProject) => (
+        {earnedRewards.length ? earnedRewards.map((backedProject) => (
           <div className="ppp-reward-proj-container" key={backedProject.project.id}>
             <div className="ppp-reward-proj-image">
                 <img onClick={() => history.push(`/projects/${backedProject.project.id}`)} id="reward-proj-img" src={backedProject.project.image} alt="reward" />
@@ -34,7 +34,7 @@ const EarnedRewards = ({ earnedRewards, userId }) => {
               />
             </div>
           </div>
-        ))}
+        )) : <h3 className="no-liked-projects">You haven't pledged to any projects yet!</h3>}
       </div>
     </div>
   );

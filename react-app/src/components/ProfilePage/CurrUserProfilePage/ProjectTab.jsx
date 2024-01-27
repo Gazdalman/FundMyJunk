@@ -17,7 +17,7 @@ const ProjectTab = ({projArr}) => {
   return (
     <div>
       <h2 className="tab-title">Your Projects</h2>
-        {projArr && projArr.reverse().map(project => (
+        {projArr.length ? projArr.reverse().map(project => (
         <div key={project.id} className="profile-page-projects">
           <h3 id="ppp-title" className="link" onClick={() => goTo(`/projects/${project.id}`)} >{project.title}</h3>
           <div id="ppp-buttons">
@@ -28,7 +28,7 @@ const ProjectTab = ({projArr}) => {
               buttonText={"Delete This"}
               />
           </div>
-        </div>))}
+        </div>)) : <h3 className="no-liked-projects">You haven't pledged to any projects yet!</h3>}
     </div>
   );
 }
