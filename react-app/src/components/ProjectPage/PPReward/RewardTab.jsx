@@ -62,12 +62,13 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
 
   }
 
-  const pledgeForReward = (e, amount) => {
+  const pledgeForReward = async (e, amount) => {
     e.preventDefault()
     e.stopPropagation()
 
-    dispatch(createPledge({ "amount": amount }, projId));
-    dispatch(setRequestedProject(projId));
+    await dispatch(createPledge({ "amount": amount }, projId));
+    await dispatch(setRequestedProject(projId));
+    await dispatch(refreshUser(user.id))
   }
 
   return rewards ? (
