@@ -13,6 +13,7 @@ import EditRewardItemForm from "../PPForms/EditRewardItem";
 import LoginFormModal from "../../LoginFormModal";
 import AddRewardItem from "../PPForms/AddRewardItem";
 import NoRewardPledge from "../../utilities/NoRewardPledge";
+import { refreshUser } from "../../../store/session";
 
 const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm }) => {
   const dispatch = useDispatch()
