@@ -3,12 +3,12 @@ import OpenModalButton from "../OpenModalButton";
 import PPStoryForm from "./PPForms/PPStoryForm";
 const StoryTab = ({ story, projectUser, id, user }) => {
   return story ? (
-    <>
+    <div id="story-tab">
       <h2>Story</h2>
       <h3>About This Project</h3>
-      <span style={{overflowWrap: "break-word"}}>{story.text}</span>
+      <span id="story-text" style={{overflowWrap: "break-word"}}>{story.text}</span>
       <h3>Potential Risks</h3>
-      <span style={{overflowWrap: "break-word"}}>{story.risks_challenges}</span>
+      <span id="story-text" style={{overflowWrap: "break-word"}}>{story.risks_challenges}</span>
       {(story && user && projectUser == user.id ) && <div id="buttons-links">
         <OpenModalButton
           modalComponent={<EditStoryForm story={story} projectId={id} />}
@@ -18,10 +18,10 @@ const StoryTab = ({ story, projectUser, id, user }) => {
         />
       </div>
       }
-    </>
+    </div>
 
   ) : (
-    <>
+    <div id="story-tab">
       <h2>Story</h2>
       <div id="pp-add-story">
         <span>No Story on this project</span>
@@ -32,7 +32,7 @@ const StoryTab = ({ story, projectUser, id, user }) => {
             buttonText={"Add Story"}
           />}
       </div>
-    </>
+    </div>
   )
 }
 

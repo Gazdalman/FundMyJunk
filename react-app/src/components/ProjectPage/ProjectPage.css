@@ -12,6 +12,14 @@
   height: 170px;
 }
 
+.edit-story-button {
+  margin-top: 20px;
+}
+
+.edit-story-button:hover {
+  background-color: #620a10;
+}
+
 #actual-pledge-form {
   display: flex;
   flex-direction: column;
@@ -192,7 +200,8 @@
 #pp-details-main {
   display: flex;
   width: 80%;
-
+  justify-content: space-evenly;
+  margin-top: 20px;
 }
 
 #pp-earned {
@@ -210,4 +219,16 @@
 #pp-earned-upper {
   font-size: 25px;
   color: #951019;
+}
+
+@media screen and (max-width: 800px) {
+  #story-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #story-text {
+    text-align: center;
+  }
 }

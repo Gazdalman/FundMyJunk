@@ -94,6 +94,10 @@
   flex-direction: column-reverse; */
 }
 
+#story-tab {
+  margin-bottom: 20px;
+}
+
 #ppp-tabs {
   display: flex;
   /* flex-direction: column; */
@@ -186,6 +190,16 @@
     row-gap: 20px;
     align-items: center;
     justify-items: center;
+  }
+
+  #story-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #story-text {
+    text-align: center;
   }
 
   .ppp-reward-proj-container {
