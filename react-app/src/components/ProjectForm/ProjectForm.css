@@ -390,3 +390,10 @@
   padding-bottom: 20px;
   border-bottom: 1px lightgrey solid;
 }
+
+@media screen and (max-width: 750px) {
+  #project-dnd-box {
+    width: 350px;
+    height: 420px;
+  }
+}
