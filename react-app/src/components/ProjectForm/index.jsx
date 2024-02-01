@@ -4,6 +4,7 @@ import ProjectInfo from "./ProjectInfo/ProjectInfo";
 import { useDispatch } from "react-redux";
 import { createProject, editProject } from "../../store/project";
 import { useHistory } from "react-router-dom";
+import { categories } from "../../data/categories";
 import "./ProjectForm.css"
 
 const ProjectForm = ({ type, project }) => {
@@ -31,6 +32,8 @@ const ProjectForm = ({ type, project }) => {
   const [secondCat, setSecondCat] = useState(type == "edit" ? project.secondCat : "");
   const [secondSubcat, setSecondSubcat] = useState(type == "edit" ? project.secondSub : "");
   const [launched, setLaunched] = useState(false);
+
+  // console.log(categories);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -125,6 +128,7 @@ const ProjectForm = ({ type, project }) => {
       </div> */}
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         {tab == "basics" && <Basics
+          categories={categories}
           mainCategory={mainCategory}
           mainSubcat={mainSubcat}
           setMainCategory={setMainCategory}

@@ -12,7 +12,7 @@ class Backer(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod("projects.id")), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(
-        add_prefix_for_prod('users.id')), nullable=False)
+        add_prefix_for_prod('users.id')))
     amount = db.Column(db.FLOAT, nullable=False)
 
     project = db.relationship(

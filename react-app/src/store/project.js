@@ -185,7 +185,7 @@ export const deleteReward = (rewardId) => async dispatch => {
 const projects = (state = {}, action) => {
   switch (action.type) {
     case GET_PROJECTS:
-      return { ...action.projects }
+      return [ ...action.projects ]
 
     default:
       return state;

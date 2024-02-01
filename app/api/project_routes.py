@@ -34,12 +34,12 @@ def get_home_projects():
     Returns home page projects
     """
 
-    projects = Project.query.filter(Project.launch_date <= datetime.now(
-    ), Project.end_date >= datetime.now()).paginate(page=1, per_page=12)
+    projects = Project.query.filter(Project.launch_date <= datetime.utcnow(
+    ), Project.end_date >= datetime.utcnow()).order_by(Project.earned_today.desc()).paginate(page=1, per_page=12)
 
-    proj_dict = {project.id: project.to_dict() for project in projects}
+    proj_arr = [project.to_dict() for project in projects]
 
-    return proj_dict, 200
+    return proj_arr, 200
 
 @project_routes.route('/search')
 def query_projects():
@@ -67,6 +67,7 @@ def get_one(id):
 
     return project.to_dict(), 200
 
+@project_routes.route('/search/<string:query>')
 
 @project_routes.route('/new', methods=['POST'])
 @login_required
@@ -190,6 +191,7 @@ def create_pledge(id):
         if past_pledge:
             total = past_pledge.amount
             old_id = past_pledge.id
+            project.earned_today = (project.earned_today - total) if project.earned_today else 0
 
             if len(past_pledge.rewards):
                 for reward in past_pledge.rewards:
@@ -199,6 +201,7 @@ def create_pledge(id):
             db.session.delete(past_pledge)
 
         data = form.data
+
 
         if old_id:
             pledge = Backer(
@@ -214,6 +217,8 @@ def create_pledge(id):
                 amount=data['amount'] + total
             )
         db.session.add(pledge)
+
+        project.earned_today = (project.earned_today + pledge.amount) if project.earned_today else pledge.amount
 
         for reward in project.rewards:
             if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):

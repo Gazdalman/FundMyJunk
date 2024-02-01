@@ -9,11 +9,22 @@ const HomePage = () => {
   const history = useHistory()
   // const location = useLocation()
   const user = useSelector(state => state.session.user)
-  const projects = useSelector(state => state.projects)
-  const projArr = Object.values(projects)
+  const projArr = useSelector(state => state.projects)
+  const projects = projObj(projArr)
   const [isLoaded, setIsLoaded] = useState(false);
   // const [progress, setProgress] = useState(0);
   const dispatch = useDispatch()
+
+  function projObj(arr) {
+
+    if (!arr.length) return {}
+
+    const obj = {}
+    arr.forEach(project => {
+      obj[project.id] = project
+    })
+    return obj
+  }
 
   const daysLeft = (date) => {
     const today = new Date();
@@ -23,11 +34,17 @@ const HomePage = () => {
     return Math.floor(difference / (1000 * 60 * 60 * 24))
   }
 
-  const like = async (id) => {
+  const like = async (e,id) => {
 
     if (user.id == projects[id].userId) {
       window.alert("You can't like your own project!")
       return
+    }
+
+    if (e.target.className == "far fa-heart") {
+      e.target.className = "fas fa-heart";
+    } else {
+      e.target.className = "far fa-heart";
     }
 
     const res = await dispatch(likeProject(id))
@@ -75,9 +92,9 @@ const HomePage = () => {
                 <div id="hp-like-heart">
                 {user ? (
                   user.liked[project.id] ? (
-                    <i onClick={() => like(project.id)} className="fas fa-heart" id="hp-heart"></i>
+                    <i onClick={(e) => like(e, project.id)} className="fas fa-heart" id="hp-heart"></i>
                   ) : (
-                    <i onClick={() => like(project.id)} className="far fa-heart" id="hp-heart"></i>
+                    <i onClick={(e) => like(e, project.id)} className="far fa-heart" id="hp-heart"></i>
                   )
                 ) : (
                   <i onClick={() => openLoginModal()} className="far fa-heart" id="hp-heart"></i>

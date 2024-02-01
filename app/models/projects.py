@@ -3,6 +3,7 @@ from .aws_helper import remove_file_from_s3
 from sqlalchemy import event
 from datetime import datetime
 from .likes import Like
+from apscheduler.schedulers.background import BackgroundScheduler
 
 class Project(db.Model):
   __tablename__ = "projects"
@@ -26,6 +27,7 @@ class Project(db.Model):
   launch_date = db.Column(db.DateTime)
   end_date = db.Column(db.DateTime)
   launched = db.Column(db.Boolean, nullable=False, default=False)
+  earned_today = db.Column(db.FLOAT, default=0)
 
   user = db.relationship(
     "User",
@@ -76,8 +78,26 @@ class Project(db.Model):
       "rewards": sorted([reward.to_dict() for reward in self.rewards], key=lambda reward : reward['amount']),
       "launched": self.launch_date <= datetime.now(),
       "user": self.user.display_name,
-      "earned": sum([backer.amount for backer in self.backers])
+      "earned": sum([backer.amount for backer in self.backers]),
+      "earnedToday": self.earned_today,
     }
+
+
+def reset_earned_today():
+  with db.session.begin(subtransactions=True):
+    projects = Project.query.all()
+    for project in projects:
+      project.earned_today = 0
+    db.session.commit()
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+
+scheduler.add_job(
+  reset_earned_today,
+  'cron',
+  hour=5
+)
 
 def on_project_delete(mapper, connection, target):
   remove_file_from_s3(target.image)

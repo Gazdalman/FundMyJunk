@@ -8,7 +8,13 @@ const LikedProjects = ({ likedProjects, userId }) => {
 
   console.log(likedProjects);
 
-  const like = async (id) => {
+  const like = async (e, id) => {
+    const container = e.target.closest(".ppp-reward-proj-container");
+
+    if (container) {
+      container.className = "hidden"
+    }
+    
     const res = await dispatch(likeProject(id))
     if (res == 'ok')
       await dispatch(refreshUser(userId))
@@ -29,7 +35,7 @@ const LikedProjects = ({ likedProjects, userId }) => {
               </a>
               <p>{project.user}</p>
               <div id="pp-like-heart">
-                <i onClick={() => like(project.id)} className="fas fa-heart" id="pp-heart"></i>
+                <i onClick={(e) => like(e, project.id)} className="fas fa-heart" id="pp-heart"></i>
               </div>
             </div>
           </div>

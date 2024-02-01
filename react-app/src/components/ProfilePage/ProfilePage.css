@@ -161,18 +161,18 @@
   height: 225px;
   width: 51vw;
   box-shadow: 0 0 20px #951019;
-  transition: all .5s ease;
+  transition: all .06s ease;
 }
 
 .ppp-reward-proj-container:hover .earned-rewards-btn {
   display: block;
-  transition: all .5s ease;
+  transition: all .06s ease;
 }
 
 .ppp-reward-proj-container:hover #reward-proj-img {
   height: 227px;
   width: 483px;
-  transition: all .5s ease;
+  transition: all .06s ease;
 }
 
 .ppp-reward-proj-container:hover>.ppp-reward-proj-details {
@@ -213,7 +213,7 @@
     height: 420px;
     width: 380px;
     box-shadow: 0 0 20px #951019;
-    transition: all .5s ease;
+    transition: all .06s ease;
   }
 
   .ppp-reward-proj-details {

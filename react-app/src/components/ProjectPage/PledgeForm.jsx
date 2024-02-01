@@ -4,6 +4,7 @@ import { createPledge } from "../../store/pledge";
 import { useModal } from "../../context/Modal";
 import { setRequestedProject } from "../../store/userProjects";
 import { refreshUser } from "../../store/session";
+import { getAllProjects } from "../../store/project";
 
 const PledgeForm = ({ projId,userId }) => {
   const dispatch = useDispatch();
@@ -13,7 +14,8 @@ const PledgeForm = ({ projId,userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await dispatch(createPledge({"amount": amount}, projId));
+    const res = await dispatch(createPledge({"amount": +amount}, projId));
+    await dispatch(getAllProjects())
     await dispatch(setRequestedProject(projId));
     await dispatch(refreshUser(userId))
     closeModal();

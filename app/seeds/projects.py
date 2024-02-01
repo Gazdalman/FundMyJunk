@@ -7,6 +7,200 @@ import requests
 
 categories = ["Art", "Comics","Crafts","Dance","Design","Fashion","Film & Video","Food","Games","Journalism","Music","Photography","Publishing","Technology","Theater"]
 fake = Faker()
+subcategories = {
+  "Art": [
+    "Ceramics",
+    "Conceptual Art",
+    "Digital Art",
+    "Illustration",
+    "Installations",
+    "Mixed Media",
+    "Painting",
+    "Performance Art",
+    "Public Art",
+    "Sculpture",
+    "Social Practice",
+    "Textiles",
+    "Video Art"
+  ],
+  "Comics": [
+    "Anthologies",
+    "Comic Books",
+    "Events",
+    "Graphic Novels",
+    "Web Comics"
+  ],
+  "Crafts": [
+    "Candles",
+    "Crochet",
+    "DIY",
+    "Embroidery",
+    "Glass",
+    "Knitting",
+    "Pottery",
+    "Printing",
+    "Quilts",
+    "Stationery",
+    "Taxidermy",
+    "Weaving",
+    "Woodworking"
+  ],
+  "Dance": [
+    "Performances",
+    "Residences",
+    "Spaces",
+    "Workshops"
+  ],
+  "Design": [
+    "Architecture",
+    "Civic Design",
+    "Graphic Design",
+    "Interactive Design",
+    "Product Design",
+    "Toys",
+    "Typography"
+  ],
+  "Eldritch Horror": [
+    "Ancient Texts",
+    "Live Entities",
+    "Observation",
+    "Research"
+  ],
+  "Fashion": [
+    "Accessories",
+    "Apparel",
+    "Children's Wear",
+    "Couture",
+    "Footwear",
+    "Jewelry",
+    "Pet Fashion",
+    "Ready-to-Wear"
+  ],
+  "Film & Video": [
+    "Action",
+    "Animation",
+    "Comedy",
+    "Documentary",
+    "Drama",
+    "Experimental",
+    "Family",
+    "Fantasy",
+    "Festivals",
+    "Horror",
+    "Movie Theaters",
+    "Music Videos",
+    "Narrative Film",
+    "Romance",
+    "Science Fiction",
+    "Shorts",
+    "Television"
+  ],
+  "Food": [
+    "Butchery",
+    "Community Gardens",
+    "Cookbooks",
+    "Drinks",
+    "Events",
+    "Farmer's Market",
+    "Farms",
+    "Food Trucks",
+    "Restaurants",
+    "Small Batch",
+    "Spaces",
+    "Vegan"
+  ],
+  "Games": [
+    "Gaming Hardware",
+    "Live Games",
+    "Mobile Games",
+    "Playing Cards",
+    "Puzzles",
+    "Tabletop Gaming",
+    "Video Games"
+  ],
+  "Journalism": [
+    "Audio",
+    "Photo",
+    "Print",
+    "Video",
+    "Web"
+  ],
+  "Music": [
+    "Blues",
+    "Chiptune",
+    "Classical Music",
+    "Comedy",
+    "Country & Folk",
+    "Electronic Music",
+    "Faith",
+    "Hip-Hop",
+    "Indie Rock",
+    "Jazz",
+    "Kids",
+    "Latin",
+    "Metal",
+    "Pop",
+    "Punk",
+    "R&B",
+    "Rock",
+    "Studios",
+    "World Music"
+  ],
+  "Photography": [
+    "Animals",
+    "Fine Art",
+    "Nature",
+    "People",
+    "Photo Albums",
+    "Places"
+  ],
+  "Publishing": [
+    "Academic",
+    "Anthologies",
+    "Art Books",
+    "Calendars",
+    "Children's Books",
+    "Comedy",
+    "Fiction",
+    "Letterpress",
+    "Literary Journals",
+    "Literary Spaces",
+    "Nonfiction",
+    "Periodicals",
+    "Poetry",
+    "Radio & Podcasts",
+    "Translate",
+    "Young Adult",
+    "Zines"
+  ],
+  "Technology": [
+    "3D Printing",
+    "Apps",
+    "Artificial Intelligence",
+    "Camera Equipment",
+    "DIY Electronics",
+    "Fabrication Tools",
+    "Flight",
+    "Gadgets",
+    "Hardware",
+    "Marketplaces",
+    "Robots",
+    "Software",
+    "Sound",
+    "Space Exploration",
+    "Wearables",
+    "Web"
+  ],
+  "Theater": [
+    "Comedy",
+    "Experimental",
+    "Festivals",
+    "Immersive",
+    "Musical",
+    "Plays",
+    "Spaces"
+  ]
+}
 num = 1
 adjectives = [
     "adorable", "agreeable", "ambitious", "brave", "calm", "charming",
@@ -33,13 +227,15 @@ def seed_projects():
 
     launch = datetime.now()
     end = launch + timedelta(days=randint(1,60))
+    cat = choice(categories)
+
     project = Project(
       user_id=choice(range(1, 11)),
       title=f"The {fake.word(ext_word_list=adjectives).title()} Project",
       subtitle="Nothing to see here folks, just give me money",
       location='nowhere, Alaska',
-      main_category=choice(categories),
-      main_subcat="banana",
+      main_category=cat,
+      main_subcat=choice(subcategories[cat]),
       image=img_url,
       type=choice(['individual', 'business', 'non-profit']),
       goal=randint(1, 1000000),
@@ -47,6 +243,12 @@ def seed_projects():
       end_date=end,
       launched=choice([True,False])
     )
+
+    if (project.launch_date <= datetime.now()):
+      project.launched = True
+    else:
+      project.launched = False
+
     db.session.add(project)
   db.session.commit()
 

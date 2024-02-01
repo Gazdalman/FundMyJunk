@@ -29,6 +29,7 @@ boto3 = "*"
 faker = "*"
 pillow = "*"
 requests = "*"
+apscheduler = "*"
 
 [dev-packages]
 

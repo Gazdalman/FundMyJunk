@@ -1,8 +1,11 @@
-const SecondCategory = (
+const SecondCategory = ({
   setSecondCat,
   secondCat,
   secondSubcat,
-  setSecondSubcat) => {
+  setSecondSubcat,
+  categories
+}) => {
+  console.log(categories);
   return (
     <div id="second-cat-form">
       <div id="second-cat-info">
@@ -15,21 +18,31 @@ const SecondCategory = (
         <span id="second-cat-input">
           <label id="second-cat-label">Second Category</label>
           <select
-          className="input-field"
+            className="input-field"
             value={secondCat}
-            onChange={(e) => setSecondCat(e.target.value)}
+            onChange={(e) => {
+              setSecondSubcat("")
+              setSecondCat(e.target.value)
+            }}
           >
-            <option value="">Not for now</option>
+            <option value="">--Select--</option>
+            {Object.keys(categories).map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </span>
         <span id="second-subcat-input">
           <label id="second-subcat-label">Second SubCategory</label>
           <select
-          className="input-field"
+            disabled={!secondCat}
+            className="input-field"
             value={secondSubcat}
             onChange={(e) => setSecondSubcat(e.target.value)}
           >
-            <option value="">Not for now</option>
+            <option value="">--Select--</option>
+            {secondCat && categories[secondCat].map(sub => (
+              <option value={sub} key={sub}>{sub}</option>
+            ))}
           </select>
         </span>
       </div>

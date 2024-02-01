@@ -9,6 +9,7 @@ html {
 
 #main-content {
   height: fit-content;
+  min-height: 625px;
 }
 
 button {
@@ -88,7 +89,7 @@ select {
   box-sizing: border-box;
   padding-bottom: 70px;
   position: relative;
-  right: 10px;
+  right: 7px;
   color: white;
 }
 

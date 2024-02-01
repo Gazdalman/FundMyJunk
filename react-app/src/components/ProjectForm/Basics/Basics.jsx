@@ -15,7 +15,8 @@ const Basics = (
     secondCat,
     secondSubcat,
     setSecondSubcat,
-    setTab
+    setTab,
+    categories
   }
 ) => {
   const [page, setPage] = useState(1)
@@ -44,6 +45,7 @@ const Basics = (
           mainSubcat={mainSubcat}
           setMainCategory={setMainCategory}
           setMainSubcat={setMainSubcat}
+          categories={categories}
         />
 
       }
@@ -53,6 +55,7 @@ const Basics = (
           setSecondCat={setSecondCat}
           secondSubcat={secondSubcat}
           setSecondSubcat={setSecondSubcat}
+          categories={categories}
         />
       }
       {page == 3 &&

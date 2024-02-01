@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat }) => {
+
+const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat, categories }) => {
 
   return (
     <div id="main-cat-form">
@@ -14,7 +15,7 @@ const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat
         <span id="main-cat-input">
           <label id="main-cat-label">Main Category</label>
           <select
-          className="input-field"
+            className="input-field"
             value={mainCategory}
             onChange={(e) => {
               setMainSubcat("")
@@ -22,19 +23,23 @@ const MainCategory = ({ mainCategory, mainSubcat, setMainCategory, setMainSubcat
             }}
           >
             <option value="">--Select--</option>
-            <option value="Art">Just gonna say 'Art' for now</option>
+            {Object.keys(categories).map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </span>
         <span id="main-subcat-input">
           <label id="main-subcat-label">Main SubCategory</label>
           <select
-          className="input-field"
+            className="input-field"
             disabled={!mainCategory}
             value={mainSubcat}
             onChange={(e) => setMainSubcat(e.target.value)}
           >
             <option value="">--Select--</option>
-            <option value="Ceramics">Just gonna say 'Ceramics' for now</option>
+            {mainCategory && categories[mainCategory].map(sub => (
+              <option value={sub} key={sub}>{sub}</option>
+            ))}
           </select>
         </span>
       </div>

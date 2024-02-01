@@ -49,6 +49,8 @@ def edit_pledge(id):
   if form.validate_on_submit():
     db.session.delete(pledge)
 
+    project.earned_today = project.earned_today - pledge.amount
+
     pledge = Backer(
       id = id,
       user_id = current_user.get_id(),
@@ -56,7 +58,10 @@ def edit_pledge(id):
       amount = form.data['amount']
     )
 
+    project.earned_today = project.earned_today + pledge.amount
+
     db.session.add(pledge)
+
 
     for reward in project.rewards:
       if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):
@@ -85,6 +90,9 @@ def delete_pledge(id):
   for reward in pledge.rewards:
     if not reward.unlimited:
       reward.quantity = reward.quantity + 1
+
+  project = Project.query.get(pledge.project_id)
+  project.earned_today = project.earned_today - pledge.amount
 
   db.session.delete(pledge)
   db.session.commit()

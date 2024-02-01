@@ -170,7 +170,7 @@ const ProjectInfo = ({
         <div id="project-image-info">
           <h2>Project Image</h2>
           <div id="project-image-description">
-            <p>Give the people a pretty picture to gawk at!</p>
+            <p>Give the people a pretty picture to gawk at! (Recommended size is 850x400 or a similar ratio)</p>
             <p style={errs.image ? { "color": "red" } : {}}>{errs.image ? errs.image : "(May be squished or stretched beyond belief)"}</p>
           </div>
         </div>

@@ -13,7 +13,7 @@
   max-height: 605.6px;
   max-width: 390px;
   box-shadow: 0 0 20px #951019;
-  transition: all .5s ease;
+  transition: all .06s ease;
 }
 
 
@@ -197,7 +197,7 @@ progress::-webkit-progress-value {
     height: 614px;
     width: 402px;
     box-shadow: 0 0 20px #951019;
-    transition: all .5s ease;
+    transition: all .03s ease;
   }
 }
 

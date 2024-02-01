@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { setRequestedProject } from "../../store/userProjects";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createStory } from "../../store/project";
 import OpenModalButton from "../OpenModalButton";
@@ -8,6 +8,7 @@ import SkipStep from "../utilities/SkipStep";
 
 const StoryForm = () => {
   const history = useHistory();
+  const location = useLocation()
   const dispatch = useDispatch();
   const [selectedAI, setSelectedAI] = useState("");
   const [isLoaded, setIsLoaded] = useState(false)
@@ -22,6 +23,8 @@ const StoryForm = () => {
   const skipStep = () => {
     return history.replace(`/projects/${projectId}/add_reward`)
   }
+
+
 
   const handleStorySubmit = async (e) => {
     e.preventDefault()
@@ -68,7 +71,7 @@ const StoryForm = () => {
     setIsLoaded(true)
   }, [dispatch]);
   return (
-    <div id="story-form-container">
+    <div id="story-form-container" style={{"height": (location.pathname.endsWith("/add_story") ? "645px" : "fit-content")}}>
       <form onSubmit={handleStorySubmit} encType="multipart/form-data">
         <h1 id="story-form-title">Add a Story</h1>
         <div id="ai-input-field">
