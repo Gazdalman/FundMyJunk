@@ -6,7 +6,7 @@ import { refreshUser } from "../../../store/session";
 const LikedProjects = ({ likedProjects, userId }) => {
   const dispatch = useDispatch();
 
-  console.log(likedProjects);
+  // console.log(likedProjects);
 
   const like = async (e, id) => {
     const container = e.target.closest(".ppp-reward-proj-container");
@@ -14,7 +14,7 @@ const LikedProjects = ({ likedProjects, userId }) => {
     if (container) {
       container.className = "hidden"
     }
-    
+
     const res = await dispatch(likeProject(id))
     if (res == 'ok')
       await dispatch(refreshUser(userId))

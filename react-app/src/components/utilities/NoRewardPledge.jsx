@@ -9,7 +9,7 @@ const NoRewardPledge = ({amount, projId}) => {
 
   const pledgeAnyway = async (e) => {
     e.preventDefault();
-    console.log(amount);
+    // console.log(amount);
     const res = await dispatch(createPledge({"amount": amount}, projId));
     await dispatch(setRequestedProject(projId));
     closeModal();

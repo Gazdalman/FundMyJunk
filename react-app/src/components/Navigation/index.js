@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
 		const res = await fetch(`/api/search/${search}`);
 		const data = await res.json();
 		if (res.ok) {
-			console.log(data);
+			// console.log(data);
 		}
 	}
 

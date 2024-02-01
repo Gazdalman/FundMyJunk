@@ -5,7 +5,7 @@ const SecondCategory = ({
   setSecondSubcat,
   categories
 }) => {
-  console.log(categories);
+
   return (
     <div id="second-cat-form">
       <div id="second-cat-info">
