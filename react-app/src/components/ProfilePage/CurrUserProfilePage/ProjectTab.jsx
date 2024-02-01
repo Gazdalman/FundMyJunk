@@ -28,7 +28,7 @@ const ProjectTab = ({projArr}) => {
               buttonText={"Delete This"}
               />
           </div>
-        </div>)) : <h3 className="no-liked-projects">You haven't pledged to any projects yet!</h3>}
+        </div>)) : <h3 className="no-liked-projects">You haven't created any projects yet!</h3>}
     </div>
   );
 }
