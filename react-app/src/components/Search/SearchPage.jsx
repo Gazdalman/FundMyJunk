@@ -160,6 +160,7 @@ const SearchPage = () => {
             placeholder="Search"
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
+            onKeyPress={e => e.key === "Enter" && search(e)}
           />
           <button onClick={search} id="search-page-button" type="submit">
             <i className="fas fa-search"></i>
@@ -211,14 +212,14 @@ const SearchPage = () => {
               </div>
             </div>
           </div>
-        )) : <h3 className="no-liked-projects">No results found!</h3>}
+        )) : <h3 className="no-found-projects">No results found!</h3>}
       </div>
       {/* {projArr.length && projArr.length % 12 == 0 ? (
         <button id="see-more" onClick
       ) : null} */}
       <div id="pagination" className={pageNumber == 1 ? "one-button" : "two-buttons"}>
         {pageNumber > 1 ? <button onClick={pageDown} id="page-button" type="submit">Page Down</button> : null}
-        <button className={`${pageNumber == 1 && "single-page-btn "} ${disabled ? "disabled" : ""}`} disabled={disabled} onClick={pageUp} id="page-button" type="submit">
+        <button className={`${pageNumber == 1 && "single-page-btn "} ${disabled ? "disabled" : ""}`} disabled={disabled || projArr.length < 12} onClick={pageUp} id="page-button" type="submit">
           Page Up
         </button>
         </div>
