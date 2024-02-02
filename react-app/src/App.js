@@ -20,6 +20,7 @@ import NotFound from "./components/utilities/NotFound";
 import { Redirect } from "react-router-dom/cjs/react-router-dom";
 import PPRewardTab from "./components/ProjectPage/PPForms/PPReward";
 import Footer from "./components/Footer/Footer";
+import SearchPage from "./components/Search/SearchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +69,9 @@ function App() {
           <ProtectedRoute path="/projects/:projectId/edit_story">
             <EditStoryForm />
           </ProtectedRoute>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
           <Route path="/unauthorized">
             <UnauthorizedPage />
           </Route>
