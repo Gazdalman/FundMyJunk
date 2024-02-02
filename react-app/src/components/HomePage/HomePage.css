@@ -1,4 +1,5 @@
-.home-project-card {
+.home-project-card,
+.search-project-card {
   width: 375px;
   border: solid 1px black;
   border-radius: 10px;
@@ -7,7 +8,8 @@
   justify-content: center;
 }
 
-.home-project-card:hover {
+.home-project-card:hover,
+.search-project-card:hover {
   height: 100%;
   width: 100%;
   max-height: 605.6px;
@@ -42,7 +44,8 @@
   height: fit-content;
 }
 
-#home-page {
+#home-page,
+#search-page {
   width: 90%;
   margin: auto;
   padding-top: 75px;
@@ -72,7 +75,8 @@
   text-shadow: #951019 0px 0px 10px;
 }
 
-.home-project-card:hover>*>*>#hp-like-heart {
+.home-project-card:hover>*>*>#hp-like-heart,
+.search-project-card:hover>*>*>#hp-like-heart {
   display: block;
 }
 
@@ -108,7 +112,8 @@
   text-align: center;
 }
 
-.home-project-card>span {
+.home-project-card>span,
+.search-project-card>span {
   width: fit-content;
 }
 
@@ -122,7 +127,8 @@
   text-decoration: none;
 }
 
-#home-page-title {
+#home-page-title,
+#search-page-title {
   /* margin-top: 75px; */
   text-align: center;
 }
@@ -156,7 +162,8 @@ progress::-webkit-progress-value {
   height: 284px;
 }
 
-#home-page-cards {
+#home-page-cards,
+#search-page-cards {
   width: 90%;
   margin: auto;
   display: grid;
@@ -171,7 +178,8 @@ progress::-webkit-progress-value {
 
 
 @media screen and (max-width: 1000px) {
-  #home-page-cards {
+  #home-page-cards,
+  #search-page-cards {
     grid-template-columns: 100%;
     /* gap: 1%; */
     text-align: center;
@@ -183,8 +191,10 @@ progress::-webkit-progress-value {
     display: none;
   }
 
-  #home-page {
+  #home-page,
+  #search-page {
     width: 95%;
+    min-height: 628px;
     height: fit-content;
     display: flex;
     margin: auto;
@@ -193,7 +203,8 @@ progress::-webkit-progress-value {
     align-items: center;
   }
 
-  .home-project-card:hover {
+  .home-project-card:hover,
+  .search-project-card:hover {
     height: 614px;
     width: 402px;
     box-shadow: 0 0 20px #951019;
@@ -202,38 +213,44 @@ progress::-webkit-progress-value {
 }
 
 @media screen and (min-width: 1000px) and (max-width: 1350px) {
-  #home-page-cards {
+  #home-page-cards,
+  #search-page-cards {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 20px;
     column-gap: 20px;
     max-width: 848px;
   }
 
-  #home-page {
+  #home-page,
+  #search-page {
     width: 95%;
     height: 3800px;
   }
 }
 
 @media screen and (min-width: 1350px) and (max-width: 1700px) {
-  #home-page-cards {
+  #home-page-cards,
+  #search-page-cards {
     grid-template-columns: repeat(3, 1fr);
     row-gap: 1%;
   }
 
-  #home-page {
+  #home-page,
+  #search-page {
     width: 95%;
     height: 2600px;
   }
 }
 
 @media screen and (min-width: 1700px) {
-  #home-page-cards {
+  #home-page-cards,
+  #search-page-cards {
     grid-template-columns: repeat(4, 1fr);
     row-gap: 20px;
   }
 
-  #home-page {
+  #home-page,
+  #search-page {
     width: 95%;
     height: fit-content;
   }

@@ -63,6 +63,7 @@ const ProjectPage = () => {
       <div id="pp-header">
         <h1>{project.title}</h1>
         <h2>{project.subtitle}</h2>
+        <h3>Created By <a className="link" href={`/users/${project.userId}`}>{project.user}</a></h3>
       </div>
       <div id="pp-project-details">
         <div id="pp-image-container">
@@ -91,6 +92,10 @@ const ProjectPage = () => {
               <span id="pp-earned-lower">earned of ${addCommas(project.goal)}
               </span>
             </div>
+            <div id="pp-category">
+              <span id="pp-category-upper">{project.mainCategory}</span>
+              <span id="pp-category-lower">{project.mainSub}</span>
+              </div>
             <div id="pp-date">
               <span id="pp-date-upper">{project.launched ?
                 (setHours() <= 48 ? setHours() : setDays()) :

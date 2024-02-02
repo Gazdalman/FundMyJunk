@@ -122,11 +122,8 @@ nav {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   border: 1px solid darkgrey;
+  border-right: none;
   padding-left: 5px;
-}
-
-#search-input:focus {
-  outline-color: #951019;
 }
 
 #search-button {
@@ -134,6 +131,8 @@ nav {
   height: 32px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  border-left: none;
+  background-color: white;
 }
 
 #search-button:hover {

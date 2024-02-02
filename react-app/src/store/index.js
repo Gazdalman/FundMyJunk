@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session';
 import projects from './project';
 import userProjects from './userProjects';
+import searchResults from './search';
 
 const rootReducer = combineReducers({
   session,
   projects,
-  userProjects
+  userProjects,
+  searchResults,
 });
 
 
