@@ -5,6 +5,7 @@ from app.forms import ProjectForm, PledgeForm, ProjectEditForm, RewardForm, Stor
 from .aws_helper import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from .helper_functions import user_owns
 from datetime import datetime
+from sqlalchemy import or_
 
 project_routes = Blueprint('projects', __name__, url_prefix="/api/projects")
 
@@ -41,18 +42,34 @@ def get_home_projects():
 
     return proj_arr, 200
 
+
 @project_routes.route('/search')
 def query_projects():
     """
     Returns all projects
     """
+    # Grab the pagination and keyword from the query
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
-    projects = Project.query.paginate(page=page, per_page=per_page)
+    per_page = request.args.get('per_page', 12, type=int)
+    keyword = request.args.get('keyword', None)
 
-    proj_dict = {project.id: project.to_dict() for project in projects}
+    if keyword:
+        projects = Project.query.filter(
+            Project.launch_date <= datetime.utcnow(),
+            Project.end_date >= datetime.utcnow(),
+            or_(
+                Project.title.ilike(f"%{keyword}%"),
+                Project.main_category.ilike(f"%{keyword}%"),
+                Project.main_subcat.ilike(f"%{keyword}%"),
+                Project.second_cat.ilike(f"%{keyword}%"),
+                Project.second_subcat.ilike(f"%{keyword}%"),
+                Project.subtitle.ilike(f"%{keyword}%"),
+            )).paginate(page=page, per_page=per_page)
 
-    return proj_dict, 200
+    else:
+        projects = Project.query.paginate(page=page, per_page=per_page)
+
+    return [project.to_dict() for project in projects], 200
 
 
 @project_routes.route('/<int:id>')
@@ -67,8 +84,8 @@ def get_one(id):
 
     return project.to_dict(), 200
 
-@project_routes.route('/search/<string:query>')
 
+@project_routes.route('/search/<string:query>')
 @project_routes.route('/new', methods=['POST'])
 @login_required
 def create_project():
@@ -191,7 +208,8 @@ def create_pledge(id):
         if past_pledge:
             total = past_pledge.amount
             old_id = past_pledge.id
-            project.earned_today = (project.earned_today - total) if project.earned_today else 0
+            project.earned_today = (
+                project.earned_today - total) if project.earned_today else 0
 
             if len(past_pledge.rewards):
                 for reward in past_pledge.rewards:
@@ -201,7 +219,6 @@ def create_pledge(id):
             db.session.delete(past_pledge)
 
         data = form.data
-
 
         if old_id:
             pledge = Backer(
@@ -218,7 +235,8 @@ def create_pledge(id):
             )
         db.session.add(pledge)
 
-        project.earned_today = (project.earned_today + pledge.amount) if project.earned_today else pledge.amount
+        project.earned_today = (
+            project.earned_today + pledge.amount) if project.earned_today else pledge.amount
 
         for reward in project.rewards:
             if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):
@@ -229,6 +247,7 @@ def create_pledge(id):
         db.session.commit()
         return pledge.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
 
 @project_routes.route('/<int:id>/like', methods=['POST'])
 @login_required
@@ -255,6 +274,7 @@ def like_project(id):
 
     db.session.commit()
     return {"message": message}
+
 
 @project_routes.route('/<int:id>/rewards/new', methods=['POST'])
 @login_required
