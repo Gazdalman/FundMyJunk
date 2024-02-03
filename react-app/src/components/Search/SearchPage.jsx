@@ -102,6 +102,7 @@ const SearchPage = () => {
     // if (res.ok) {
     // setSearchText("")
     localStorage.setItem("search", searchText)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // }
   }
@@ -119,7 +120,7 @@ const SearchPage = () => {
     }
     localStorage.setItem("page", newPage)
     setPageNumber(newPage)
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const pageDown = async (e) => {
@@ -130,6 +131,7 @@ const SearchPage = () => {
     setPageNumber(newPage)
 
     const res = await dispatch(getResults(`page=${newPage}&keyword=${searchText || ""}`))
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   useEffect(() => {

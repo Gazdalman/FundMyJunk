@@ -23,6 +23,13 @@ def seed_pledges():
     )
 
     db.session.add(pledge)
+
+    for reward in proj_dict[proj_id].rewards:
+            if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):
+                pledge.rewards.append(reward)
+                if not reward.unlimited:
+                    reward.quantity = reward.quantity - 1
+
     proj_dict[proj_id].earned_today = proj_dict[proj_id].earned_today + pledge.amount
   db.session.commit()
 

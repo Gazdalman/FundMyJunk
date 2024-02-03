@@ -21,11 +21,14 @@ import { Redirect } from "react-router-dom/cjs/react-router-dom";
 import PPRewardTab from "./components/ProjectPage/PPForms/PPReward";
 import Footer from "./components/Footer/Footer";
 import SearchPage from "./components/Search/SearchPage";
+import LandingPage from "./components/LandingPage/LandingPage";
+import { getAllProjects } from "./store/project";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
+    dispatch(getAllProjects())
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
@@ -37,6 +40,12 @@ function App() {
         <>
         <Switch>
           <Route exact path="/">
+            <Redirect to="/welcome" />
+          </Route>
+          <Route exact path="/welcome">
+            <LandingPage />
+          </Route>
+          <Route exact path="/home">
             <HomePage />
           </Route>
           <Route path="/login" >
