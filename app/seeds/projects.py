@@ -5,7 +5,7 @@ from random import choice, randint
 from datetime import datetime, timedelta
 import requests
 
-categories = ["Art", "Comics","Crafts","Dance","Design","Fashion","Film & Video","Food","Games","Journalism","Music","Photography","Publishing","Technology","Theater"]
+categories = ["Art", "Comics","Crafts","Dance","Design","Eldritch Horror","Fashion","Film & Video","Food","Games","Journalism","Music","Photography","Publishing","Technology","Theater"]
 fake = Faker()
 subcategories = {
   "Art": [
