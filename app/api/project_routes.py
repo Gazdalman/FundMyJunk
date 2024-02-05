@@ -21,13 +21,17 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@project_routes.route("/users/<int:id>")
+@project_routes.route("/current")
 @login_required
-def get_user_projects(id):
-    projects = Project.query.filter(Project.user_id == id).all()
-
+def get_curr_user_projects(id):
+    if current_user.get_id() == id:
+        projects = Project.query.filter(Project.user_id == current_user.get_id()).all()
     return {f"{project.id}": project.to_dict() for project in projects}
 
+@project_routes.route("/users/<int:id>")
+def get_user_projects(id):
+    projects = Project.query.filter(Project.user_id == id, Project.launched == True ).all()
+    return {f"{project.id}": project.to_dict() for project in projects}
 
 @project_routes.route('/')
 def get_home_projects():

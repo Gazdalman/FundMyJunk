@@ -90,11 +90,27 @@ def reset_earned_today():
       project.earned_today = 0
     db.session.commit()
 
+def check_if_launched():
+  with db.session.begin(subtransactions=True):
+    projects = Project.query.all()
+    for project in projects:
+      if (project.launch_date <= datetime.now() and project.end_date >= datetime.now()):
+        project.launched = True
+      else:
+        project.launched = False
+    db.session.commit()
+
 scheduler = BackgroundScheduler()
 scheduler.start()
 
 scheduler.add_job(
   reset_earned_today,
+  'cron',
+  hour=5
+)
+
+scheduler.add_job(
+  check_if_launched,
   'cron',
   hour=5
 )

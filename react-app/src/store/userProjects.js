@@ -47,6 +47,15 @@ export const getUserProjects = (userId) => async dispatch => {
   }
 }
 
+export const getCurrUserProjects = () => async dispatch => {
+  const res = await fetch(`/api/projects/current`)
+  const projects = await res.json()
+
+  if (res.ok) {
+    dispatch(setProjects(projects))
+  }
+}
+
 const userProjects = (state = {}, action) => {
   switch (action.type) {
     case GET_USER_PROJECTS:

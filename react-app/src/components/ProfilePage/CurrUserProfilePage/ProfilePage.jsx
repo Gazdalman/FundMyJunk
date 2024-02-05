@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProject, getUserProjects } from "../../../store/userProjects";
+import { deleteProject, getCurrUserProjects } from "../../../store/userProjects";
 import { useHistory } from "react-router-dom";
 import "../ProfilePage.css"
 import OpenModalButton from "../../OpenModalButton";
@@ -20,7 +20,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const getProjects = async () => {
-      await dispatch(getUserProjects(currUser.id))
+      await dispatch(getCurrUserProjects())
       setIsLoaded(true)
     }
     getProjects()
