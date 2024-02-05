@@ -172,7 +172,9 @@ const SearchPage = () => {
       <div id="search-page-cards">
         {projArr.length ? projArr.map(project => (
           <div key={project.id} className="search-project-card">
-            <img className="link" id="hp-card-img" onClick={() => goTo(`/projects/${project.id}`)} src={project.image} />
+            <div className="link" id="hp-card-img" onClick={() => goTo(`/projects/${project.id}`)} >
+            <img src={project.image} />
+            </div>
             <div id="hp-card-details">
               <div id="title-and-heart">
                 <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} id="hp-title">{project.title}</h3>

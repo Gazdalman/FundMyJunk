@@ -9,6 +9,8 @@ import DeleteModal from "../utilities/deleteModal";
 import OpenModalButton from "../OpenModalButton";
 import PledgeForm from "./PledgeForm";
 import LoginFormModal from "../LoginFormModal";
+import { likeProject } from "../../store/project";
+import { refreshUser } from "../../store/session";
 
 const ProjectPage = () => {
   const history = useHistory();
@@ -47,6 +49,20 @@ const ProjectPage = () => {
     return Math.ceil(difference / (1000 * 60 * 60 * 24))
   }
 
+  const like = async (e, id) => {
+
+    if (e.target.className == "far fa-heart") {
+      e.target.className = "fas fa-heart";
+    } else {
+      e.target.className = "far fa-heart";
+    }
+
+    const res = await dispatch(likeProject(id))
+    if (res == 'ok')
+      await dispatch(refreshUser(user.id))
+    // return history.go(0)
+  }
+
   useEffect(() => {
     const loadProject = async () => {
       const gotProject = await dispatch(setRequestedProject(projectId))
@@ -71,19 +87,30 @@ const ProjectPage = () => {
         </div>
         <div id="pp-details-container">
           <progress id="pp-progress-bar" value={project.earned} max={project.goal} />
-          {!user || user && user.id != project.userId ? <OpenModalButton
-            modalClasses={["pp-pledge-button"]}
-            buttonText={user ? "Burn Your Money" : "Login To Pledge"}
-            modalComponent={user ? <PledgeForm projId={project.id} userId={user.id}/> : <LoginFormModal />}
-          /> :
-          (!showForm && <div id="user-project-buttons">
-          <button id="owner-edit-btn" onClick={e => editClick(e, project.id)}>Edit Project</button>
-          <OpenModalButton
-            modalClasses={["owner-delete-button"]}
-            modalComponent={<DeleteModal project={project} type={"project"} />}
-            buttonText={"Delete Project"}
-          />
-        </div>)
+          {!user || user && user.id != project.userId ? <div id="like-pledge-btns">
+            <OpenModalButton
+              modalClasses={["pp-pledge-button"]}
+              buttonText={user ? "Burn Your Money" : "Login To Pledge"}
+              modalComponent={user ? <PledgeForm projId={project.id} userId={user.id} /> : <LoginFormModal />}
+            />
+
+            {
+              user.liked[project.id] ? (
+                <i onClick={(e) => like(e, project.id)} className="fas fa-heart" id="ppp-heart"></i>
+              ) : (
+                <i onClick={(e) => like(e, project.id)} className="far fa-heart" id="ppp-heart"></i>
+              )
+            }
+
+          </div> :
+            (!showForm && <div id="user-project-buttons">
+              <button id="owner-edit-btn" onClick={e => editClick(e, project.id)}>Edit Project</button>
+              <OpenModalButton
+                modalClasses={["owner-delete-button"]}
+                modalComponent={<DeleteModal project={project} type={"project"} />}
+                buttonText={"Delete Project"}
+              />
+            </div>)
           }
           <div id="pp-details-main">
             <div id="pp-earned">
@@ -95,7 +122,7 @@ const ProjectPage = () => {
             <div id="pp-category">
               <span id="pp-category-upper">{project.mainCategory}</span>
               <span id="pp-category-lower">{project.mainSub}</span>
-              </div>
+            </div>
             <div id="pp-date">
               <span id="pp-date-upper">{project.launched ?
                 (setHours() <= 48 ? setHours() : setDays()) :

@@ -15,9 +15,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
@@ -136,10 +138,18 @@
   text-align: center;
 }
 
+.ppp-reward-proj-image {
+  display: flex;
+  justify-content: center;
+  background-color: #951019;
+  border-radius: 10px;
+}
+
 .ppp-reward-proj-image>img {
   width: 350px;
   height: 165px;
   border-radius: 10px;
+  object-fit: contain;
 }
 
 .ppp-reward-proj-details {

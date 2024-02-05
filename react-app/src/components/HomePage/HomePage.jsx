@@ -34,7 +34,7 @@ const HomePage = () => {
     return Math.floor(difference / (1000 * 60 * 60 * 24))
   }
 
-  const like = async (e,id) => {
+  const like = async (e, id) => {
 
     if (user.id == projects[id].userId) {
       window.alert("You can't like your own project!")
@@ -73,7 +73,6 @@ const HomePage = () => {
     }
   }
 
-
   useEffect(() => {
     dispatch(getAllProjects())
     setIsLoaded(true)
@@ -85,26 +84,28 @@ const HomePage = () => {
       <div id="home-page-cards">
         {projArr.map(project => (
           <div key={project.id} className="home-project-card">
-            <img className="link" id="hp-card-img" onClick={() => goTo(`/projects/${project.id}`)} src={project.image} />
+            <div className="link" id="hp-card-img" onClick={() => goTo(`/projects/${project.id}`)} >
+              <img id="project-hp-pic" src={project.image} />
+            </div>
             <div id="hp-card-details">
               <div id="title-and-heart">
                 <h3 className="link" onClick={() => goTo(`/projects/${project.id}`)} id="hp-title">{project.title}</h3>
                 <div id="hp-like-heart">
-                {user ? (
-                  user.liked[project.id] ? (
-                    <i onClick={(e) => like(e, project.id)} className="fas fa-heart" id="hp-heart"></i>
+                  {user ? (
+                    user.liked[project.id] ? (
+                      <i onClick={(e) => like(e, project.id)} className="fas fa-heart" id="hp-heart"></i>
+                    ) : (
+                      <i onClick={(e) => like(e, project.id)} className="far fa-heart" id="hp-heart"></i>
+                    )
                   ) : (
-                    <i onClick={(e) => like(e, project.id)} className="far fa-heart" id="hp-heart"></i>
-                  )
-                ) : (
-                  <i onClick={() => openLoginModal()} className="far fa-heart" id="hp-heart"></i>
-                )}
+                    <i onClick={() => openLoginModal()} className="far fa-heart" id="hp-heart"></i>
+                  )}
                 </div>
               </div>
               <p id="hp-subtitle">{project.subtitle}</p>
               <span>by <span className="link" onClick={() => goTo(`/users/${project.userId}`)} id="hp-author">
-                  {project.user}
-                </span>
+                {project.user}
+              </span>
               </span>
               <progress id="hp-progress" value={project.earned} max={project.goal}></progress>
               <div id="hp-mid">

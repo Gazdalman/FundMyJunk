@@ -86,6 +86,7 @@ function SignupFormModal() {
 					<input
 						type="text"
 						value={username}
+						minLength={5}
 						onChange={(e) => setUsername(e.target.value)}
 						onFocus={e => handleFocus("username", e)}
 						onBlur={handleBlur}
