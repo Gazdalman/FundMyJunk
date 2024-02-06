@@ -15,7 +15,7 @@ const UserProfilePage = () => {
   const projArr = useSelector(state => Object.values(state.userProjects));
   const [isLoaded, setIsLoaded] = useState(false)
 
-  console.log(projArr);
+  // console.log(projArr);
   const getProjects = async () => {
     await dispatch(getUserProjects(id))
     setIsLoaded(true)
