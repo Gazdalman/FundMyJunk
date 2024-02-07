@@ -31,7 +31,6 @@ const UserProfilePage = () => {
     }
     const mink = dispatch(getSingleUser(id))
     getProjects()
-    // console.log("mink ->", mink);
   }, [dispatch])
 
   return isLoaded && pageUser ? (

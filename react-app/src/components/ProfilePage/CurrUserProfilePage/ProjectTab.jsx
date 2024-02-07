@@ -1,10 +1,11 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteModal from "../../utilities/deleteModal";
 
 
 const ProjectTab = ({projArr}) => {
   const history = useHistory()
+  const location = useLocation()
 
   const goTo = (link) => {
     return history.push(link)
@@ -23,7 +24,7 @@ const ProjectTab = ({projArr}) => {
           <div id="ppp-buttons">
             <button onClick={e => editClick(project.id)}>Edit This</button>
             <OpenModalButton
-              modalComponent={<DeleteModal type="project" project={project} />}
+              modalComponent={<DeleteModal type="project" project={project} url={location.pathname}/>}
               modalClasses={["delete-modal"]}
               buttonText={"Delete This"}
               />

@@ -95,7 +95,7 @@ const ProjectPage = () => {
             />
 
             {
-              user.liked[project.id] ? (
+              user && user.liked[project.id] ? (
                 <i onClick={(e) => like(e, project.id)} className="fas fa-heart" id="ppp-heart"></i>
               ) : (
                 <i onClick={(e) => like(e, project.id)} className="far fa-heart" id="ppp-heart"></i>

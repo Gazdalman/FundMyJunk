@@ -54,7 +54,8 @@ class Project(db.Model):
 
   backers = db.relationship(
     "Backer",
-    back_populates="project"
+    back_populates="project",
+    cascade="all, delete-orphan"
   )
 
   def to_dict(self):
