@@ -227,7 +227,7 @@ const ProjectInfo = ({
         <input
           value={launchDate}
           type="date"
-          min={type != "edit" ? today : launchDate}
+          min={today}
           max={launchLimit()}
           onChange={launchChange}
           className="input-field"

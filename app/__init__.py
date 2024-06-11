@@ -4,10 +4,11 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User
+from .models import db, User, Project, Story, Reward, RewardItem
 from .api import user_routes, auth_routes, project_routes, reward_routes, ri_routes, story_routes, pledge_routes
 from .seeds import seed_commands
 from .config import Config
+from random import randint
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -71,9 +72,9 @@ def api_help():
     Returns all API routes and their doc strings
     """
     acceptable_methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
-    route_list = { rule.rule: [[ method for method in rule.methods if method in acceptable_methods ],
-                    app.view_functions[rule.endpoint].__doc__ ]
-                    for rule in app.url_map.iter_rules() if rule.endpoint != 'static' }
+    route_list = {rule.rule: [[method for method in rule.methods if method in acceptable_methods],
+                              app.view_functions[rule.endpoint].__doc__]
+                  for rule in app.url_map.iter_rules() if rule.endpoint != 'static'}
     return route_list
 
 
@@ -93,3 +94,4 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
