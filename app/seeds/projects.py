@@ -294,8 +294,8 @@ def undo_projects():
   if environment == "production":
     if does_table_exist("projects", SCHEMA):
       db.session.execute(f"TRUNCATE table {SCHEMA}.projects RESTART IDENTITY CASCADE;")
-    else:
-      db.session.execute(text("DELETE FROM projects"))
+  else:
+    db.session.execute(text("DELETE FROM projects"))
 
   db.session.commit()
 

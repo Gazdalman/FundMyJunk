@@ -80,6 +80,10 @@
   width: 100%;
 }
 
+#pp-item-details {
+  margin-left: 10px;
+}
+
 #pp-prod-item-card {
   display: flex;
   margin-bottom: 20px;

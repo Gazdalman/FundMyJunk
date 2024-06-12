@@ -1,6 +1,7 @@
 from app.models import db, RewardItem, environment, SCHEMA
 from sqlalchemy.sql import text
 from random import randint, choice
+import requests
 
 adjectives = [
     "adorable", "adventurous", "agreeable", "alert", "ambitious",
@@ -31,21 +32,31 @@ adjectives = [
 # Adds a demo reward_item, you can add other reward_items here if you want
 def seed_reward_items():
   for id in range(1,151):
+    imgs = []
+
+    for num in range(3):
+      res = requests.get("https://picsum.photos/850/400")
+
+      if res.status_code == 200:
+        imgs.append(res.url)
+      else:
+        imgs.append("https://picsum.photos/450/500")
+
     reward_item1 = RewardItem(
       reward_id=id,
-      image="https://m.media-amazon.com/images/M/MV5BMTczNDc4OTU5NF5BMl5BanBnXkFtZTcwMjY1NzkyMw@@._V1_.jpg",
+      image=imgs[0],
       title=f"A Very {choice(adjectives).title()} Something",
       quantity=randint(1,5)
     )
     reward_item2 = RewardItem(
       reward_id=id,
-      image="https://m.media-amazon.com/images/M/MV5BMTczNDc4OTU5NF5BMl5BanBnXkFtZTcwMjY1NzkyMw@@._V1_.jpg",
+      image=imgs[1],
       title=f"A Very {choice(adjectives).title()} Something",
       quantity=randint(1,5)
     )
     reward_item3 = RewardItem(
       reward_id=id,
-      image="https://m.media-amazon.com/images/M/MV5BMTczNDc4OTU5NF5BMl5BanBnXkFtZTcwMjY1NzkyMw@@._V1_.jpg",
+      image=imgs[2],
       title=f"A Very {choice(adjectives).title()} Something",
       quantity=randint(1,5)
     )
