@@ -58,6 +58,9 @@ class Project(db.Model):
     cascade="all, delete-orphan"
   )
 
+  def get_earned(self):
+    return sum([backer.amount for backer in self.backers])
+
   def to_dict(self):
     return {
       "id": self.id,
@@ -79,7 +82,7 @@ class Project(db.Model):
       "rewards": sorted([reward.to_dict() for reward in self.rewards], key=lambda reward : reward['amount']),
       "launched": self.launch_date <= datetime.now(),
       "user": self.user.display_name,
-      "earned": sum([backer.amount for backer in self.backers]),
+      "earned": self.get_earned(),
       "earnedToday": self.earned_today,
     }
 

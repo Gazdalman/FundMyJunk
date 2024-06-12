@@ -369,9 +369,9 @@ def add_projects():
         amount=randint(1,80000),
         unlimited=True
       )
-  
+
       db.session.add_all([reward1,reward2,reward3,story])
-  
+
       for reward in [reward1,reward2,reward3]:
         reward_item1 = RewardItem(
           reward_id=reward.id,
@@ -391,19 +391,34 @@ def add_projects():
           title=f"A Very {choice(adjectives).title()} Something",
           quantity=randint(1,5)
         )
-  
+
         db.session.add(reward_item1)
         db.session.add(reward_item2)
         db.session.add(reward_item3)
-  
+
       db.session.commit()
 
+def delete_old_projects():
+  with db.session.begin(subtransactions=True):
+    projects = Project.query.filter(Project.end_date < datetime.utcnow())
+
+    for project in projects:
+      if project.get_earned < project.goal:
+        db.session.delete(project)
+
+    db.session.commit()
 
 scheduler = BackgroundScheduler()
 scheduler.start()
 
 scheduler.add_job(
-    add_projects,
-    'cron',
-    hour=24
+  add_projects,
+  'cron',
+  hour=24
+)
+
+scheduler.add_job(
+  delete_old_projects,
+  'cron',
+  hours=12
 )
