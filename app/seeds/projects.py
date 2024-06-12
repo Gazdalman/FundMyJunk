@@ -420,5 +420,5 @@ scheduler.add_job(
 scheduler.add_job(
   delete_old_projects,
   'cron',
-  hours=12
+  hour=12
 )
