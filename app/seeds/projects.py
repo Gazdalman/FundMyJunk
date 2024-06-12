@@ -414,7 +414,7 @@ scheduler.start()
 scheduler.add_job(
   add_projects,
   'cron',
-  hour=24
+  hour=23
 )
 
 scheduler.add_job(
