@@ -69,7 +69,7 @@ const RewardTab = ({ rewards, user, projectOwner, projId, setShowForm, showForm 
 
     await dispatch(createPledge({ "amount": amount }, projId));
     await dispatch(setRequestedProject(projId));
-    await dispatch(refreshUser(user.id))
+    await dispatch(refreshUser(user))
   }
 
   return rewards ? (

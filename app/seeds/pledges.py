@@ -7,6 +7,9 @@ from sqlalchemy.sql import text
 fake = Faker()
 
 def seed_pledges():
+
+  already_pledged = []
+
   projects = Project.query.all()
 
   proj_dict = {project.id: project for project in projects}
@@ -21,7 +24,11 @@ def seed_pledges():
       else:
         id = id + 1
 
-
+    if not [id,proj_id] in already_pledged:
+      already_pledged.append([id,proj_id])
+    else:
+      continue
+    
     pledge = Backer(
       project_id=proj_id,
       user_id=id,

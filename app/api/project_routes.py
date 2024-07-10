@@ -215,10 +215,14 @@ def create_pledge(id):
             project.earned_today = (
                 project.earned_today - total) if project.earned_today else 0
 
-            if len(past_pledge.rewards):
+            return f'{len(past_pledge.rewards)}'
+
+            if len(past_pledge.rewards) >= 1:
                 for reward in past_pledge.rewards:
                     past_pledge.rewards.remove(reward)
+                    print(f'-------------> Here: {reward.unlimited}')
                     if not reward.unlimited:
+                        return 'Twas False'
                         reward.quantity = reward.quantity + 1
             db.session.delete(past_pledge)
 

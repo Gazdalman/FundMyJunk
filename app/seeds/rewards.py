@@ -35,7 +35,7 @@ def seed_rewards():
   for id in range(1,51):
     reward1 = Reward(
       project_id=id,
-      image="https://source.unsplash.com/featured/500x400/?rock",
+      image="https://picsum.photos/850/400",
       title=f"A Very {fake.word(ext_word_list=adjectives).title()} Something or Other",
       description=fake.sentence(),
       physical_items=True,
@@ -46,7 +46,7 @@ def seed_rewards():
     )
     reward2 = Reward(
       project_id=id,
-      image="https://source.unsplash.com/featured/500x400/?rock",
+      image="https://picsum.photos/850/400",
       title=f"A Very {fake.word(ext_word_list=adjectives).title()} Something or Other",
       description=fake.sentence(),
       physical_items=True,
@@ -58,7 +58,7 @@ def seed_rewards():
     )
     reward3 = Reward(
       project_id=id,
-      image="https://source.unsplash.com/featured/500x400/?rock",
+      image="https://picsum.photos/850/400",
       title=f"A Very {fake.word(ext_word_list=adjectives).title()} Something or Other",
       description=fake.sentence(),
       physical_items=True,
