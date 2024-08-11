@@ -20,7 +20,7 @@ RUN pip install -r requirements.txt
 RUN pip install psycopg2
 COPY . .
 COPY --from=build /react_app /var/www/react-app
-RUN flask seed undo
+# RUN flask seed undo
 RUN flask db upgrade
 RUN flask seed all
 CMD gunicorn app:app
