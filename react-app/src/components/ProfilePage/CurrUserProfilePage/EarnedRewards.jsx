@@ -2,10 +2,13 @@ import OpenModalButton from "../../OpenModalButton";
 import EditPledge from "./EditPledge";
 import DeleteModal from "../../utilities/deleteModal";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const EarnedRewards = ({ earnedRewards, userId }) => {
+const EarnedRewards = ({ earnedRewards }) => {
   const history = useHistory()
-
+  const user = useSelector(state => state.session.user)
+  const userId = user.id
+  
   return (
     <div id="earned-rewards">
       <h2 className="tab-title">Projects Pledged To</h2>

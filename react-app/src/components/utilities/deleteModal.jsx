@@ -29,9 +29,8 @@ const DeleteModal = ({ method, project, pledge, reward, item, projId, type, url 
       if (res === "ok")
         await dispatch(setRequestedProject(reward.projectId));
     } else if (type == "pledge") {
-      const res = await dispatch(deletePledge(pledge.id));
-      if (res === "ok")
-        await dispatch(refreshUser(user.id));
+      const res = await dispatch(deletePledge(pledge.id, user.id));
+      await dispatch(refreshUser(user.id));
     } else {
       const res = await dispatch(deleteItem(item.id))
       if (res == "ok")

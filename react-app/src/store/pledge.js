@@ -1,3 +1,5 @@
+import { refreshUser } from "./session"
+
 const PLEDGE_PROJECT = "pledges/createPledge"
 const EDIT_PLEDGE = "pledges/editPledge"
 
@@ -31,7 +33,7 @@ export const editPledge = (pledge, pledgeId) => async dispatch => {
   // console.log("res errors", resJson);
 }
 
-export const deletePledge = (pledgeId) => async dispatch => {
+export const deletePledge = (pledgeId, userId) => async dispatch => {
   const res = await fetch(`/api/pledges/${pledgeId}/delete`, {
     method: "DELETE",
   })

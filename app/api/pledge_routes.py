@@ -58,10 +58,11 @@ def edit_pledge(id):
       amount = form.data['amount']
     )
 
-    project.earned_today = project.earned_today + pledge.amount
+
 
     db.session.add(pledge)
 
+    project.earned_today = project.earned_today + pledge.amount
 
     for reward in project.rewards:
       if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):
@@ -96,4 +97,5 @@ def delete_pledge(id):
 
   db.session.delete(pledge)
   db.session.commit()
+  
   return {'message': 'Pledge deleted'}, 200
