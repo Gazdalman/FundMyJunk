@@ -209,48 +209,37 @@ def create_pledge(id):
     old_id = None
 
     if form.validate_on_submit():
-        if past_pledge:
-            total = past_pledge.amount
-            old_id = past_pledge.id
-            project.earned_today = (
-                project.earned_today - total) if project.earned_today else 0
-
-            return f'{len(past_pledge.rewards)}'
-
-            if len(past_pledge.rewards) >= 1:
-                for reward in past_pledge.rewards:
-                    past_pledge.rewards.remove(reward)
-                    print(f'-------------> Here: {reward.unlimited}')
-                    if not reward.unlimited:
-                        return 'Twas False'
-                        reward.quantity = reward.quantity + 1
-            db.session.delete(past_pledge)
-
         data = form.data
 
-        if old_id:
-            pledge = Backer(
-                id=old_id,
-                project_id=id,
-                user_id=current_user.get_id(),
-                amount=data['amount'] + total
-            )
+        if past_pledge:
+            past_pledge.amount = data['amount'] + past_pledge.amount
+
+            for reward in project.rewards:
+                if reward.amount <= past_pledge.amount and (reward.unlimited or reward.quantity > 0) and reward not in past_pledge.rewards:
+                    past_pledge.rewards.append(reward)
+                    if not reward.unlimited:
+                        reward.quantity = reward.quantity - 1
+
+            project.earned_today = (
+                project.earned_today + data['amount'])
+
+            db.session.commit()
+
+            return past_pledge.to_dict()
         else:
             pledge = Backer(
                 project_id=id,
                 user_id=current_user.get_id(),
                 amount=data['amount'] + total
             )
-        db.session.add(pledge)
 
-        project.earned_today = (
-            project.earned_today + pledge.amount) if project.earned_today else pledge.amount
+            db.session.add(pledge)
 
-        for reward in project.rewards:
-            if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):
-                pledge.rewards.append(reward)
-                if not reward.unlimited:
-                    reward.quantity = reward.quantity - 1
+            for reward in project.rewards:
+                if reward.amount <= pledge.amount and (reward.unlimited or reward.quantity > 0):
+                    pledge.rewards.append(reward)
+                    if not reward.unlimited:
+                        reward.quantity = reward.quantity - 1
 
         db.session.commit()
         return pledge.to_dict()

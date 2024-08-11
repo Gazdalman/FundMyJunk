@@ -28,7 +28,7 @@ def seed_pledges():
       already_pledged.append([id,proj_id])
     else:
       continue
-    
+
     pledge = Backer(
       project_id=proj_id,
       user_id=id,
