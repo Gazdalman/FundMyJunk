@@ -1,32 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import "./LandingPage.css"
-
-// const LandingPage = () => {
-//   // const [quoteIndex, setQuoteIndex] = useState(0);
-
-//   useEffect(() => {
-//     // const interval = setInterval(() => {
-//     //   setQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
-//     // }, 3000);
-
-//     // return () => clearInterval(interval);
-//   }, []);
-
-//   return (
-//     <div className="landing-page">
-//       <h1>Welcome to FundMyJunk™</h1>
-//       <h3>Where misguided philanthropy meets awful...ly good ideas!</h3>
-//       <div className="quotes">
-//         <p>Thanks to FundMyJunk, I was able to quit being the head of a pyramid scheme and start my business where my employees are the ones who have to recruit their friends and family to make money!! <br/> - A Legitimate Business Man</p>
-//         <p>I got my project fully funded before it ended and they STILL didn't give me my money! <br/> - A Total Loser</p>
-//         <p>I, of my own free will and not under the threat of violence, retract my earlier statement... <br/> - Same Loser</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default LandingPage;
-
 import React, { useState, useEffect } from 'react';
 import './LandingPage.css'; // Import your CSS file
 
