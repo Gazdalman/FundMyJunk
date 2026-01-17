@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
 let enhancer;
 
 if (process.env.NODE_ENV === 'production') {
-  enhancer = applyMiddleware(thunk);
+  enhancer = applyMiddleware(thunk); // Thunk midddleware is used to handle async actions
 } else {
   const logger = require('redux-logger').default;
   const composeEnhancers =
